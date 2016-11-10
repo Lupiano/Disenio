@@ -33,7 +33,7 @@ public class Main {
 		ArrayList<Problema> sol = ps.masCercanos(p0,3);
 		
 		for(Problema pAux: sol){
-			//System.out.println(pAux.valor("Vehiculo"));
+			System.out.println(pAux.valor("Vehiculo"));
 		}
 	}
 
