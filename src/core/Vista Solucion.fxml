@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorSolucion">
+   <children>
+      <MenuBar layoutX="-4.0" layoutY="2.0" maxHeight="36.0" maxWidth="809.0" minHeight="25.0" minWidth="800.0" prefHeight="25.0" prefWidth="809.0">
+         <menus>
+            <Menu mnemonicParsing="false" text="Archivo">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#salir" text="Salir" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
+      <Text layoutX="357.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Arquitectura" wrappingWidth="106.99999934434891">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="35.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Solución" wrappingWidth="106.99999934434891">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Button layoutX="628.0" layoutY="553.0" mnemonicParsing="false" onAction="#salir" prefHeight="25.0" prefWidth="148.0" text="Salir" />
+   </children>
+</AnchorPane>
