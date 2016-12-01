@@ -12,6 +12,9 @@ public class Main {
 		p1.setValor("Vehiculo", "Auto");
 		Caso c1 = new Caso(p1,"10");
 		
+		BaseDatos BD = new BaseDatos("postgres", "diseño");
+		BD.conectar();
+		
 		Problema p2 = new Problema("2");
 		p2.setValor("Vehiculo", "Moto");
 		Caso c2 = new Caso(p2,"20");
@@ -32,9 +35,9 @@ public class Main {
 		
 		ArrayList<Problema> sol = ps.masCercanos(p0,3);
 		
-		/* for(Problema pAux: sol){
-			//System.out.println(pAux.valor("Vehiculo"));
-		} */
+		for(Problema pAux: sol){
+			System.out.println(pAux.valor("Vehiculo"));
+		}
 	}
 
 }
