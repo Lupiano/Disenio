@@ -10,7 +10,7 @@ public class BaseDatos {
  
     //  Database credentials
     private String USER = "postgres";
-    private String PASS = "ayelen";
+    private String PASS = "diseño";
     
     private Connection conn = null;
     private Statement stmt = null;

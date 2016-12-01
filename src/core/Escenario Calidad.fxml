@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="400.0" maxWidth="600.0" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorEscenario">
+   <children>
+      <TableView fx:id="tablaEstimulo" layoutX="197.0" layoutY="60.0" prefHeight="50.0" prefWidth="229.0">
+        <columns>
+          <TableColumn fx:id="columnaEstimulo" prefWidth="228.0" text="Estimulo" />
+        </columns>
+      </TableView>
+      <Text layoutX="29.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Agregar Escenario de Calidad" wrappingWidth="282.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Button layoutX="488.0" layoutY="355.0" mnemonicParsing="false" onAction="#guardarEscenario" text="Guardar" />
+      <TableView fx:id="tablaRespuesta" layoutX="197.0" layoutY="109.0" prefHeight="50.0" prefWidth="229.0">
+         <columns>
+            <TableColumn prefWidth="228.0" text="Respuesta" />
+         </columns>
+      </TableView>
+      <TableView layoutX="197.0" layoutY="158.0" prefHeight="50.0" prefWidth="229.0">
+         <columns>
+            <TableColumn fx:id="tablaFuenteEstimulo" prefWidth="228.0" text="Fuente del estímulo" />
+         </columns>
+      </TableView>
+      <TableView layoutX="197.0" layoutY="207.0" prefHeight="50.0" prefWidth="229.0">
+         <columns>
+            <TableColumn fx:id="tablaMedidaRespuesta" prefWidth="228.0" text="Medida de la respuesta" />
+         </columns>
+      </TableView>
+      <TableView layoutX="197.0" layoutY="256.0" prefHeight="50.0" prefWidth="229.0">
+         <columns>
+            <TableColumn fx:id="tablaArtefactoAfectado" prefWidth="228.0" text="Artefacto Afectado" />
+         </columns>
+      </TableView>
+      <TableView layoutX="197.0" layoutY="305.0" prefHeight="50.0" prefWidth="229.0">
+         <columns>
+            <TableColumn fx:id="tablaAmbiente" prefWidth="228.0" text="Ambiente" />
+         </columns>
+      </TableView>
+   </children>
+</AnchorPane>
