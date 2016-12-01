@@ -15,7 +15,7 @@ public class Main extends Application {
 		try {
 			primaryStage.setTitle("Trabajo Diseño Final");
 			primaryStage.getIcons().add(new Image("file:resources/imagen/icono.png"));
-			Parent root = FXMLLoader.load(getClass().getResource("Vista Componente.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("/ui/Vista Componente.fxml"));
 			primaryStage.setScene(new Scene(root));
 			primaryStage.show();
 		} catch(Exception e) {
