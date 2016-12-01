@@ -3,6 +3,12 @@ package core;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
+
 
 public class Main {
 
@@ -39,5 +45,23 @@ public class Main {
 			System.out.println(pAux.valor("Vehiculo"));
 		}
 	}
+	
+	/*
+	@Override
+	public void start(Stage primaryStage) {
+		try {
+			primaryStage.setTitle("Trabajo Diseño Final");
+			primaryStage.getIcons().add(new Image("file:resources/imagen/icono.png"));
+			Parent root = FXMLLoader.load(getClass().getResource("Vista Componente.fxml"));
+			primaryStage.setScene(new Scene(root));
+			primaryStage.show();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void main(String[] args) {
+		launch(args);
+	}*/
 
 }
