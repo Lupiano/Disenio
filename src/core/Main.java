@@ -1,13 +1,5 @@
 package core;
 
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.List;
-
-import com.mysql.jdbc.ResultSet;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
