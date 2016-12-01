@@ -1,4 +1,4 @@
-package core;
+package ui;
 
 public class Controlador {
 
