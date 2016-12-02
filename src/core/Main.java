@@ -10,7 +10,6 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-	@Override
 	public void start(Stage primaryStage) {
 		try {
 			primaryStage.setTitle("Trabajo Diseño Final");

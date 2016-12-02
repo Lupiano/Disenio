@@ -149,22 +149,15 @@ public class ControladorComponentes {
 	
 	public static void agregarListaEscenario(){
         Label l1 = new Label();
-        System.out.println(Modelo.numero);
-        System.out.println("fila" + Modelo.fila);
         String nombrefinal = "Escenario" + Modelo.numero;
         l1.setText(nombrefinal);
         l1.setFont(new Font("Arial", 18)); 
         grid.add(l1, Modelo.columna, Modelo.fila);
-        System.out.println("PASA1");
-
     	final Button buttonEditar = new Button ("Editar Escenario");
     	final Button buttonBorrar = new Button ("Borrar Escenario");
         
         grid.add(buttonEditar, 1, Modelo.fila);
-        System.out.println("PASA2");
-
         grid.add(buttonBorrar, 2, Modelo.fila);
-        System.out.println("PASA3");
 
         Modelo.numero++;
         Modelo.fila+= 4;
