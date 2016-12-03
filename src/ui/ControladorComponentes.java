@@ -1,5 +1,7 @@
 package ui;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Optional;
 import javax.swing.JOptionPane;
 import javafx.application.Platform;
@@ -15,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Labeled;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
@@ -148,27 +151,59 @@ public class ControladorComponentes {
 	}
 	
 	public static void agregarListaEscenario(){
+		
         Label l1 = new Label();
-        System.out.println(Modelo.numero);
-        System.out.println("fila" + Modelo.fila);
         String nombrefinal = "Escenario" + Modelo.numero;
         l1.setText(nombrefinal);
         l1.setFont(new Font("Arial", 18)); 
+
+    	Button buttonEditar = new Button ("Editar Escenario");
+    	
+    	Button buttonBorrar = new Button ("Borrar Escenario");
+    	buttonBorrar.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent e) {
+				
+				ArrayList<Labeled> aBorrar = new ArrayList<Labeled>();
+				int indexBorrar;
+				
+				//Se borran todos los botones de la interfaz.
+				Modelo.fila -= Modelo.listaBotones.size() * 4;
+				for(ArrayList<Labeled> arr: Modelo.listaBotones){
+					grid.getChildren().removeAll(arr);
+					//Se borran los botones a eliminar de la lista de botones.
+					if(arr.contains(l1)){
+						aBorrar = arr;
+					}
+				}
+
+				Modelo.listaBotones.remove(aBorrar);
+				
+				//Se vuelven a generar los botones.
+				for(ArrayList<Labeled> arr: Modelo.listaBotones){
+					grid.add(arr.get(0), Modelo.columna, Modelo.fila);
+					grid.add(arr.get(1), 1, Modelo.fila);
+					grid.add(arr.get(2), 2, Modelo.fila);
+			        Modelo.fila+= 4;
+				}
+			}	
+			
+    	});
+    	
         grid.add(l1, Modelo.columna, Modelo.fila);
-        System.out.println("PASA1");
-
-    	final Button buttonEditar = new Button ("Editar Escenario");
-    	final Button buttonBorrar = new Button ("Borrar Escenario");
-        
         grid.add(buttonEditar, 1, Modelo.fila);
-        System.out.println("PASA2");
-
         grid.add(buttonBorrar, 2, Modelo.fila);
-        System.out.println("PASA3");
-
+        
+        ArrayList<Labeled> aux = new ArrayList<Labeled>();
+        aux.add(l1);
+        aux.add(buttonEditar);
+        aux.add(buttonBorrar);
+        Modelo.listaBotones.add(aux);
+        
         Modelo.numero++;
         Modelo.fila+= 4;
-        System.out.println("fila" + Modelo.fila);
+        
 	}
 	
    
