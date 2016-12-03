@@ -39,6 +39,8 @@ public class ControladorComponentes {
 	private final static Button buttonEditar = new Button ("Editar Escenario");
 	private final static Button buttonBorrar = new Button ("Borrar Escenario");
 	private final static Button idAgregarComponente = new Button();
+	private final static Button botonSiguienteSolucion = new Button ("Siguiente");
+
 
 	Scene scene = new Scene(new Group(), 850, 650);
 	static GridPane grid = new GridPane();
@@ -123,16 +125,24 @@ public class ControladorComponentes {
 		        grid.add (valorAtributo, 1,9);
 		        nombreAtributo.setPrefWidth(250);
 		        nombreAtributo.setFont(new Font("Arial", 24));
+		        nombreAtributo.setDisable(true);
 		        grid.add(nombreAtributo, 5, 5);
+		        
+		        atributosCalidad.setOnAction(new EventHandler<ActionEvent>() {
+		            @Override
+		            public void handle(ActionEvent e) {
+		            	nombreAtributo.setText(atributosCalidad.getValue());
+		            	Modelo.nombreAtributo = atributosCalidad.getValue();
+		            	}
+		            }
+		        );
 		        
 		        valorAtributo.setOnAction(new EventHandler<ActionEvent>() {
 		            @Override
 		            public void handle(ActionEvent e) {
 		            	if ((atributosCalidad.getValue() != null && !atributosCalidad.getValue().toString().isEmpty())){
-		            		System.out.println(atributosCalidad.getValue());
-		            		System.out.println(valorAtributo.getText());
-
 		            		nombreAtributo.setText(atributosCalidad.getValue() + ": " + valorAtributo.getText());
+		            		valorAtributo.clear();
 		            	}
 		            }
 		        });
@@ -153,6 +163,25 @@ public class ControladorComponentes {
 		            @Override
 		            public void handle(ActionEvent e) {
 		            	ControladorAtributos.agregarEscenario();
+		            }
+		        });
+		        
+		        grid.add(botonSiguienteSolucion, 6, 120);
+		        
+		        botonSiguienteSolucion.setOnAction(new EventHandler<ActionEvent>() {
+		            @Override
+		            public void handle(ActionEvent e) {
+		            	
+		            	Modelo.secondaryStage.setTitle("Trabajo Diseño Final");
+						Modelo.secondaryStage.getIcons().add(new Image("file:resources/imagen/icono.png"));
+						
+						Scene scene = new Scene(new Group(), 850, 650);
+						GridPane grid = new GridPane();;
+						
+				        Group root = (Group)scene.getRoot();
+				        root.getChildren().add(grid);
+				        Modelo.secondaryStage.setScene(scene);
+				        Modelo.secondaryStage.show();
 		            }
 		        });
 		        
@@ -275,6 +304,7 @@ public class ControladorComponentes {
         
         if(hayValores){
         	valorRespuestaComboBox.setValue(valores.get(1));
+        	notification.setText("");
         }
         valorRespuestaComboBox.setPromptText("Valor Respuesta");
         valorRespuestaComboBox.setEditable(true);        
