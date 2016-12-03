@@ -1,7 +1,10 @@
 package ui;
 
+import java.util.ArrayList;
 import java.util.Optional;
 import javax.swing.JOptionPane;
+
+import core.EscenarioDeCalidad;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
@@ -15,6 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Labeled;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
@@ -70,6 +74,8 @@ public class ControladorComponentes {
 				
 				grid.setVgap(4);
 			    grid.setHgap(10);
+			    
+			    //grid.setStyle("-fx-background-color: #C0C0C0;");
 			    Group root = (Group)scene.getRoot();
 			    root.getChildren().add(grid);
 			    Modelo.primaryStage.setScene(scene);
@@ -107,15 +113,13 @@ public class ControladorComponentes {
 		        nombreAtributo.setPrefWidth(250);
 		        nombreAtributo.setFont(new Font("Arial", 24));
 		        grid.add(nombreAtributo, 5, 5);
-		        
+		        nombreAtributo.setDisable(true);
 		        valorAtributo.setOnAction(new EventHandler<ActionEvent>() {
 		            @Override
 		            public void handle(ActionEvent e) {
 		            	if ((atributosCalidad.getValue() != null && !atributosCalidad.getValue().toString().isEmpty())){
-		            		System.out.println(atributosCalidad.getValue());
-		            		System.out.println(valorAtributo.getText());
-
 		            		nombreAtributo.setText(atributosCalidad.getValue() + ": " + valorAtributo.getText());
+		            		valorAtributo.clear();
 		            	}
 		            }
 		        });
@@ -148,20 +152,37 @@ public class ControladorComponentes {
 	}
 	
 	public static void agregarListaEscenario(){
-        Label l1 = new Label();
+		
+	    Label l1 = new Label();
         String nombrefinal = "Escenario" + Modelo.numero;
         l1.setText(nombrefinal);
         l1.setFont(new Font("Arial", 18)); 
         grid.add(l1, Modelo.columna, Modelo.fila);
+        
     	final Button buttonEditar = new Button ("Editar Escenario");
     	final Button buttonBorrar = new Button ("Borrar Escenario");
-        
+    	
+        buttonBorrar.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+            	System.out.println("HOLA");
+            	grid.getChildren().remove(11);
+            }
+        });
+   
         grid.add(buttonEditar, 1, Modelo.fila);
         grid.add(buttonBorrar, 2, Modelo.fila);
 
+        ArrayList<Labeled> botones = new ArrayList<Labeled>();
+        botones.add(l1);
+        botones.add(buttonEditar);
+        botones.add(buttonBorrar);
+        
+        Modelo.listaBotones.add(botones);
+        Modelo.hashEscenarios.put(l1.getText(), new EscenarioDeCalidad());
+        
         Modelo.numero++;
         Modelo.fila+= 4;
-        System.out.println("fila" + Modelo.fila);
 	}
 	
    

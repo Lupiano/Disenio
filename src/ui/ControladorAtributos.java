@@ -14,6 +14,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -147,6 +148,7 @@ public class ControladorAtributos {
         valorRespuestaComboBox.setPromptText("Valor Respuesta");
         valorRespuestaComboBox.setEditable(true);        
         valorRespuestaComboBox.valueProperty().addListener((ChangeListener<String>) (ov, t, t1) -> address = t1);
+
         
       //ComboBox Fuente
         valorFuenteComboBox.getItems().addAll(
@@ -158,6 +160,7 @@ public class ControladorAtributos {
         valorFuenteComboBox.setPromptText("Valor Fuente del Estímulo");
         valorFuenteComboBox.setEditable(true);        
         valorFuenteComboBox.valueProperty().addListener((ChangeListener<String>) (ov, t, t1) -> address = t1);
+
         
       //ComboBox Medida de Respuesta
         valorMedidaRespuestaComboBox.getItems().addAll(
@@ -169,6 +172,7 @@ public class ControladorAtributos {
         valorMedidaRespuestaComboBox.setPromptText("Valor Medida de la Respuesta");
         valorMedidaRespuestaComboBox.setEditable(true);        
         valorMedidaRespuestaComboBox.valueProperty().addListener((ChangeListener<String>) (ov, t, t1) -> address = t1);
+
         
         //ComboBox Artefacto Afectado
         valorArtefactoAfectadoComboBox.getItems().addAll(
