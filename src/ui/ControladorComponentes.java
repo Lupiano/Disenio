@@ -133,8 +133,17 @@ public class ControladorComponentes {
 		            public void handle(ActionEvent e) {
 		            	nombreAtributo.setText(atributosCalidad.getValue());
 		            	Modelo.nombreAtributo = atributosCalidad.getValue();
+		            	ControladorComponentes.borrarBotonesEscenarios();
+		            	Modelo.numero = 1;
+		            	Modelo.listaBotones = Modelo.hashAtributos.get(Modelo.nombreAtributo);
+		            	if(Modelo.listaBotones != null){
+			            	ControladorComponentes.generarBotonesEscenarios();
+		            	}
+		            	else{
+		            		Modelo.listaBotones = new ArrayList<ArrayList<Labeled>>();
 		            	}
 		            }
+		          }
 		        );
 		        
 		        valorAtributo.setOnAction(new EventHandler<ActionEvent>() {
@@ -211,7 +220,6 @@ public class ControladorComponentes {
 			public void handle(ActionEvent e) {
 				
 				ArrayList<Labeled> aBorrar = new ArrayList<Labeled>();
-				int indexBorrar;
 				
 				//Se borran todos los botones de la interfaz.
 				Modelo.fila -= Modelo.listaBotones.size() * 4;
@@ -224,17 +232,9 @@ public class ControladorComponentes {
 				}
 
 				Modelo.listaBotones.remove(aBorrar);
-				Modelo.numero = 1;
 				
-				//Se vuelven a generar los botones.
-				for(ArrayList<Labeled> arr: Modelo.listaBotones){
-					arr.get(0).setText("Escenario" + Modelo.numero);
-					grid.add(arr.get(0), 0, Modelo.fila);
-					grid.add(arr.get(1), 1, Modelo.fila);
-					grid.add(arr.get(2), 2, Modelo.fila);
-			        Modelo.fila += 4;
-			        Modelo.numero ++;
-				}
+				generarBotonesEscenarios();
+				
 			}	
 			
     	});
@@ -419,6 +419,27 @@ public class ControladorComponentes {
         root.getChildren().add(grid);
         Modelo.escenario.setScene(scene);
         Modelo.escenario.show();
+	}
+	
+	public static void borrarBotonesEscenarios(){
+		//Se borran todos los botones de la interfaz.
+		Modelo.fila -= Modelo.listaBotones.size() * 4;
+		for(ArrayList<Labeled> arr: Modelo.listaBotones){
+			grid.getChildren().removeAll(arr);
+		}
+	}
+	
+	public static void generarBotonesEscenarios(){
+		Modelo.numero = 1;
+		//Se vuelven a generar los botones.
+		for(ArrayList<Labeled> arr: Modelo.listaBotones){
+			arr.get(0).setText("Escenario" + Modelo.numero);
+			grid.add(arr.get(0), 0, Modelo.fila);
+			grid.add(arr.get(1), 1, Modelo.fila);
+			grid.add(arr.get(2), 2, Modelo.fila);
+	        Modelo.fila += 4;
+	        Modelo.numero ++;
+		}
 	}
 	
 	@FXML
