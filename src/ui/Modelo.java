@@ -1,5 +1,8 @@
 package ui;
 
+import java.util.ArrayList;
+
+import javafx.scene.control.Labeled;
 import javafx.stage.Stage;
 
 public class Modelo {
@@ -10,4 +13,5 @@ public class Modelo {
 	public static int numero = 1;
 	public static int fila = 24;
 	public static int columna = 0;
+	public static ArrayList<ArrayList<Labeled>> listaBotones = new ArrayList<ArrayList<Labeled>>();
 }
