@@ -108,12 +108,7 @@ public class ControladorAtributos {
 	}
 	
 	@FXML
-	private void siguienteHaciaSolucion(){
-		/*if (salir == false){
-			JOptionPane.showMessageDialog(null, "Error: Debe llenar al menos un componente");
-			System.out.println("Entraaa en Solución");
-		}
-		else*/
+	public void siguienteHaciaSolucion(){
 			try {
 				Parent root = FXMLLoader.load(getClass().getResource("Vista Solucion.fxml"));
 				Modelo.primaryStage.setScene(new Scene(root));

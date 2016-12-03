@@ -1,7 +1,6 @@
 package ui;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Optional;
 import javax.swing.JOptionPane;
 
@@ -11,8 +10,10 @@ import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -42,10 +43,10 @@ public class ControladorComponentes {
 	private final static Button botonSiguienteSolucion = new Button ("Siguiente");
 
 
-	Scene scene = new Scene(new Group(), 850, 650);
+	Scene scene = new Scene(new Group(), 830, 550);
 	static GridPane grid = new GridPane();
 	
-	final static Button button = new Button ("Guardar");
+	final static Button botonGuardarEscenario = new Button ("Guardar");
 	final static Label notification = new Label ();
 	final static TextField subject = new TextField("");
 	final static TextArea text = new TextArea ("");
@@ -166,24 +167,20 @@ public class ControladorComponentes {
 		            }
 		        });
 		        
-		        grid.add(botonSiguienteSolucion, 6, 120);
+		        grid.add(botonSiguienteSolucion, 6, 100);
 		        
 		        botonSiguienteSolucion.setOnAction(new EventHandler<ActionEvent>() {
 		            @Override
 		            public void handle(ActionEvent e) {
-		            	
-		            	Modelo.secondaryStage.setTitle("Trabajo Diseño Final");
-						Modelo.secondaryStage.getIcons().add(new Image("file:resources/imagen/icono.png"));
-						
-						Scene scene = new Scene(new Group(), 850, 650);
-						GridPane grid = new GridPane();;
-						
-				        Group root = (Group)scene.getRoot();
-				        root.getChildren().add(grid);
-				        Modelo.secondaryStage.setScene(scene);
-				        Modelo.secondaryStage.show();
-		            }
-		        });
+		    			try {
+		    				Parent root = FXMLLoader.load(getClass().getResource("Vista Solucion.fxml"));
+		    				Modelo.primaryStage.setScene(new Scene(root));
+		    				Modelo.primaryStage.show();
+		    			} catch(Exception e1) {
+		    				e1.printStackTrace();
+		    			}
+		            }}
+		        );
 		        
 		        
 		        Modelo.primaryStage.show();
@@ -211,7 +208,6 @@ public class ControladorComponentes {
 			public void handle(ActionEvent e) {
 				
 				ArrayList<Labeled> aBorrar = new ArrayList<Labeled>();
-				int indexBorrar;
 				
 				//Se borran todos los botones de la interfaz.
 				Modelo.fila -= Modelo.listaBotones.size() * 4;
@@ -366,7 +362,7 @@ public class ControladorComponentes {
         valorAmbienteComboBox.setEditable(true);        
         valorAmbienteComboBox.valueProperty().addListener((ChangeListener<String>) (ov, t, t1) -> address = t1);
         
-        button.setOnAction(new EventHandler<ActionEvent>() {
+        botonGuardarEscenario.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
                 if ((valorEstimuloComboBox.getValue() != null && !valorEstimuloComboBox.getValue().toString().isEmpty()) &&
@@ -412,7 +408,7 @@ public class ControladorComponentes {
         grid.add(valorArtefactoAfectadoComboBox, 1,6);
         grid.add(new Label("Ambiente: "), 0, 7);
         grid.add(valorAmbienteComboBox, 1,7);
-        grid.add(button, 0,13);
+        grid.add(botonGuardarEscenario, 0,13);
         grid.add (notification, 1,13, 13, 1);
 
         Group root = (Group)scene.getRoot();
