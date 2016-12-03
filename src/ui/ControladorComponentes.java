@@ -133,8 +133,17 @@ public class ControladorComponentes {
 		            public void handle(ActionEvent e) {
 		            	nombreAtributo.setText(atributosCalidad.getValue());
 		            	Modelo.nombreAtributo = atributosCalidad.getValue();
+		            	ControladorComponentes.borrarBotonesEscenarios();
+		            	Modelo.numero = 1;
+		            	Modelo.listaBotones = Modelo.hashAtributos.get(Modelo.nombreAtributo);
+		            	if(Modelo.listaBotones != null){
+			            	ControladorComponentes.generarBotonesEscenarios();
+		            	}
+		            	else{
+		            		Modelo.listaBotones = new ArrayList<ArrayList<Labeled>>();
 		            	}
 		            }
+		          }
 		        );
 		        
 		        valorAtributo.setOnAction(new EventHandler<ActionEvent>() {
@@ -223,8 +232,6 @@ public class ControladorComponentes {
 				}
 
 				Modelo.listaBotones.remove(aBorrar);
-				
-				Modelo.numero = 1;
 				
 				generarBotonesEscenarios();
 				

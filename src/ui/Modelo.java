@@ -23,5 +23,4 @@ public class Modelo {
 	
 	public static ArrayList<ArrayList<Labeled>> listaBotones = new ArrayList<ArrayList<Labeled>>();
 	public static Hashtable<String, ArrayList<ArrayList<Labeled>>> hashAtributos = new Hashtable<String, ArrayList<ArrayList<Labeled>>>();
-	
 }
