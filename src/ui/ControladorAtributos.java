@@ -238,6 +238,7 @@ public class ControladorAtributos {
         grid.add(button, 0,13);
         grid.add (notification, 1,13, 13, 1);
 
+
         Group root = (Group)scene.getRoot();
         root.getChildren().add(grid);
         Modelo.escenario.setScene(scene);
