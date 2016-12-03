@@ -1,6 +1,10 @@
 package ui;
 
+import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.Optional;
+
+import core.EscenarioDeCalidad;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
@@ -201,7 +205,29 @@ public class ControladorAtributos {
                 				(valorMedidaRespuestaComboBox.getValue() != null && !valorMedidaRespuestaComboBox.getValue().toString().isEmpty())&&
                 					(valorArtefactoAfectadoComboBox.getValue() != null && !valorArtefactoAfectadoComboBox.getValue().toString().isEmpty())&&
                 						(valorAmbienteComboBox.getValue() != null && !valorAmbienteComboBox.getValue().toString().isEmpty())){
-                        notification.setText("El escenario se ha guardado con éxito");                        
+                        
+                		EscenarioDeCalidad aGuardar = new EscenarioDeCalidad();
+                		ArrayList<String> arrAux = new ArrayList<String>();
+                		arrAux.add(valorEstimuloComboBox.getValue());
+                		arrAux.add(valorRespuestaComboBox.getValue());
+                		arrAux.add(valorFuenteComboBox.getValue());
+                		arrAux.add(valorMedidaRespuestaComboBox.getValue());
+                		arrAux.add(valorArtefactoAfectadoComboBox.getValue());
+                		arrAux.add(valorAmbienteComboBox.getValue());
+                		aGuardar.setValores(arrAux);
+                		
+                		if(Modelo.conectorActual.getEscenariosCalidad().get(Modelo.nombreAtributo) != null){
+                			Modelo.conectorActual.getEscenariosCalidad().get(Modelo.nombreAtributo).put(Integer.toString(Modelo.numeroId), aGuardar);
+                		}
+                		else {
+                			Hashtable<String,EscenarioDeCalidad> hashAux = new Hashtable<String,EscenarioDeCalidad>();
+                			hashAux.put(Integer.toString(Modelo.numeroId), aGuardar);
+                			Modelo.conectorActual.getEscenariosCalidad().put(Modelo.nombreAtributo, hashAux);
+                		}
+                		
+                		
+                		
+                		notification.setText("El escenario se ha guardado con éxito");                        
                         valorEstimuloComboBox.setValue(null);
                         valorRespuestaComboBox.setValue(null);
                         valorFuenteComboBox.setValue(null);

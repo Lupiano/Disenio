@@ -14,7 +14,8 @@ public class Conector {
 	private Hashtable<String,Integer> atributosCalidad = new Hashtable<String,Integer>();
 	
 	//Escenarios de calidad por cada atributo.
-	private Hashtable<String,ArrayList<EscenarioDeCalidad>> escenariosCalidad = new Hashtable<String,ArrayList<EscenarioDeCalidad>>();
+	private Hashtable<String, Hashtable<String, EscenarioDeCalidad>> escenariosCalidad = new Hashtable<String,Hashtable<String, EscenarioDeCalidad>>();
+	
 	
 	public String getNombre() {
 		return nombre;
@@ -48,12 +49,12 @@ public class Conector {
 		this.atributosCalidad = atributosCalidad;
 	}
 
-	public Hashtable<String, ArrayList<EscenarioDeCalidad>> getEscenariosCalidad() {
+	public Hashtable<String, Hashtable<String, EscenarioDeCalidad>> getEscenariosCalidad() {
 		return escenariosCalidad;
 	}
 
 	public void setEscenariosCalidad(
-			Hashtable<String, ArrayList<EscenarioDeCalidad>> escenariosCalidad) {
+			Hashtable<String, Hashtable<String, EscenarioDeCalidad>> escenariosCalidad) {
 		this.escenariosCalidad = escenariosCalidad;
 	}
 	
