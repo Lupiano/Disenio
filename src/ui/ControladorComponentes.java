@@ -132,6 +132,7 @@ public class ControladorComponentes {
 		            @Override
 		            public void handle(ActionEvent e) {
 		            	nombreAtributo.setText(atributosCalidad.getValue());
+		            	Modelo.nombreAtributo = atributosCalidad.getValue();
 		            	}
 		            }
 		        );
@@ -140,9 +141,6 @@ public class ControladorComponentes {
 		            @Override
 		            public void handle(ActionEvent e) {
 		            	if ((atributosCalidad.getValue() != null && !atributosCalidad.getValue().toString().isEmpty())){
-		            		System.out.println(atributosCalidad.getValue());
-		            		System.out.println(valorAtributo.getText());
-
 		            		nombreAtributo.setText(atributosCalidad.getValue() + ": " + valorAtributo.getText());
 		            		valorAtributo.clear();
 		            	}
@@ -173,15 +171,17 @@ public class ControladorComponentes {
 		        botonSiguienteSolucion.setOnAction(new EventHandler<ActionEvent>() {
 		            @Override
 		            public void handle(ActionEvent e) {
-		            	Modelo.primaryStage.setTitle("Trabajo Diseño Final");
-						Modelo.primaryStage.getIcons().add(new Image("file:resources/imagen/icono.png"));
+		            	
+		            	Modelo.secondaryStage.setTitle("Trabajo Diseño Final");
+						Modelo.secondaryStage.getIcons().add(new Image("file:resources/imagen/icono.png"));
 						
-						grid.setVgap(4);
-					    grid.setHgap(10);
-					    Group root = (Group)scene.getRoot();
-					    root.getChildren().add(grid);
-					    Modelo.primaryStage.setScene(scene);
-					    grid.setPadding(new Insets(6, 6, 6, 6));
+						Scene scene = new Scene(new Group(), 850, 650);
+						GridPane grid = new GridPane();;
+						
+				        Group root = (Group)scene.getRoot();
+				        root.getChildren().add(grid);
+				        Modelo.secondaryStage.setScene(scene);
+				        Modelo.secondaryStage.show();
 		            }
 		        });
 		        
@@ -304,6 +304,7 @@ public class ControladorComponentes {
         
         if(hayValores){
         	valorRespuestaComboBox.setValue(valores.get(1));
+        	notification.setText("");
         }
         valorRespuestaComboBox.setPromptText("Valor Respuesta");
         valorRespuestaComboBox.setEditable(true);        

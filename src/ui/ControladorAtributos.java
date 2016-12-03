@@ -127,6 +127,7 @@ public class ControladorAtributos {
 	public static void agregarEscenario(){
 		Modelo.escenario.setTitle(Modelo.nombreAtributo);
 		Modelo.escenario.getIcons().add(new Image("file:resources/imagen/icono.png"));
+		notification.setText("");
 		
         Scene scene = new Scene(new Group(), 500, 300);
         
@@ -270,21 +271,6 @@ public class ControladorAtributos {
         Modelo.escenario.setScene(scene);
         Modelo.escenario.show();
 	}
-		
-		
-		
-		
-		/*try {
-			Modelo.escenario.setTitle(Modelo.nombreAtributo);
-			Modelo.escenario.getIcons().add(new Image("file:resources/imagen/icono.png"));
-			Parent root = FXMLLoader.load(getClass().getResource("Escenario Calidad.fxml"));
-			Modelo.escenario.setScene(new Scene(root));			
-			Modelo.escenario.show();
-			
-		} catch(Exception e) {
-		e.printStackTrace();
-		}*/
-	
 	
 	@FXML
 	private void salir(){
