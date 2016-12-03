@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 import core.Conector;
-import core.EscenarioDeCalidad;
+import javafx.scene.Scene;
 import javafx.scene.control.Labeled;
 import javafx.stage.Stage;
 
@@ -18,6 +18,8 @@ public class Modelo {
 	public static int fila = 24;
 	public static int columna = 0;
 	public static int numeroId = 0;
+	public static Scene scene;
+
 	
 	public static Conector conectorActual = new Conector();
 	

@@ -2,9 +2,6 @@ package core;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Hashtable;
-
-import com.mysql.jdbc.ResultSet;
 
 public class ImportadorDBSimple extends ImportadorDB {
 	
