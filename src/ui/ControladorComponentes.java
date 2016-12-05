@@ -28,6 +28,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 
 public class ControladorComponentes {
@@ -36,6 +37,7 @@ public class ControladorComponentes {
 	private final ComboBox<String> atributosCalidad = new ComboBox<String>();
 	private static String address = "";
 	private final TextField valorAtributo = new TextField("");
+	private final TextField valorNombreConector = new TextField("");
 	private final TextField nombreAtributo = new TextField("");
 	private final Button buttonAgregar = new Button ("Agregar Escenario");
 	private final static Button buttonEditar = new Button ("Editar Escenario");
@@ -47,11 +49,13 @@ public class ControladorComponentes {
 	Scene scene = new Scene(new Group(), 800, 600);
 	static GridPane grid = new GridPane();
 	
+	final static Button botonGuardarConector = new Button("Guardar");
 	final static Button botonGuardarEscenario = new Button ("Guardar");
 	final static Button botonEditarPropiedades = new Button ("Editar Propiedades");
 	final static Label notification = new Label ();
 	final static TextField subject = new TextField("");
 	final static TextArea text = new TextArea ("");
+	
     
 	private static ComboBox<String> valorEstimuloComboBox = new ComboBox<String>();
     private static ComboBox<String> valorRespuestaComboBox = new ComboBox<String>();
@@ -468,8 +472,93 @@ public class ControladorComponentes {
 	}
 	
 	@FXML
-	private void agregarComponente(){
-		salir = true;
+	private void agregarConector(){
+		Modelo.conector.setTitle("Agregar Conector");
+		Modelo.conector.getIcons().add(new Image("file:resources/imagen/icono.png"));
+		
+		Scene scene = new Scene(new Group(), 400, 250);
+		
+        botonGuardarConector.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+            	notification.setText("El conector se ha guardado con éxito");                        
+                subject.clear();
+                text.clear();
+            }
+        });
+        
+        
+        
+        GridPane grid = new GridPane();
+        grid.setVgap(4);
+        grid.setHgap(10);
+        grid.setPadding(new Insets(6, 6, 6, 6));
+        Group root = (Group)scene.getRoot();
+        root.getChildren().add(grid);
+       
+        Label l1 = new Label();
+        l1.setText("Nombre del conector: ");
+        l1.setFont(new Font("Arial", 18));
+        l1.setLayoutX(10);
+        l1.setLayoutY(40);
+        root.getChildren().add(l1);
+        
+        TextField valorNombreConector = new TextField();
+        valorNombreConector.setPrefWidth(180);
+          valorNombreConector.setFont(new Font("Arial", 18));
+        valorNombreConector.setLayoutX(190);
+        valorNombreConector.setLayoutY(35);
+        root.getChildren().add(valorNombreConector);
+        
+        
+        Label l2 = new Label();
+        l2.setText("Tipo del conector: ");
+        l2.setFont(new Font("Arial", 18));
+        l2.setLayoutX(10);
+        l2.setLayoutY(80);
+        root.getChildren().add(l2);
+        
+        
+        
+        Label l3 = new Label();
+        l3.setText("Componente Origen: ");
+        l3.setFont(new Font("Arial", 18));
+        l3.setLayoutX(10);
+        l3.setLayoutY(120);
+        root.getChildren().add(l3);
+        
+        TextField valorOrigenConector = new TextField();
+        valorOrigenConector.setPrefWidth(180);
+        valorOrigenConector.setFont(new Font("Arial", 18));
+        valorOrigenConector.setLayoutX(190);
+        valorOrigenConector.setLayoutY(110);
+        root.getChildren().add(valorOrigenConector);
+        
+        Label l4 = new Label();
+        l4.setText("Componente Destino: ");
+        l4.setFont(new Font("Arial", 18));
+        l4.setLayoutX(10);
+        l4.setLayoutY(160);
+        root.getChildren().add(l4);
+        
+        TextField valorDestinoConector = new TextField();
+        valorDestinoConector.setPrefWidth(180);
+        valorDestinoConector.setFont(new Font("Arial", 18));
+        valorDestinoConector.setLayoutX(190);
+        valorDestinoConector.setLayoutY(150);
+        root.getChildren().add(valorDestinoConector);
+        
+        botonGuardarConector.setLayoutX(300);
+        botonGuardarConector.setLayoutY(200);
+        root.getChildren().add(botonGuardarConector);
+        
+        notification.setLayoutX(70);
+        notification.setLayoutY(205);
+        root.getChildren().add(notification);
+        
+
+        Modelo.conector.setScene(scene);
+        Modelo.conector.show();
 	}
 	
 	@FXML

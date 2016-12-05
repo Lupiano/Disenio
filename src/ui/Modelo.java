@@ -12,6 +12,7 @@ public class Modelo {
 	public static String atribActual = "";
 	public static String nombreAtributo = "";
 	public static Stage escenario = new Stage();
+	public static Stage conector = new Stage();
 	public static Stage propiedades = new Stage();
 	public static Stage primaryStage = new Stage();
 	public static Stage secondaryStage = new Stage();
