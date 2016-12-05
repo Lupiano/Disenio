@@ -21,6 +21,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Labeled;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
@@ -40,13 +41,14 @@ public class ControladorComponentes {
 	private final static Button buttonEditar = new Button ("Editar Escenario");
 	private final static Button buttonBorrar = new Button ("Borrar Escenario");
 	private final static Button idAgregarComponente = new Button();
-	private final static Button botonSiguienteSolucion = new Button ("Siguiente");
+	private final static Button botonCerrarAtributos = new Button ("Guardar Edición");
 
 
-	Scene scene = new Scene(new Group(), 830, 550);
+	Scene scene = new Scene(new Group(), 800, 600);
 	static GridPane grid = new GridPane();
 	
 	final static Button botonGuardarEscenario = new Button ("Guardar");
+	final static Button botonEditarPropiedades = new Button ("Editar Propiedades");
 	final static Label notification = new Label ();
 	final static TextField subject = new TextField("");
 	final static TextArea text = new TextArea ("");
@@ -85,7 +87,7 @@ public class ControladorComponentes {
 			try {
 				/*Parent root = FXMLLoader.load(getClass().getResource("Vista Atributos Calidad.fxml"));
 				Modelo.primaryStage.setScene(new Scene(root));*/
-				Modelo.primaryStage.setTitle("Trabajo Diseño Final");
+				Modelo.primaryStage.setTitle("Editar Conector");
 				Modelo.primaryStage.getIcons().add(new Image("file:resources/imagen/icono.png"));
 				
 				grid.setVgap(4);
@@ -120,14 +122,18 @@ public class ControladorComponentes {
 		        Label l2 = new Label();
 		        l2.setText("Valor");
 		        l2.setFont(new Font("Arial", 24));
-		        grid.add(l2, 1, 5);
+		        grid.add(l2, 0, 18);
 		        
-		        valorAtributo.setPrefWidth(10);
-		        grid.add (valorAtributo, 1,9);
-		        nombreAtributo.setPrefWidth(250);
+		        valorAtributo.setPrefWidth(50);
+		        valorAtributo.setLayoutX(10);
+		        valorAtributo.setLayoutY(160);
+		        root.getChildren().add(valorAtributo);
+		        
+		       // grid.add (valorAtributo, 0,20);
+		        /*nombreAtributo.setPrefWidth(250);
 		        nombreAtributo.setFont(new Font("Arial", 24));
 		        nombreAtributo.setDisable(true);
-		        grid.add(nombreAtributo, 5, 5);
+		        grid.add(nombreAtributo, 5, 5);*/
 		        
 		        atributosCalidad.setOnAction(new EventHandler<ActionEvent>() {
 		            @Override
@@ -152,7 +158,6 @@ public class ControladorComponentes {
 		            public void handle(ActionEvent e) {
 		            	if ((atributosCalidad.getValue() != null && !atributosCalidad.getValue().toString().isEmpty())){
 		            		nombreAtributo.setText(atributosCalidad.getValue() + ": " + valorAtributo.getText());
-		            		valorAtributo.clear();
 		            	}
 		            }
 		        });
@@ -160,14 +165,29 @@ public class ControladorComponentes {
 		        Label l3 = new Label();
 		        l3.setText("(entre 0 y 1)");
 		        l3.setFont(new Font("Arial", 16));
-		        grid.add(l3, 2, 9);
+		        l3.setLayoutX(70);
+		        l3.setLayoutY(160);
+		        root.getChildren().add(l3);
 		        
 		        Label l4 = new Label();
 		        l4.setText("Escenarios de Calidad");
 		        l4.setFont(new Font("Arial", 24));
-		        grid.add(l4, 0, 20);
+		        grid.add(l4, 0, 30);
 		        
-		        grid.add(buttonAgregar, 1,20);
+		        Label l5 = new Label();
+		        l5.setText("Propiedades");
+		        l5.setFont(new Font("Arial", 24));
+		        grid.add(l5,7, 5);
+		        
+		        grid.add(botonEditarPropiedades, 7, 9);
+		        grid.add(buttonAgregar, 1,30);
+		        
+		        botonEditarPropiedades.setOnAction(new EventHandler<ActionEvent>() {
+		            @Override
+		            public void handle(ActionEvent e) {
+		            	ControladorAtributos.editarPropiedades();
+		            }
+		        });
 		        
 		        buttonAgregar.setOnAction(new EventHandler<ActionEvent>() {
 		            @Override
@@ -175,22 +195,17 @@ public class ControladorComponentes {
 		            	ControladorAtributos.agregarEscenario();
 		            }
 		        });
-		        
-		        grid.add(botonSiguienteSolucion, 6, 100);
-		        
-		        botonSiguienteSolucion.setOnAction(new EventHandler<ActionEvent>() {
+		        		        
+		        botonCerrarAtributos.setOnAction(new EventHandler<ActionEvent>() {
 		            @Override
 		            public void handle(ActionEvent e) {
-		    			try {
-		    				Parent root = FXMLLoader.load(getClass().getResource("Vista Solucion.fxml"));
-		    				Modelo.primaryStage.setScene(new Scene(root));
-		    				Modelo.primaryStage.show();
-		    			} catch(Exception e1) {
-		    				e1.printStackTrace();
-		    			}
+		            	Modelo.primaryStage.close();
 		            }}
 		        );
 		        
+		        botonCerrarAtributos.setLayoutX(650);
+		        botonCerrarAtributos.setLayoutY(500);
+		        root.getChildren().add(botonCerrarAtributos);
 		        
 		        Modelo.primaryStage.show();
 
@@ -199,6 +214,19 @@ public class ControladorComponentes {
 			}
 	}
 	
+
+	@FXML
+	public void siguienteHaciaSolucion(){
+		try {
+			Modelo.primaryStage.setTitle("Solución Arquitectura");
+			Parent root = FXMLLoader.load(getClass().getResource("/ui/Vista Solucion.fxml"));
+			Modelo.primaryStage.setScene(new Scene(root));
+			Modelo.primaryStage.show();
+			} catch(Exception e) {
+				e.printStackTrace();
+		}
+	}
+		
 	public static void agregarListaEscenario(){
 		
         Label l1 = new Label();
