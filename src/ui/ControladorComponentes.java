@@ -1,26 +1,30 @@
 package ui;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Optional;
 import javax.swing.JOptionPane;
 
 import core.EscenarioDeCalidad;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Labeled;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
@@ -32,10 +36,10 @@ import javafx.scene.text.Font;
 public class ControladorComponentes {
 	
 	private boolean salir = false;
-	private final ComboBox<String> atributosCalidad = new ComboBox<String>();
+	private final MenuButton atributosCalidad = new MenuButton("Atributo de calidad...");
 	private static String address = "";
 	private final TextField valorAtributo = new TextField("");
-	private final TextField nombreAtributo = new TextField("");
+	private final static TextField nombreAtributo = new TextField("");
 	private final Button buttonAgregar = new Button ("Agregar Escenario");
 	private final static Button buttonEditar = new Button ("Editar Escenario");
 	private final static Button buttonBorrar = new Button ("Borrar Escenario");
@@ -43,10 +47,10 @@ public class ControladorComponentes {
 	private final static Button botonSiguienteSolucion = new Button ("Siguiente");
 
 
-	Scene scene = new Scene(new Group(), 830, 550);
+	Scene scene = new Scene(new Group(), 850, 650);
 	static GridPane grid = new GridPane();
 	
-	final static Button botonGuardarEscenario = new Button ("Guardar");
+	final static Button button = new Button ("Guardar");
 	final static Label notification = new Label ();
 	final static TextField subject = new TextField("");
 	final static TextArea text = new TextArea ("");
@@ -93,7 +97,7 @@ public class ControladorComponentes {
 			    Group root = (Group)scene.getRoot();
 			    root.getChildren().add(grid);
 			    Modelo.primaryStage.setScene(scene);
-			    grid.setPadding(new Insets(6, 6, 6, 6));
+			    grid.setPadding(new Insets(20, 6, 6, 20));
 				
 		       
 		        Label l1 = new Label();
@@ -101,19 +105,113 @@ public class ControladorComponentes {
 		        l1.setFont(new Font("Arial", 24));
 		        grid.add(l1, 0, 5);
 		        
+		        Label labelElegirAtributos = new Label();
+		        labelElegirAtributos.setText("Elija un atributo de calidad:");
+		        labelElegirAtributos.setFont(new Font("Arial", 14));
+		        grid.add(labelElegirAtributos, 0, 7);
+		        
+		        ObservableList<MenuItem> list = FXCollections.observableArrayList();
+
+		        MenuItem item1 = new MenuItem("Performance");
+		        MenuItem item2 = new MenuItem("Seguridad");
+		        MenuItem item3 = new MenuItem("Modificabilidad");
+		        MenuItem item4 = new MenuItem("Testability");
+		        MenuItem item5 = new MenuItem("Disponibilidad");
+		        MenuItem item6 = new MenuItem("Usabilidad");
+		        
+		        item1.setOnAction(new EventHandler<ActionEvent>() {
+		            @Override
+		            public void handle(ActionEvent actionEvent) {
+		            	ControladorComponentes.cambiarAtributo("Performance");
+		            	atributosCalidad.setText("Performance");
+		            }
+		        });
+		        
+		        item2.setOnAction(new EventHandler<ActionEvent>() {
+		            @Override
+		            public void handle(ActionEvent actionEvent) {
+		            	ControladorComponentes.cambiarAtributo("Seguridad");
+		            	atributosCalidad.setText("Seguridad");
+		            }
+		        });
+		        
+		        item3.setOnAction(new EventHandler<ActionEvent>() {
+		            @Override
+		            public void handle(ActionEvent actionEvent) {
+		            	ControladorComponentes.cambiarAtributo("Modificabilidad");
+		            	atributosCalidad.setText("Modificabilidad");
+		            }
+		        });
+		        
+		        item4.setOnAction(new EventHandler<ActionEvent>() {
+		            @Override
+		            public void handle(ActionEvent actionEvent) {
+		            	ControladorComponentes.cambiarAtributo("Testability");
+		            	atributosCalidad.setText("Testability");
+		            }
+		        });
+		        
+		        item5.setOnAction(new EventHandler<ActionEvent>() {
+		            @Override
+		            public void handle(ActionEvent actionEvent) {
+		            	ControladorComponentes.cambiarAtributo("Disponibilidad");
+		            	atributosCalidad.setText("Disponibilidad");
+		            }
+		        });
+		        
+		        item6.setOnAction(new EventHandler<ActionEvent>() {
+		            @Override
+		            public void handle(ActionEvent actionEvent) {
+		            	ControladorComponentes.cambiarAtributo("Usabilidad");
+		            	atributosCalidad.setText("Usabilidad");
+		            }
+		        });
+		        
+		        
+		        list.addAll(item1,item2,item3,item4,item5,item6);
+		        atributosCalidad.getItems().addAll(list);
+		        //root.getChildren().addAll(atributosCalidad,button);
+		        /*
+		        atributosCalidad.setOnAction(new EventHandler<ActionEvent>() {
+		            @Override
+		            public void handle(ActionEvent actionEvent) {
+		            	String elegido = "";
+		                for(MenuItem item : atributosCalidad.getItems()) {
+		                    MenuItem checkMenuItem = (MenuItem) item;
+		                    if(checkMenuItem.isSelected()) {
+		                        elegido = checkMenuItem.getText();
+		                    }
+		                }
+		                
+		                nombreAtributo.setText(elegido);
+		            	Modelo.nombreAtributo = elegido;
+		            	ControladorComponentes.borrarBotonesEscenarios();
+		            	Modelo.numero = 1;
+		            	Modelo.listaBotones = Modelo.hashAtributos.get(Modelo.nombreAtributo);
+		            	if(Modelo.listaBotones != null){
+			            	ControladorComponentes.generarBotonesEscenarios();
+		            	}
+		            	else{
+		            		Modelo.listaBotones = new ArrayList<ArrayList<Labeled>>();
+		            	}
+		            }
+		        });
+		        
+
 		        atributosCalidad.setPromptText("Atributos de Calidad:");
 		        atributosCalidad.setEditable(true);        
 		        atributosCalidad.valueProperty().addListener((ChangeListener<String>) (ov, t, t1) -> address = t1);
-		        
+		        */
 		      //ComboBox AtributosCalidad
-		        atributosCalidad.getItems().addAll(
+		        /*atributosCalidad.getItems().addAll(
 		            "Performance",
 		            "Seguridad",
 		            "Modificabilidad",
 		            "Testability",
 		            "Disponibilidad",
 		            "Usabilidad"
-		        );
+		        );*/
+		        
 		        
 		        grid.add(atributosCalidad, 0, 9);
 		        
@@ -129,29 +227,11 @@ public class ControladorComponentes {
 		        nombreAtributo.setDisable(true);
 		        grid.add(nombreAtributo, 5, 5);
 		        
-		        atributosCalidad.setOnAction(new EventHandler<ActionEvent>() {
-		            @Override
-		            public void handle(ActionEvent e) {
-		            	nombreAtributo.setText(atributosCalidad.getValue());
-		            	Modelo.nombreAtributo = atributosCalidad.getValue();
-		            	ControladorComponentes.borrarBotonesEscenarios();
-		            	Modelo.numero = 1;
-		            	Modelo.listaBotones = Modelo.hashAtributos.get(Modelo.nombreAtributo);
-		            	if(Modelo.listaBotones != null){
-			            	ControladorComponentes.generarBotonesEscenarios();
-		            	}
-		            	else{
-		            		Modelo.listaBotones = new ArrayList<ArrayList<Labeled>>();
-		            	}
-		            }
-		          }
-		        );
-		        
 		        valorAtributo.setOnAction(new EventHandler<ActionEvent>() {
 		            @Override
 		            public void handle(ActionEvent e) {
-		            	if ((atributosCalidad.getValue() != null && !atributosCalidad.getValue().toString().isEmpty())){
-		            		nombreAtributo.setText(atributosCalidad.getValue() + ": " + valorAtributo.getText());
+		            	if ((Modelo.nombreAtributo != null && !Modelo.nombreAtributo.toString().isEmpty())){
+		            		nombreAtributo.setText(Modelo.nombreAtributo + ": " + valorAtributo.getText());
 		            		valorAtributo.clear();
 		            	}
 		            }
@@ -176,20 +256,24 @@ public class ControladorComponentes {
 		            }
 		        });
 		        
-		        grid.add(botonSiguienteSolucion, 6, 100);
+		        grid.add(botonSiguienteSolucion, 6, 120);
 		        
 		        botonSiguienteSolucion.setOnAction(new EventHandler<ActionEvent>() {
 		            @Override
 		            public void handle(ActionEvent e) {
-		    			try {
-		    				Parent root = FXMLLoader.load(getClass().getResource("Vista Solucion.fxml"));
-		    				Modelo.primaryStage.setScene(new Scene(root));
-		    				Modelo.primaryStage.show();
-		    			} catch(Exception e1) {
-		    				e1.printStackTrace();
-		    			}
-		            }}
-		        );
+		            	
+		            	Modelo.secondaryStage.setTitle("Trabajo Diseño Final");
+						Modelo.secondaryStage.getIcons().add(new Image("file:resources/imagen/icono.png"));
+						
+						Scene scene = new Scene(new Group(), 850, 650);
+						GridPane grid = new GridPane();;
+						
+				        Group root = (Group)scene.getRoot();
+				        root.getChildren().add(grid);
+				        Modelo.secondaryStage.setScene(scene);
+				        Modelo.secondaryStage.show();
+		            }
+		        });
 		        
 		        
 		        Modelo.primaryStage.show();
@@ -363,7 +447,7 @@ public class ControladorComponentes {
         valorAmbienteComboBox.setEditable(true);        
         valorAmbienteComboBox.valueProperty().addListener((ChangeListener<String>) (ov, t, t1) -> address = t1);
         
-        botonGuardarEscenario.setOnAction(new EventHandler<ActionEvent>() {
+        button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
                 if ((valorEstimuloComboBox.getValue() != null && !valorEstimuloComboBox.getValue().toString().isEmpty()) &&
@@ -409,7 +493,7 @@ public class ControladorComponentes {
         grid.add(valorArtefactoAfectadoComboBox, 1,6);
         grid.add(new Label("Ambiente: "), 0, 7);
         grid.add(valorAmbienteComboBox, 1,7);
-        grid.add(botonGuardarEscenario, 0,13);
+        grid.add(button, 0,13);
         grid.add (notification, 1,13, 13, 1);
 
         Group root = (Group)scene.getRoot();
@@ -447,4 +531,18 @@ public class ControladorComponentes {
 	@FXML
 	private void eliminarComponente(){
 	}
+	
+	private static void cambiarAtributo(String elegido){
+        nombreAtributo.setText(elegido);
+    	Modelo.nombreAtributo = elegido;
+    	ControladorComponentes.borrarBotonesEscenarios();
+    	Modelo.numero = 1;
+    	Modelo.listaBotones = Modelo.hashAtributos.get(Modelo.nombreAtributo);
+    	if(Modelo.listaBotones != null){
+        	ControladorComponentes.generarBotonesEscenarios();
+    	}
+    	else{
+    		Modelo.listaBotones = new ArrayList<ArrayList<Labeled>>();
+    	}
+    }
 }
