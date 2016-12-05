@@ -41,6 +41,7 @@ public class ControladorAtributos {
 	@FXML private TableColumn<Contact, String> columnaEstimulo = new TableColumn<>("Estimulo");
 	
 	final static Button button = new Button ("Guardar");
+	final static Button botonGuardarPropiedades = new Button("Guardar");
 	final static Label notification = new Label ();
 	final static TextField subject = new TextField("");
 	final static TextArea text = new TextArea ("");
@@ -108,14 +109,33 @@ public class ControladorAtributos {
 	}
 	
 	@FXML
-	public void siguienteHaciaSolucion(){
-			try {
-				Parent root = FXMLLoader.load(getClass().getResource("Vista Solucion.fxml"));
-				Modelo.primaryStage.setScene(new Scene(root));
-				Modelo.primaryStage.show();
-			} catch(Exception e) {
-				e.printStackTrace();
-			}
+	public static void editarPropiedades(){
+		Modelo.propiedades.setTitle("Editar Propiedades del Conector: " + Modelo.nombreAtributo);
+		Modelo.propiedades.getIcons().add(new Image("file:resources/imagen/icono.png"));
+		
+		Scene scene = new Scene(new Group(), 500, 300);
+		
+        botonGuardarPropiedades.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+            	notification.setText("Las propiedades se han guardado con éxito");                        
+                subject.clear();
+                text.clear();
+            }
+        });
+        
+        GridPane grid = new GridPane();
+        grid.setVgap(4);
+        grid.setHgap(10);
+        grid.setPadding(new Insets(6, 6, 6, 6));
+        grid.add(botonGuardarPropiedades,0,25);
+        grid.add (notification, 1,25, 25, 1);
+        
+        Group root = (Group)scene.getRoot();
+        root.getChildren().add(grid);
+        Modelo.propiedades.setScene(scene);
+        Modelo.propiedades.show();
+		
 	}
 	
 	@FXML
