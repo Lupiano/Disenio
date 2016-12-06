@@ -11,7 +11,7 @@ public class Conector {
 	private String componenteDestino;
 	
 	//Atributos de calidad.
-	private Hashtable<String,Integer> atributosCalidad = new Hashtable<String,Integer>();
+	private Hashtable<String,Float> atributosCalidad = new Hashtable<String,Float>();
 	
 	//Escenarios de calidad por cada atributo.
 	private Hashtable<String, Hashtable<String, EscenarioDeCalidad>> escenariosCalidad = new Hashtable<String,Hashtable<String, EscenarioDeCalidad>>();
@@ -41,11 +41,11 @@ public class Conector {
 		this.componenteDestino = componenteDestino;
 	}
 
-	public Hashtable<String, Integer> getAtributosCalidad() {
+	public Hashtable<String, Float> getAtributosCalidad() {
 		return atributosCalidad;
 	}
 
-	public void setAtributosCalidad(Hashtable<String, Integer> atributosCalidad) {
+	public void setAtributosCalidad(Hashtable<String, Float> atributosCalidad) {
 		this.atributosCalidad = atributosCalidad;
 	}
 

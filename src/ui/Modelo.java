@@ -17,10 +17,13 @@ public class Modelo {
 	public static Stage primaryStage = new Stage();
 	public static Stage secondaryStage = new Stage();
 	public static int numero = 1;
-	public static int fila = 34;
+	public static int fila = 37;
 	public static int columna = 0;
 	public static int numeroId = 0;
 	public static Scene scene;
+	public static boolean hayNombreConector = false;
+	public static boolean hayNombreOrigen= false;
+	public static boolean hayNombreDestino = false;
 
 	
 	public static Conector conectorActual = new Conector();

@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.Optional;
 import javax.swing.JOptionPane;
 
+
 import core.EscenarioDeCalidad;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -18,30 +21,34 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Labeled;
 import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 
 
 public class ControladorComponentes {
 	
-	private boolean salir = false;
-	private final ComboBox<String> atributosCalidad = new ComboBox<String>();
+	private boolean salir = true;
+	private final MenuButton atributosCalidad = new MenuButton("Atributo de calidad...");
+	private final MenuButton atributosCalidadTradeOff = new MenuButton("Trade Off con...");
+	private final MenuButton tipoConector = new MenuButton("Tipo del conector...");
+	@FXML private MenuButton verConectores = new MenuButton();
+	
 	private static String address = "";
 	private final TextField valorAtributo = new TextField("");
 	private final TextField valorNombreConector = new TextField("");
-	private final TextField nombreAtributo = new TextField("");
+	private final static TextField nombreAtributo = new TextField("");
 	private final Button buttonAgregar = new Button ("Agregar Escenario");
-	private final static Button buttonEditar = new Button ("Editar Escenario");
-	private final static Button buttonBorrar = new Button ("Borrar Escenario");
 	private final static Button idAgregarComponente = new Button();
 	private final static Button botonCerrarAtributos = new Button ("Guardar Edición");
 
@@ -49,9 +56,12 @@ public class ControladorComponentes {
 	Scene scene = new Scene(new Group(), 800, 600);
 	static GridPane grid = new GridPane();
 	
+	final static CheckBox tradeOff = new CheckBox("Trade off");
+	final static Button botonAgregarAtributo = new Button("Agregar Atributo");
 	final static Button botonGuardarConector = new Button("Guardar");
 	final static Button botonGuardarEscenario = new Button ("Guardar");
 	final static Button botonEditarPropiedades = new Button ("Editar Propiedades");
+	
 	final static Label notification = new Label ();
 	final static TextField subject = new TextField("");
 	final static TextArea text = new TextArea ("");
@@ -99,7 +109,7 @@ public class ControladorComponentes {
 			    Group root = (Group)scene.getRoot();
 			    root.getChildren().add(grid);
 			    Modelo.primaryStage.setScene(scene);
-			    grid.setPadding(new Insets(6, 6, 6, 6));
+			    grid.setPadding(new Insets(20, 6, 6, 20));
 				
 		       
 		        Label l1 = new Label();
@@ -107,43 +117,123 @@ public class ControladorComponentes {
 		        l1.setFont(new Font("Arial", 24));
 		        grid.add(l1, 0, 5);
 		        
-		        atributosCalidad.setPromptText("Atributos de Calidad:");
-		        atributosCalidad.setEditable(true);        
-		        atributosCalidad.valueProperty().addListener((ChangeListener<String>) (ov, t, t1) -> address = t1);
+		        Label labelElegirAtributos = new Label();
+		        labelElegirAtributos.setText("Elija un atributo de calidad:");
+		        labelElegirAtributos.setFont(new Font("Arial", 14));
+		        grid.add(labelElegirAtributos, 0, 7);
 		        
-		      //ComboBox AtributosCalidad
-		        atributosCalidad.getItems().addAll(
-		            "Performance",
-		            "Seguridad",
-		            "Modificabilidad",
-		            "Testability",
-		            "Disponibilidad",
-		            "Usabilidad"
-		        );
+		        ObservableList<MenuItem> list = FXCollections.observableArrayList();
+
+		        MenuItem item1 = new MenuItem("Performance");
+		        MenuItem item2 = new MenuItem("Seguridad");
+		        MenuItem item3 = new MenuItem("Modificabilidad");
+		        MenuItem item4 = new MenuItem("Testability");
+		        MenuItem item5 = new MenuItem("Disponibilidad");
+		        MenuItem item6 = new MenuItem("Usabilidad");
 		        
-		        grid.add(atributosCalidad, 0, 9);
+		        item1.setOnAction(new EventHandler<ActionEvent>() {
+		            @Override
+		            public void handle(ActionEvent actionEvent) {
+		            	ControladorComponentes.cambiarAtributo("Performance");
+		            	atributosCalidad.setText("Performance");
+		            	if(Modelo.conectorActual.getAtributosCalidad().get("Performance") != null){
+		            		valorAtributo.setText(Float.toString(Modelo.conectorActual.getAtributosCalidad().get("Performance")));
+		            	}
+		            	else{
+		            		valorAtributo.setText("0");
+		            	}
+		            }
+		        });
 		        
-		        Label l2 = new Label();
-		        l2.setText("Valor");
-		        l2.setFont(new Font("Arial", 24));
-		        grid.add(l2, 0, 18);
+		        item2.setOnAction(new EventHandler<ActionEvent>() {
+		            @Override
+		            public void handle(ActionEvent actionEvent) {
+		            	ControladorComponentes.cambiarAtributo("Seguridad");
+		            	atributosCalidad.setText("Seguridad");
+		            	if(Modelo.conectorActual.getAtributosCalidad().get("Seguridad") != null){
+		            		valorAtributo.setText(Float.toString(Modelo.conectorActual.getAtributosCalidad().get("Seguridad")));
+		            	}
+		            	else{
+		            		valorAtributo.setText("0");
+		            	}
+		            }
+		        });
 		        
-		        valorAtributo.setPrefWidth(50);
-		        valorAtributo.setLayoutX(10);
-		        valorAtributo.setLayoutY(160);
-		        root.getChildren().add(valorAtributo);
+		        item3.setOnAction(new EventHandler<ActionEvent>() {
+		            @Override
+		            public void handle(ActionEvent actionEvent) {
+		            	ControladorComponentes.cambiarAtributo("Modificabilidad");
+		            	atributosCalidad.setText("Modificabilidad");
+		            	if(Modelo.conectorActual.getAtributosCalidad().get("Modificabilidad") != null){
+		            		valorAtributo.setText(Float.toString(Modelo.conectorActual.getAtributosCalidad().get("Modificabilidad")));
+		            	}
+		            	else{
+		            		valorAtributo.setText("0");
+		            	}
+		            }
+		        });
 		        
-		       // grid.add (valorAtributo, 0,20);
-		        /*nombreAtributo.setPrefWidth(250);
-		        nombreAtributo.setFont(new Font("Arial", 24));
-		        nombreAtributo.setDisable(true);
-		        grid.add(nombreAtributo, 5, 5);*/
+		        item4.setOnAction(new EventHandler<ActionEvent>() {
+		            @Override
+		            public void handle(ActionEvent actionEvent) {
+		            	ControladorComponentes.cambiarAtributo("Testability");
+		            	atributosCalidad.setText("Testability");
+		            	if(Modelo.conectorActual.getAtributosCalidad().get("Testability") != null){
+		            		valorAtributo.setText(Float.toString(Modelo.conectorActual.getAtributosCalidad().get("Testability")));
+		            	}
+		            	else{
+		            		valorAtributo.setText("0");
+		            	}
+		            }
+		        });
 		        
+		        item5.setOnAction(new EventHandler<ActionEvent>() {
+		            @Override
+		            public void handle(ActionEvent actionEvent) {
+		            	ControladorComponentes.cambiarAtributo("Disponibilidad");
+		            	atributosCalidad.setText("Disponibilidad");
+		            	if(Modelo.conectorActual.getAtributosCalidad().get("Disponibilidad") != null){
+		            		valorAtributo.setText(Float.toString(Modelo.conectorActual.getAtributosCalidad().get("Disponibilidad")));
+		            	}
+		            	else{
+		            		valorAtributo.setText("0");
+		            	}
+		            }
+		        });
+		        
+		        item6.setOnAction(new EventHandler<ActionEvent>() {
+		            @Override
+		            public void handle(ActionEvent actionEvent) {
+		            	ControladorComponentes.cambiarAtributo("Usabilidad");
+		            	atributosCalidad.setText("Usabilidad");
+		            	if(Modelo.conectorActual.getAtributosCalidad().get("Usabilidad") != null){
+		            		valorAtributo.setText(Float.toString(Modelo.conectorActual.getAtributosCalidad().get("Usabilidad")));
+		            	}
+		            	else{
+		            		valorAtributo.setText("0");
+		            	}
+		            }
+		        });
+		        
+		        
+		        list.addAll(item1,item2,item3,item4,item5,item6);
+		        atributosCalidad.getItems().addAll(list);
+	
+		        //root.getChildren().addAll(atributosCalidad,button);
+		        /*
 		        atributosCalidad.setOnAction(new EventHandler<ActionEvent>() {
 		            @Override
-		            public void handle(ActionEvent e) {
-		            	nombreAtributo.setText(atributosCalidad.getValue());
-		            	Modelo.nombreAtributo = atributosCalidad.getValue();
+		            public void handle(ActionEvent actionEvent) {
+		            	String elegido = "";
+		                for(MenuItem item : atributosCalidad.getItems()) {
+		                    MenuItem checkMenuItem = (MenuItem) item;
+		                    if(checkMenuItem.isSelected()) {
+		                        elegido = checkMenuItem.getText();
+		                    }
+		                }
+		                
+		                nombreAtributo.setText(elegido);
+		            	Modelo.nombreAtributo = elegido;
 		            	ControladorComponentes.borrarBotonesEscenarios();
 		            	Modelo.numero = 1;
 		            	Modelo.listaBotones = Modelo.hashAtributos.get(Modelo.nombreAtributo);
@@ -154,37 +244,79 @@ public class ControladorComponentes {
 		            		Modelo.listaBotones = new ArrayList<ArrayList<Labeled>>();
 		            	}
 		            }
-		          }
-		        );
+		        });
+		        
+
+		        atributosCalidad.setPromptText("Atributos de Calidad:");
+		        atributosCalidad.setEditable(true);        
+		        atributosCalidad.valueProperty().addListener((ChangeListener<String>) (ov, t, t1) -> address = t1);
+		        */
+		      //ComboBox AtributosCalidad
+		        /*atributosCalidad.getItems().addAll(
+		            "Performance",
+		            "Seguridad",
+		            "Modificabilidad",
+		            "Testability",
+		            "Disponibilidad",
+		            "Usabilidad"
+		        );*/
+		        
+		        
+		        
+		        Label l2 = new Label();
+		        l2.setText("Valor");
+		        l2.setFont(new Font("Arial", 24));
+		        grid.add(l2, 0, 18);
+		        
+		        Label labelElegirValor = new Label();
+		        labelElegirValor.setText("Elija un valor entre 0 y 1:");
+		        labelElegirValor.setFont(new Font("Arial", 14));
+		        grid.add(labelElegirValor, 0, 20);
+		        
+		        valorAtributo.setPrefWidth(50);
+		        valorAtributo.setLayoutX(20);
+		        valorAtributo.setLayoutY(200);
+		        root.getChildren().add(valorAtributo);
+		        
+		       // grid.add (valorAtributo, 0,20);
+		        /*nombreAtributo.setPrefWidth(250);
+		        nombreAtributo.setFont(new Font("Arial", 24));
+		        nombreAtributo.setDisable(true);
+		        grid.add(nombreAtributo, 5, 5);*/
 		        
 		        valorAtributo.setOnAction(new EventHandler<ActionEvent>() {
 		            @Override
 		            public void handle(ActionEvent e) {
-		            	if ((atributosCalidad.getValue() != null && !atributosCalidad.getValue().toString().isEmpty())){
-		            		nombreAtributo.setText(atributosCalidad.getValue() + ": " + valorAtributo.getText());
+		            	if ((Modelo.nombreAtributo != null && !Modelo.nombreAtributo.toString().isEmpty())){
+		            		nombreAtributo.setText(Modelo.nombreAtributo + ": " + valorAtributo.getText());
+		            		if(Modelo.conectorActual.getAtributosCalidad().get(Modelo.nombreAtributo) != null){
+		            			Modelo.conectorActual.getAtributosCalidad().replace(Modelo.nombreAtributo, Float.parseFloat((valorAtributo.getText())));
+		            		}
+		            		else {
+		            			Modelo.conectorActual.getAtributosCalidad().put(Modelo.nombreAtributo, Float.parseFloat(valorAtributo.getText()));
+		            		}
 		            	}
 		            }
-		        });
-		        
-		        Label l3 = new Label();
-		        l3.setText("(entre 0 y 1)");
-		        l3.setFont(new Font("Arial", 16));
-		        l3.setLayoutX(70);
-		        l3.setLayoutY(160);
-		        root.getChildren().add(l3);
+		         });
 		        
 		        Label l4 = new Label();
 		        l4.setText("Escenarios de Calidad");
 		        l4.setFont(new Font("Arial", 24));
-		        grid.add(l4, 0, 30);
+		        grid.add(l4, 0, 34);
 		        
 		        Label l5 = new Label();
 		        l5.setText("Propiedades");
 		        l5.setFont(new Font("Arial", 24));
-		        grid.add(l5,7, 5);
+		        l5.setLayoutX(600);
+		        l5.setLayoutY(40);
+		        root.getChildren().add(l5);
+		       
+		        grid.add(buttonAgregar, 1,34);
 		        
-		        grid.add(botonEditarPropiedades, 7, 9);
-		        grid.add(buttonAgregar, 1,30);
+		        botonEditarPropiedades.setLayoutX(600);
+		        botonEditarPropiedades.setLayoutY(90);
+		        root.getChildren().add(botonEditarPropiedades);
+		        
 		        
 		        botonEditarPropiedades.setOnAction(new EventHandler<ActionEvent>() {
 		            @Override
@@ -207,6 +339,132 @@ public class ControladorComponentes {
 		            }}
 		        );
 		        
+		        atributosCalidad.setPrefWidth(150);
+		        atributosCalidad.setLayoutX(10);
+		        atributosCalidad.setLayoutY(98);
+		        root.getChildren().add(atributosCalidad);
+
+		        
+		        botonAgregarAtributo.setLayoutX(170);
+		        botonAgregarAtributo.setLayoutY(98);
+		        root.getChildren().add(botonAgregarAtributo);
+		        
+		        tradeOff.setLayoutX(290);
+		        tradeOff.setLayoutY(100);
+		        root.getChildren().add(tradeOff);
+		        
+		        tradeOff.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent e) {
+						//Trade off
+						atributosCalidadTradeOff.setLayoutX(370);
+						atributosCalidadTradeOff.setLayoutY(97);
+						atributosCalidadTradeOff.setPrefWidth(150);
+						root.getChildren().add(atributosCalidadTradeOff);
+						
+						ObservableList<MenuItem> list = FXCollections.observableArrayList();
+
+				        MenuItem nuevoitem1 = new MenuItem("Performance");
+				        MenuItem nuevoitem2 = new MenuItem("Seguridad");
+				        MenuItem nuevoitem3 = new MenuItem("Modificabilidad");
+				        MenuItem nuevoitem4 = new MenuItem("Testability");
+				        MenuItem nuevoitem5 = new MenuItem("Disponibilidad");
+				        MenuItem nuevoitem6 = new MenuItem("Usabilidad");
+				        
+				        list.addAll(nuevoitem1,nuevoitem2,nuevoitem3,nuevoitem4,nuevoitem5,nuevoitem6);
+				        atributosCalidadTradeOff.getItems().addAll(list);
+						
+				        nuevoitem1.setOnAction(new EventHandler<ActionEvent>() {
+				            @Override
+				            public void handle(ActionEvent actionEvent) {
+				            	atributosCalidadTradeOff.setText("Performance");
+				            }
+				        });
+				        
+				        nuevoitem2.setOnAction(new EventHandler<ActionEvent>() {
+				            @Override
+				            public void handle(ActionEvent actionEvent) {
+				            	atributosCalidadTradeOff.setText("Seguridad");
+				            }
+				        });
+				        
+				        nuevoitem3.setOnAction(new EventHandler<ActionEvent>() {
+				            @Override
+				            public void handle(ActionEvent actionEvent) {
+				            	atributosCalidadTradeOff.setText("Modificabilidad");
+				            }
+				        });
+				        
+				        nuevoitem4.setOnAction(new EventHandler<ActionEvent>() {
+				            @Override
+				            public void handle(ActionEvent actionEvent) {
+				            	atributosCalidadTradeOff.setText("Testability");
+				            }
+				        });
+				        
+				        nuevoitem5.setOnAction(new EventHandler<ActionEvent>() {
+				            @Override
+				            public void handle(ActionEvent actionEvent) {
+				            	atributosCalidadTradeOff.setText("Disponibilidad");
+				            }
+				        });
+				        
+				        nuevoitem6.setOnAction(new EventHandler<ActionEvent>() {
+				            @Override
+				            public void handle(ActionEvent actionEvent) {
+				            	atributosCalidadTradeOff.setText("Usabilidad");
+				            }
+				        });
+						
+					}	
+					
+		    	});
+		        
+		        botonAgregarAtributo.setOnAction(new EventHandler<ActionEvent>() {
+
+					@Override
+					public void handle(ActionEvent e) {
+						//Se agrega el nuevo atributo de calidad ingresado por pantalla.
+						TextInputDialog dialog = new TextInputDialog("Atributo de Calidad");
+						dialog.setTitle("Ingrese el nombre del Atributo");
+						dialog.setContentText("Nombre:");
+						Optional<String> result = dialog.showAndWait();
+						if (result.isPresent()){
+							 
+							ObservableList<MenuItem> list = FXCollections.observableArrayList();
+							 MenuItem nuevo = new MenuItem(result.get());
+							 list.addAll(nuevo);
+						     atributosCalidad.getItems().addAll(list);
+						     
+							 ObservableList<MenuItem> list2 = FXCollections.observableArrayList();
+							 MenuItem nuevo2 = new MenuItem(result.get());
+							 list.addAll(nuevo2);
+							 atributosCalidadTradeOff.getItems().addAll(list2);
+						     
+						     
+						     nuevo.setOnAction(new EventHandler<ActionEvent>() {
+						     @Override
+						            public void handle(ActionEvent actionEvent) {
+						            	ControladorComponentes.cambiarAtributo(result.get());
+						            	atributosCalidad.setText(result.get());
+						            	if(Modelo.conectorActual.getAtributosCalidad().get(result.get()) != null){
+						            		valorAtributo.setText(Float.toString(Modelo.conectorActual.getAtributosCalidad().get(result.get())));
+						            	}
+						            	else{
+						            		valorAtributo.setText("0");
+						            	}
+						            }
+						     });
+						     
+						     
+						}
+						else 
+							System.out.println("Debe ingresar un nombre");
+					}
+					
+		    	});
+		        
+
 		        botonCerrarAtributos.setLayoutX(650);
 		        botonCerrarAtributos.setLayoutY(500);
 		        root.getChildren().add(botonCerrarAtributos);
@@ -269,7 +527,6 @@ public class ControladorComponentes {
     	});
     	
     	buttonEditar.setOnAction(new EventHandler<ActionEvent>() {
-
 			@Override
 			public void handle(ActionEvent e) {
 				//Se obtiene el escenario de calidad que corresponde a este boton.
@@ -478,17 +735,6 @@ public class ControladorComponentes {
 		
 		Scene scene = new Scene(new Group(), 400, 250);
 		
-        botonGuardarConector.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-            	notification.setText("El conector se ha guardado con éxito");                        
-                subject.clear();
-                text.clear();
-            }
-        });
-        
-        
-        
         GridPane grid = new GridPane();
         grid.setVgap(4);
         grid.setHgap(10);
@@ -505,21 +751,102 @@ public class ControladorComponentes {
         
         TextField valorNombreConector = new TextField();
         valorNombreConector.setPrefWidth(180);
-          valorNombreConector.setFont(new Font("Arial", 18));
+        valorNombreConector.setFont(new Font("Arial", 18));
         valorNombreConector.setLayoutX(190);
         valorNombreConector.setLayoutY(35);
         root.getChildren().add(valorNombreConector);
         
+        valorNombreConector.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+            	Modelo.hayNombreConector = true;	
+            }
+        });
         
         Label l2 = new Label();
+        l2.setText("");
         l2.setText("Tipo del conector: ");
         l2.setFont(new Font("Arial", 18));
         l2.setLayoutX(10);
         l2.setLayoutY(80);
         root.getChildren().add(l2);
         
+        ObservableList<MenuItem> list = FXCollections.observableArrayList();
+
+        MenuItem item1 = new MenuItem("Procedure Call");
+        MenuItem item2 = new MenuItem("Event");
+        MenuItem item3 = new MenuItem("Data Access");
+        MenuItem item4 = new MenuItem("Linkage");
+        MenuItem item5 = new MenuItem("Stream");
+        MenuItem item6 = new MenuItem("Arbitator");
+        MenuItem item7 = new MenuItem("Adaptor");
+        MenuItem item8 = new MenuItem("Distributor");
         
+        list.addAll(item1,item2,item3,item4,item5,item6,item7,item8);
+        tipoConector.getItems().addAll(list);
         
+        tipoConector.setLayoutX(190);
+        tipoConector.setLayoutY(75);
+        tipoConector.setPrefWidth(180);
+        root.getChildren().add(tipoConector);
+       
+        
+        item1.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+            	tipoConector.setText("Procedure Call");
+            }
+        });
+        
+        item2.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+            	tipoConector.setText("Event");
+            }
+        });
+        
+        item3.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+            	tipoConector.setText("Data Access");
+            }
+        });
+        
+        item4.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+            	tipoConector.setText("Linkage");
+            }
+        });
+        
+        item5.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+            	tipoConector.setText("Stream");
+            }
+        });
+        
+        item6.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+            	tipoConector.setText("Arbitator");
+            }
+        });
+        
+        item7.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+            	tipoConector.setText("Adaptor");
+            }
+        });
+        
+        item8.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+            	tipoConector.setText("Distributor");
+            }
+        });
+
         Label l3 = new Label();
         l3.setText("Componente Origen: ");
         l3.setFont(new Font("Arial", 18));
@@ -533,6 +860,14 @@ public class ControladorComponentes {
         valorOrigenConector.setLayoutX(190);
         valorOrigenConector.setLayoutY(110);
         root.getChildren().add(valorOrigenConector);
+        
+        
+        valorOrigenConector.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+            	Modelo.hayNombreOrigen = true;	
+            }
+        });
         
         Label l4 = new Label();
         l4.setText("Componente Destino: ");
@@ -548,20 +883,83 @@ public class ControladorComponentes {
         valorDestinoConector.setLayoutY(150);
         root.getChildren().add(valorDestinoConector);
         
+        valorDestinoConector.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+            	Modelo.hayNombreDestino = true;	
+            }
+        });
+        
         botonGuardarConector.setLayoutX(300);
         botonGuardarConector.setLayoutY(200);
-        root.getChildren().add(botonGuardarConector);
+        root.getChildren().add(botonGuardarConector); 
+        
+        botonGuardarConector.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {            	
+            	if (Modelo.hayNombreConector && (tipoConector.getText()!= "Tipo del conector...")
+            			&& Modelo.hayNombreDestino && Modelo.hayNombreOrigen){
+	            	notification.setText("El conector se ha guardado con éxito");
+	            	
+	            	//Agrego en la lista de Conectores disponibles
+	            	ObservableList<MenuItem> list = FXCollections.observableArrayList();
+	                MenuItem conector = new MenuItem(valorNombreConector.getText());
+	                list.addAll(conector);
+	                verConectores.getItems().addAll(list);
+	                
+	                conector.setOnAction(new EventHandler<ActionEvent>() {
+	                    @Override
+	                    public void handle(ActionEvent e) {
+	                    	verConectores.setText(conector.getText());
+	                    }
+	                });
+	                
+	                
+	                //Limpio botones
+	                valorNombreConector.clear();
+	                tipoConector.setText("Tipo del conector...");
+	                valorOrigenConector.clear();
+	                valorDestinoConector.clear();
+	                Modelo.hayNombreConector = false;
+	                Modelo.hayNombreDestino = false;
+	                Modelo.hayNombreOrigen = false;
+	                
+            	}
+            	else
+            		notification.setText("Debes completar todos los campos");
+            }
+        });
         
         notification.setLayoutX(70);
         notification.setLayoutY(205);
         root.getChildren().add(notification);
+        notification.setText("");
         
 
         Modelo.conector.setScene(scene);
         Modelo.conector.show();
 	}
+		
+	@FXML
+	private void editarConector(){
+		siguienteHaciaAtributos();
+	}
 	
 	@FXML
 	private void eliminarComponente(){
 	}
+	
+	private static void cambiarAtributo(String elegido){
+        nombreAtributo.setText(elegido);
+    	Modelo.nombreAtributo = elegido;
+    	ControladorComponentes.borrarBotonesEscenarios();
+    	Modelo.numero = 1;
+    	Modelo.listaBotones = Modelo.hashAtributos.get(Modelo.nombreAtributo);
+    	if(Modelo.listaBotones != null){
+        	ControladorComponentes.generarBotonesEscenarios();
+    	}
+    	else{
+    		Modelo.listaBotones = new ArrayList<ArrayList<Labeled>>();
+    	}
+    }
 }
