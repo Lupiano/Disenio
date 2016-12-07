@@ -12,6 +12,7 @@ public class Modelo {
 	public static String atribActual = "";
 	public static String nombreAtributo = "";
 	public static Stage escenario = new Stage();
+	public static Stage conector = new Stage();
 	public static Stage propiedades = new Stage();
 	public static Stage primaryStage = new Stage();
 	public static Stage secondaryStage = new Stage();
@@ -20,6 +21,9 @@ public class Modelo {
 	public static int columna = 0;
 	public static int numeroId = 0;
 	public static Scene scene;
+	public static boolean hayNombreConector = false;
+	public static boolean hayNombreOrigen= false;
+	public static boolean hayNombreDestino = false;
 
 	
 	public static Conector conectorActual = new Conector();
