@@ -1,11 +1,12 @@
 package ui;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
-
-
 import core.EscenarioDeCalidad;
+import core.Propiedades;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
@@ -14,6 +15,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Parent;
@@ -29,15 +31,15 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 
-public class ControladorComponentes {
+public class ControladorComponentes implements Initializable{
 	
 	private boolean salir = true;
 	private final MenuButton atributosCalidad = new MenuButton("Atributo de calidad...");
@@ -45,38 +47,39 @@ public class ControladorComponentes {
 	private final Button botonAgregarAtributo = new Button ("Agregar");
 	private final MenuButton atributosCalidadTradeOff = new MenuButton("Trade Off con...");
 	private final MenuButton tipoConector = new MenuButton("Tipo del conector...");
+	
 	@FXML private MenuButton verConectores = new MenuButton();
 
 	private static String address = "";
 	private final TextField valorAtributo = new TextField("");
-	private final TextField valorNombreConector = new TextField("");
 	private final static TextField nombreAtributo = new TextField("");
-	private final Button buttonAgregar = new Button ("Agregar Escenario");
-	private final static Button idAgregarComponente = new Button();
+	private final Button botonAgregarEscenario = new Button ("Agregar Escenario");
 	private final static Button botonCerrarAtributos = new Button ("Guardar Edición");
-
-
-	Scene scene = new Scene(new Group(), 800, 600);
+	
+	Scene scene = new Scene(new Group(), 930, 600);
 	static GridPane grid = new GridPane();
 	
 	private final CheckBox tradeOff = new CheckBox("Trade off");
 	private final Button botonGuardarConector = new Button("Guardar");
 	private static final Button botonGuardarEscenario = new Button ("Guardar");
-	private final Button botonEditarPropiedades = new Button ("Editar Propiedades");
+	private Button botonAgregarPropiedades = new Button ("Agregar Propiedades");
 	
 	final static Label notification = new Label ();
 	final static TextField subject = new TextField("");
 	final static TextArea text = new TextArea ("");
 	
-    
 	private static ComboBox<String> valorEstimuloComboBox = new ComboBox<String>();
     private static ComboBox<String> valorRespuestaComboBox = new ComboBox<String>();
     private static ComboBox<String> valorFuenteComboBox = new ComboBox<String>();
     private static ComboBox<String> valorAmbienteComboBox = new ComboBox<String>();
     private static ComboBox<String> valorMedidaRespuestaComboBox = new ComboBox<String>();
     private static ComboBox<String> valorArtefactoAfectadoComboBox = new ComboBox<String>();
-  
+    @FXML private AnchorPane idPanelConectores;
 	
+    @Override
+    public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
+    }
+    
 	@FXML
 	private void salir(){
 		Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -95,14 +98,13 @@ public class ControladorComponentes {
 	
 	@FXML
 	private void siguienteHaciaAtributos(){
+		
 		if (salir == false){
 			JOptionPane.showMessageDialog(null, "Error: Debe llenar al menos un componente");
 			System.out.println("Entraaa en siguiente");
 		}
 		else
 			try {
-				/*Parent root = FXMLLoader.load(getClass().getResource("Vista Atributos Calidad.fxml"));
-				Modelo.primaryStage.setScene(new Scene(root));*/
 				Modelo.primaryStage.setTitle("Editar Conector");
 				Modelo.primaryStage.getIcons().add(new Image("file:resources/imagen/icono.png"));
 				
@@ -113,7 +115,6 @@ public class ControladorComponentes {
 			    Modelo.primaryStage.setScene(scene);
 			    grid.setPadding(new Insets(20, 6, 6, 20));
 				
-		       
 		        Label l1 = new Label();
 		        l1.setText("Atributos de Calidad");
 		        l1.setFont(new Font("Arial", 24));
@@ -215,13 +216,11 @@ public class ControladorComponentes {
 		            		valorAtributo.setText("0");
 		            	}
 		            }
-		        });
-		        
+		        });  
 		        
 		        list.addAll(item1,item2,item3,item4,item5,item6);
 		        atributosCalidad.getItems().addAll(list);
 
-		        
 		        grid.add(atributosCalidad, 0, 9);
 		        
 		        botonAgregarAtributo.setPrefWidth(60);
@@ -239,17 +238,20 @@ public class ControladorComponentes {
 		        Label l2 = new Label();
 		        l2.setText("Valor");
 		        l2.setFont(new Font("Arial", 24));
-		        grid.add(l2, 0, 18);
+		        l2.setLayoutX(20);
+		        l2.setLayoutY(180);
+		        root.getChildren().add(l2);
 		        
 		        Label labelElegirValor = new Label();
 		        labelElegirValor.setText("Elija un valor entre 0 y 1:");
 		        labelElegirValor.setFont(new Font("Arial", 14));
-
-		        grid.add(labelElegirValor, 0, 26);
+		        labelElegirValor.setLayoutX(20);
+		        labelElegirValor.setLayoutY(210);
+		        root.getChildren().add(labelElegirValor);
 		        
 		        valorAtributo.setPrefWidth(50);
 		        valorAtributo.setLayoutX(20);
-		        valorAtributo.setLayoutY(240);
+		        valorAtributo.setLayoutY(230);
 		        root.getChildren().add(valorAtributo);
 		        
 		        valorAtributo.setOnAction(new EventHandler<ActionEvent>() {
@@ -264,37 +266,68 @@ public class ControladorComponentes {
 		            			Modelo.conectorActual.getAtributosCalidad().put(Modelo.nombreAtributo, Float.parseFloat(valorAtributo.getText()));
 		            		}
 		            	}
+				        tradeOff.setLayoutX(180);
+				        tradeOff.setLayoutY(100);
+				        root.getChildren().add(tradeOff);
+				        		        
+				        tradeOff.setOnAction(new EventHandler<ActionEvent>() {
+							@Override
+							public void handle(ActionEvent e) {
+								//Trade off
+								
+								if (tradeOff.isSelected()){
+									
+									atributosCalidadTradeOff.setLayoutX(260);
+									atributosCalidadTradeOff.setLayoutY(97);
+									atributosCalidadTradeOff.setPrefWidth(150);
+									root.getChildren().add(atributosCalidadTradeOff);
+			        		
+					        		for(String s: Modelo.conectorActual.getAtributosCalidad().keySet()){
+					        			MenuItem item = new MenuItem(s);
+					        			item.setOnAction(new EventHandler<ActionEvent>() {
+					        	            @Override
+					        	            public void handle(ActionEvent actionEvent) {
+					        	            	atributosCalidadTradeOff.setText(s);
+					        	            }
+					        			});
+					        		}
+								}
+								else
+									root.getChildren().remove(atributosCalidadTradeOff);
+							}});
 		            }
 		         });
 		        
-		        Label l4 = new Label();
-		        l4.setText("Escenarios de Calidad");
-		        l4.setFont(new Font("Arial", 24));
-
-		        grid.add(l4, 0, 38);
+		        Label escenariosCalidad = new Label();
+		        escenariosCalidad.setText("Escenarios de Calidad");
+		        escenariosCalidad.setFont(new Font("Arial", 24));
+		        escenariosCalidad.setLayoutX(20);
+		        escenariosCalidad.setLayoutY(270);
+		        root.getChildren().add(escenariosCalidad);
+		        
+		        botonAgregarEscenario.setLayoutX(270);
+		        botonAgregarEscenario.setLayoutY(270);
+		        root.getChildren().add(botonAgregarEscenario);
 		        
 		        Label l5 = new Label();
 		        l5.setText("Propiedades");
 		        l5.setFont(new Font("Arial", 24));
-		        l5.setLayoutX(600);
+		        l5.setLayoutX(500);
 		        l5.setLayoutY(40);
 		        root.getChildren().add(l5);
 		        
-		        botonEditarPropiedades.setLayoutX(600);
-		        botonEditarPropiedades.setLayoutY(90);
-		        root.getChildren().add(botonEditarPropiedades);
+		        botonAgregarPropiedades.setLayoutX(500);
+		        botonAgregarPropiedades.setLayoutY(90);
+		        root.getChildren().add(botonAgregarPropiedades);
 
-		        grid.add(botonEditarPropiedades, 7, 9);
-		        grid.add(buttonAgregar, 1,38);
-
-		        botonEditarPropiedades.setOnAction(new EventHandler<ActionEvent>() {
+		        botonAgregarPropiedades.setOnAction(new EventHandler<ActionEvent>() {
 		            @Override
 		            public void handle(ActionEvent e) {
-		            	ControladorAtributos.editarPropiedades();
+		            	ControladorAtributos.AgregarPropiedades();
 		            }
 		        });
 		        
-		        buttonAgregar.setOnAction(new EventHandler<ActionEvent>() {
+		        botonAgregarEscenario.setOnAction(new EventHandler<ActionEvent>() {
 		            @Override
 		            public void handle(ActionEvent e) {
 		            	ControladorAtributos.agregarEscenario();
@@ -309,82 +342,10 @@ public class ControladorComponentes {
 		        );
 		        
 		        atributosCalidad.setPrefWidth(150);
-		        atributosCalidad.setLayoutX(10);
+		        atributosCalidad.setLayoutX(20);
 		        atributosCalidad.setLayoutY(98);
 		        root.getChildren().add(atributosCalidad);
 		        
-		        tradeOff.setLayoutX(290);
-		        tradeOff.setLayoutY(100);
-		        root.getChildren().add(tradeOff);
-		        
-		        tradeOff.setOnAction(new EventHandler<ActionEvent>() {
-					@Override
-					public void handle(ActionEvent e) {
-						//Trade off
-						atributosCalidadTradeOff.setLayoutX(370);
-						atributosCalidadTradeOff.setLayoutY(97);
-						atributosCalidadTradeOff.setPrefWidth(150);
-						root.getChildren().add(atributosCalidadTradeOff);
-						
-						ObservableList<MenuItem> list = FXCollections.observableArrayList();
-
-				        MenuItem nuevoitem1 = new MenuItem("Performance");
-				        MenuItem nuevoitem2 = new MenuItem("Seguridad");
-				        MenuItem nuevoitem3 = new MenuItem("Modificabilidad");
-				        MenuItem nuevoitem4 = new MenuItem("Testability");
-				        MenuItem nuevoitem5 = new MenuItem("Disponibilidad");
-				        MenuItem nuevoitem6 = new MenuItem("Usabilidad");
-				        
-				        list.addAll(nuevoitem1,nuevoitem2,nuevoitem3,nuevoitem4,nuevoitem5,nuevoitem6);
-				        atributosCalidadTradeOff.getItems().addAll(list);
-						
-				        nuevoitem1.setOnAction(new EventHandler<ActionEvent>() {
-				            @Override
-				            public void handle(ActionEvent actionEvent) {
-				            	atributosCalidadTradeOff.setText("Performance");
-				            }
-				        });
-				        
-				        nuevoitem2.setOnAction(new EventHandler<ActionEvent>() {
-				            @Override
-				            public void handle(ActionEvent actionEvent) {
-				            	atributosCalidadTradeOff.setText("Seguridad");
-				            }
-				        });
-				        
-				        nuevoitem3.setOnAction(new EventHandler<ActionEvent>() {
-				            @Override
-				            public void handle(ActionEvent actionEvent) {
-				            	atributosCalidadTradeOff.setText("Modificabilidad");
-				            }
-				        });
-				        
-				        nuevoitem4.setOnAction(new EventHandler<ActionEvent>() {
-				            @Override
-				            public void handle(ActionEvent actionEvent) {
-				            	atributosCalidadTradeOff.setText("Testability");
-				            }
-				        });
-				        
-				        nuevoitem5.setOnAction(new EventHandler<ActionEvent>() {
-				            @Override
-				            public void handle(ActionEvent actionEvent) {
-				            	atributosCalidadTradeOff.setText("Disponibilidad");
-				            }
-				        });
-				        
-				        nuevoitem6.setOnAction(new EventHandler<ActionEvent>() {
-				            @Override
-				            public void handle(ActionEvent actionEvent) {
-				            	atributosCalidadTradeOff.setText("Usabilidad");
-				            }
-				        });
-						
-					}	
-					
-		    	});
-		        
-
 		        botonCerrarAtributos.setLayoutX(650);
 		        botonCerrarAtributos.setLayoutY(500);
 		        root.getChildren().add(botonCerrarAtributos);
@@ -408,6 +369,46 @@ public class ControladorComponentes {
 		}
 	}
 		
+	public static void agregarListaPropiedades(){
+		
+		ArrayList<Propiedades> lista = Modelo.conectorActual.getPropiedades();
+		
+		int filaPropiedad = 20;
+		
+		for(Propiedades p : lista){
+				Label l1 = new Label();
+				String nombredimensión = p.getDimension() + " ->";
+				l1.setText(nombredimensión);
+		        l1.setFont(new Font("Arial", 18));
+		        l1.setId(Integer.toString(Modelo.numeroIdPropiedad));
+		        grid.add(l1, 19, filaPropiedad);
+		        Modelo.numeroIdPropiedad ++;
+		        
+				Label l2 = new Label();
+		        String nombreSubdimension = p.getSubdimension() + " ->";
+		        l2.setText(nombreSubdimension);
+		        l2.setFont(new Font("Arial", 18)); 
+		        l2.setId(Integer.toString(Modelo.numeroIdPropiedad));
+		        grid.add(l2, 20, filaPropiedad);
+		        Modelo.numeroIdPropiedad ++;
+		        	        
+				Label l3 = new Label();
+		        String nombreValue = p.getValue();
+		        l3.setText(nombreValue);
+		        l3.setFont(new Font("Arial", 18)); 
+		        l3.setId(Integer.toString(Modelo.numeroIdPropiedad));
+		        grid.add(l3, 21, filaPropiedad);
+		        Modelo.numeroIdPropiedad ++;
+		        
+		        Button buttonBorrar = new Button ("Borrar");
+		        grid.add(buttonBorrar, 22, Modelo.filaPropiedad);
+		        
+		        filaPropiedad+=4;		        
+		}      
+        
+	}
+	
+		
 	public static void agregarListaEscenario(){
 		
         Label l1 = new Label();
@@ -418,15 +419,13 @@ public class ControladorComponentes {
         Modelo.numeroId ++;
 
     	Button buttonEditar = new Button ("Editar Escenario");
-    	
     	Button buttonBorrar = new Button ("Borrar Escenario");
+    	
     	buttonBorrar.setOnAction(new EventHandler<ActionEvent>() {
-
 			@Override
 			public void handle(ActionEvent e) {
 				
 				ArrayList<Labeled> aBorrar = new ArrayList<Labeled>();
-				
 				//Se borran todos los botones de la interfaz.
 				Modelo.fila -= Modelo.listaBotones.size() * 4;
 				for(ArrayList<Labeled> arr: Modelo.listaBotones){
@@ -436,11 +435,8 @@ public class ControladorComponentes {
 						aBorrar = arr;
 					}
 				}
-
 				Modelo.listaBotones.remove(aBorrar);
-				
 				generarBotonesEscenarios();
-				
 			}	
 			
     	});
@@ -469,8 +465,7 @@ public class ControladorComponentes {
         Modelo.hashAtributos.put(Modelo.nombreAtributo, Modelo.listaBotones);
         
         Modelo.numero++;
-        Modelo.fila+= 4;
-        
+        Modelo.fila+= 4; 
 	}
 	
 	private static void editarEscenario(ArrayList<String> valores, String id){
@@ -484,8 +479,7 @@ public class ControladorComponentes {
         	hayValores = false;
         }
         
-        //ComboBox Estímulo
-        
+        //ComboBox Estímulo 
         valorEstimuloComboBox.getItems().addAll(
                 "valorEstimulo1",
                 "valorEstimulo2",
@@ -678,7 +672,8 @@ public class ControladorComponentes {
         valorNombreConector.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-            	Modelo.hayNombreConector = true;	
+            	Modelo.hayNombreConector = true;
+            	Modelo.conectorActual.setNombre(valorNombreConector.getText());
             }
         });
         
@@ -709,11 +704,11 @@ public class ControladorComponentes {
         tipoConector.setPrefWidth(180);
         root.getChildren().add(tipoConector);
        
-        
         item1.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
             	tipoConector.setText("Procedure Call");
+            	Modelo.conectorActual.SetTipo(item1.getText());
             }
         });
         
@@ -721,6 +716,7 @@ public class ControladorComponentes {
             @Override
             public void handle(ActionEvent actionEvent) {
             	tipoConector.setText("Event");
+            	Modelo.conectorActual.SetTipo(item2.getText());
             }
         });
         
@@ -728,6 +724,7 @@ public class ControladorComponentes {
             @Override
             public void handle(ActionEvent actionEvent) {
             	tipoConector.setText("Data Access");
+            	Modelo.conectorActual.SetTipo(item3.getText());
             }
         });
         
@@ -735,6 +732,7 @@ public class ControladorComponentes {
             @Override
             public void handle(ActionEvent actionEvent) {
             	tipoConector.setText("Linkage");
+            	Modelo.conectorActual.SetTipo(item4.getText());
             }
         });
         
@@ -742,6 +740,7 @@ public class ControladorComponentes {
             @Override
             public void handle(ActionEvent actionEvent) {
             	tipoConector.setText("Stream");
+            	Modelo.conectorActual.SetTipo(item5.getText());
             }
         });
         
@@ -749,6 +748,7 @@ public class ControladorComponentes {
             @Override
             public void handle(ActionEvent actionEvent) {
             	tipoConector.setText("Arbitator");
+            	Modelo.conectorActual.SetTipo(item6.getText());
             }
         });
         
@@ -756,6 +756,7 @@ public class ControladorComponentes {
             @Override
             public void handle(ActionEvent actionEvent) {
             	tipoConector.setText("Adaptor");
+            	Modelo.conectorActual.SetTipo(item7.getText());
             }
         });
         
@@ -763,6 +764,7 @@ public class ControladorComponentes {
             @Override
             public void handle(ActionEvent actionEvent) {
             	tipoConector.setText("Distributor");
+            	Modelo.conectorActual.SetTipo(item8.getText());
             }
         });
 
@@ -779,12 +781,12 @@ public class ControladorComponentes {
         valorOrigenConector.setLayoutX(190);
         valorOrigenConector.setLayoutY(110);
         root.getChildren().add(valorOrigenConector);
-        
-        
+           
         valorOrigenConector.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
             	Modelo.hayNombreOrigen = true;	
+            	Modelo.conectorActual.setComponenteOrigen(valorOrigenConector.getText());
             }
         });
         
@@ -805,7 +807,8 @@ public class ControladorComponentes {
         valorDestinoConector.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-            	Modelo.hayNombreDestino = true;	
+            	Modelo.conectorActual.setComponenteOrigen(valorDestinoConector.getText());
+            	Modelo.hayNombreDestino = true;
             }
         });
         
@@ -830,10 +833,9 @@ public class ControladorComponentes {
 	                    @Override
 	                    public void handle(ActionEvent e) {
 	                    	verConectores.setText(conector.getText());
+	                    	
 	                    }
 	                });
-	                
-	                
 	                //Limpio botones
 	                valorNombreConector.clear();
 	                tipoConector.setText("Tipo del conector...");
@@ -853,7 +855,6 @@ public class ControladorComponentes {
         notification.setLayoutY(205);
         root.getChildren().add(notification);
         notification.setText("");
-        
 
         Modelo.conector.setScene(scene);
         Modelo.conector.show();
@@ -862,10 +863,6 @@ public class ControladorComponentes {
 	@FXML
 	private void editarConector(){
 		siguienteHaciaAtributos();
-	}
-	
-	@FXML
-	private void eliminarComponente(){
 	}
 	
 	private static void cambiarAtributo(String elegido){
@@ -888,7 +885,7 @@ public class ControladorComponentes {
 		escenario.getIcons().add(new Image("file:resources/imagen/icono.png"));
 		
         Scene scene = new Scene(new Group(), 250, 120);
-        
+
         Group root = (Group)scene.getRoot();
         
         TextField nombreNuevoAtributo = new TextField("");
@@ -918,8 +915,8 @@ public class ControladorComponentes {
                 	char primero = value.charAt(0);
                 	String primString = primero + "";
                 	value = primString.toUpperCase() + value.substring(1, value.length()).toLowerCase();
-                	Float cero = new Float(0);
-                	Modelo.conectorActual.getAtributosCalidad().put(value, cero);
+                	Float cero = new Float(0);             	
+                	Modelo.conectorActual.getAtributosCalidad().put(value, cero);     	
                 	actualizarListaAtributos();
                 	escenario.close();
             	}
@@ -937,11 +934,13 @@ public class ControladorComponentes {
 	
 	private void actualizarListaAtributos(){
 
-		ObservableList<MenuItem> list = FXCollections.observableArrayList();
+		ObservableList<MenuItem> list1 = FXCollections.observableArrayList();
+		ObservableList<MenuItem> list2 = FXCollections.observableArrayList();
 		
 		for(String s: Modelo.conectorActual.getAtributosCalidad().keySet()){
-			MenuItem item = new MenuItem(s);
-			item.setOnAction(new EventHandler<ActionEvent>() {
+			MenuItem item1 = new MenuItem(s);
+			MenuItem item2 = new MenuItem(s);
+			item1.setOnAction(new EventHandler<ActionEvent>() {
 	            @Override
 	            public void handle(ActionEvent actionEvent) {
 	            	ControladorComponentes.cambiarAtributo(s);
@@ -954,10 +953,18 @@ public class ControladorComponentes {
 	            	}
 	            }
 	        });
-			list.add(item);
+			
+			item2.setOnAction(new EventHandler<ActionEvent>() {
+	            @Override
+	            public void handle(ActionEvent actionEvent) {
+	            	atributosCalidadTradeOff.setText(s);
+	            }
+	        });
+			list1.add(item1);
+			list2.add(item2);
 		}
 		
-        atributosCalidad.getItems().addAll(list);
-	}
-	
+        atributosCalidad.getItems().addAll(list1);
+    	atributosCalidadTradeOff.getItems().addAll(list2);
+	}	
 }
