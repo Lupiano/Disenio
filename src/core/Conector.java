@@ -77,7 +77,6 @@ public class Conector {
 	}
 	
 	public ArrayList<Propiedades> getPropiedades(){
-		System.out.print("a");
 		return propiedades;
 	}
 	
