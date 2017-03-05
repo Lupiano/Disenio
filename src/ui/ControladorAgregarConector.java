@@ -2,14 +2,14 @@ package ui;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import core.Conector;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-
-import core.Conector;
 
 public class ControladorAgregarConector implements Initializable{
 		

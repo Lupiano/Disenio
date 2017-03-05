@@ -4,6 +4,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
+import core.Atributo;
+import core.EscenarioDeCalidad;
+import core.Propiedades;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,10 +34,6 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-
-import core.Atributo;
-import core.Propiedades;
-import core.EscenarioDeCalidad;
 
 public class ControladorAtributos implements Initializable {
 	

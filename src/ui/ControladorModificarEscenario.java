@@ -3,14 +3,14 @@ package ui;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+
+import core.EscenarioDeCalidad;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.layout.AnchorPane;
-
-import core.EscenarioDeCalidad;
 
 public class ControladorModificarEscenario implements Initializable {
 		
