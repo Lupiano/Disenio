@@ -80,7 +80,7 @@ public class ControladorComponentes implements Initializable{
 	private void salir(){
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Salir del Programa");
-		alert.setContentText("¿Está seguro que desea salir? Los cambios no guardados se perderán.");
+		alert.setContentText("Â¿EstÃ¡ seguro que desea salir? Los cambios no guardados se perderÃ¡n.");
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK){
 			Platform.exit();

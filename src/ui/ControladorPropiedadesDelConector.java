@@ -39,7 +39,7 @@ public class ControladorPropiedadesDelConector implements Initializable{
 		if((!idValorDimension.getText().equals("Opciones")) &&
 				(!idValorSubDimension.getText().equals("Opciones")) &&
 					(!idValorValor.getText().equals("Opciones"))){
-						l1.setText("Las propiedades se han guardado con exíto");						
+						l1.setText("Las propiedades se han guardado con exÃ­to");						
 						Propiedades nueva = new Propiedades();
 						nueva.setDimension(idValorDimension.getText());
 						nueva.setSubdimension(idValorSubDimension.getText());
