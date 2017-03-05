@@ -378,6 +378,7 @@ public class ControladorAtributos implements Initializable {
 	
 	@FXML
 	private void tablaTestability(){
+		System.out.print("print");
 		Atributo t = new Atributo();
 		t.setNombre("Testability");
 		dataAtributosTradeOff.add(t);
