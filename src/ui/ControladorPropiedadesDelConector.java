@@ -2,6 +2,8 @@ package ui;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import core.Propiedades;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,7 +14,6 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
-import core.Propiedades;
 
 public class ControladorPropiedadesDelConector implements Initializable{
 	
@@ -38,7 +39,7 @@ public class ControladorPropiedadesDelConector implements Initializable{
 		if((!idValorDimension.getText().equals("Opciones")) &&
 				(!idValorSubDimension.getText().equals("Opciones")) &&
 					(!idValorValor.getText().equals("Opciones"))){
-						l1.setText("Las propiedades se han guardado con exíto");						
+						l1.setText("Las propiedades se han guardado con exÃ­to");						
 						Propiedades nueva = new Propiedades();
 						nueva.setDimension(idValorDimension.getText());
 						nueva.setSubdimension(idValorSubDimension.getText());
