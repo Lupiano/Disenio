@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="panelAgregarConector" maxHeight="300.0" maxWidth="500.0" minHeight="300.0" minWidth="450.0" prefHeight="300.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.ControladorAgregarConector">
+   <children>
+      <Text layoutX="40.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre del Conector:" wrappingWidth="184.9999993443489">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="40.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo del Conector:" wrappingWidth="164.9999993443489">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="40.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Componente Origen:" wrappingWidth="185.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <TextField fx:id="idNombreDelConector" layoutX="249.0" layoutY="61.0" />
+      <Text layoutX="40.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Componente Destino:" wrappingWidth="197.9999993443489">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Button layoutX="341.0" layoutY="251.0" mnemonicParsing="false" onAction="#guardarConector" prefHeight="25.0" prefWidth="71.0" text="Guardar" />
+      <TextField fx:id="idComponenteOrigen" layoutX="249.0" layoutY="151.0" />
+      <TextField fx:id="idComponenteDestino" layoutX="249.0" layoutY="194.0" />
+      <MenuButton fx:id="idTipoDeConector" layoutX="249.0" layoutY="105.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="Tipo del Conector...">
+        <items>
+          <MenuItem mnemonicParsing="false" onAction="#itemProcedureCall" text="Procedure Call" />
+          <MenuItem mnemonicParsing="false" onAction="#itemEvent" text="Event" />
+          <MenuItem mnemonicParsing="false" onAction="#itemAccess" text="Data Access" />
+          <MenuItem mnemonicParsing="false" onAction="#itemLinkage" text="Linkage" />
+          <MenuItem mnemonicParsing="false" onAction="#itemStream" text="Stream" />
+          <MenuItem mnemonicParsing="false" onAction="#itemArbitator" text="Arbitator" />
+          <MenuItem mnemonicParsing="false" onAction="#itemAdaptor" text="Adaptor" />
+          <MenuItem mnemonicParsing="false" onAction="#itemDistributor" text="Distributor" />
+        </items>
+      </MenuButton>
+   </children>
+</AnchorPane>

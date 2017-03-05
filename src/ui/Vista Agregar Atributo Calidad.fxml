@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="150.0" maxWidth="250.0" minHeight="139.0" minWidth="237.0" prefHeight="139.0" prefWidth="237.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.ControladorAgregarAtributoCalidad">
+   <children>
+      <Button layoutX="157.0" layoutY="100.0" mnemonicParsing="false" onAction="#guardarNuevoAtributoCalidad" prefHeight="25.0" prefWidth="66.0" text="Aceptar" />
+      <Text layoutX="14.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Agregar Atributo:" wrappingWidth="145.9999993443489">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <TextField fx:id="idNuevoAtributoCalidad" layoutX="34.0" layoutY="57.0" prefHeight="25.0" prefWidth="170.0" />
+   </children>
+</AnchorPane>

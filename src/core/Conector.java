@@ -5,6 +5,16 @@ import java.util.Hashtable;
 
 public class Conector {
 	
+	public Conector(){
+		Float cero = ((float)0);
+		atributosCalidad.put("Performance", cero);
+		atributosCalidad.put("Seguridad", cero);
+		atributosCalidad.put("Modificabilidad", cero);
+		atributosCalidad.put("Disponibilidad", cero);
+		atributosCalidad.put("Usabilidad", cero);
+		atributosCalidad.put("Testability", cero);
+	}
+	
 	private String nombre;
 	private String tipo;
 	private String componenteOrigen;
