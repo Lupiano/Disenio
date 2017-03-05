@@ -4,7 +4,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
 import core.Atributo;
 import core.EscenarioDeCalidad;
 import core.Propiedades;
@@ -378,7 +377,6 @@ public class ControladorAtributos implements Initializable {
 	
 	@FXML
 	private void tablaTestability(){
-		System.out.print("print");
 		Atributo t = new Atributo();
 		t.setNombre("Testability");
 		dataAtributosTradeOff.add(t);
