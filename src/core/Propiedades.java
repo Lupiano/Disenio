@@ -5,7 +5,6 @@ public class Propiedades {
 	private String dimension;
 	private String subdimension;
 	private String value;
-	
 	public String getDimension() {
 		return dimension;
 	}

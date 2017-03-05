@@ -6,6 +6,8 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
+
+import ui.Modelo;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
