@@ -5,10 +5,21 @@ import java.util.Hashtable;
 
 public class Conector {
 	
+	public Conector(){
+		Float cero = ((float)0);
+		atributosCalidad.put("Performance", cero);
+		atributosCalidad.put("Seguridad", cero);
+		atributosCalidad.put("Modificabilidad", cero);
+		atributosCalidad.put("Disponibilidad", cero);
+		atributosCalidad.put("Usabilidad", cero);
+		atributosCalidad.put("Testability", cero);
+	}
+	
 	private String nombre;
-
+	private String tipo;
 	private String componenteOrigen;
 	private String componenteDestino;
+	private ArrayList<Propiedades> propiedades = new ArrayList<Propiedades>();
 	
 	//Atributos de calidad.
 	private Hashtable<String,Float> atributosCalidad = new Hashtable<String,Float>();
@@ -16,6 +27,13 @@ public class Conector {
 	//Escenarios de calidad por cada atributo.
 	private Hashtable<String, Hashtable<String, EscenarioDeCalidad>> escenariosCalidad = new Hashtable<String,Hashtable<String, EscenarioDeCalidad>>();
 	
+	public String getTipo(){
+		return tipo;
+	}
+	
+	public void SetTipo(String tipo){
+		this.tipo = tipo;
+	}
 	
 	public String getNombre() {
 		return nombre;
@@ -58,5 +76,8 @@ public class Conector {
 		this.escenariosCalidad = escenariosCalidad;
 	}
 	
+	public ArrayList<Propiedades> getPropiedades(){
+		return propiedades;
+	}
 	
 }

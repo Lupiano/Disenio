@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="panelAgregarEscenario" minHeight="300.0" minWidth="450.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.ControladorEscenario">
+   <children>
+      <Text layoutX="14.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Agregar Escenario de Calidad:" wrappingWidth="298.9999993443489">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Text layoutX="26.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Estímulo:" wrappingWidth="78.99999934434891">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="26.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Respuesta:" wrappingWidth="131.9999993443489">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="26.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fuente del estímulo:" wrappingWidth="162.9999993443489">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="26.0" layoutY="171.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Medida de la respuesta:" wrappingWidth="193.9999993443489">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="26.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Artefacto afectado:" wrappingWidth="163.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="26.0" layoutY="237.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ambiente:" wrappingWidth="105.99999934434891">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Button fx:id="botonGuardarEscenario" layoutX="313.0" layoutY="261.0" mnemonicParsing="false" onAction="#guardarEscenarioCalidad" prefHeight="25.0" prefWidth="79.0" text="Guardar" />
+      <MenuButton fx:id="idFuenteEstimulo" alignment="CENTER" layoutX="204.0" layoutY="118.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="118.0" textAlignment="CENTER">
+        <items>
+            <MenuItem mnemonicParsing="false" onAction="#guardarUsuario" text="Usuario" />
+            <MenuItem mnemonicParsing="false" onAction="#guardarOperador" text="Operador" />
+            <MenuItem mnemonicParsing="false" onAction="#guardarActor" text="Actor" />
+            <MenuItem mnemonicParsing="false" onAction="#guardarSistemas" text="Sistemas" />
+            <MenuItem mnemonicParsing="false" onAction="#guardarPrueba" text="Prueba" />
+        </items>
+      </MenuButton>
+      <MenuButton fx:id="idRespuesta" alignment="CENTER" layoutX="127.0" layoutY="83.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="118.0" textAlignment="CENTER">
+         <items>
+            <MenuItem mnemonicParsing="false" onAction="#guardarRespuesta1" text="Respuesta 1" />
+         </items>
+      </MenuButton>
+      <MenuButton fx:id="idEstimulo" alignment="CENTER" layoutX="112.0" layoutY="47.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="118.0" textAlignment="CENTER">
+         <items>
+          	<MenuItem mnemonicParsing="false" onAction="#guardarEstimulo1" text="Estimulo 1" />
+         </items>
+      </MenuButton>
+      <MenuButton fx:id="idMedidaRespuesta" alignment="CENTER" layoutX="225.0" layoutY="152.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="118.0" textAlignment="CENTER">
+         <items>
+            <MenuItem mnemonicParsing="false" onAction="#guardar1segundos" text="1s" />
+            <MenuItem mnemonicParsing="false" onAction="#guardar2segundos" text="2s" />
+            <MenuItem mnemonicParsing="false" onAction="#guardar3segundos" text="3s" />
+            <MenuItem mnemonicParsing="false" onAction="#guardar4segundos" text="4s" />
+            <MenuItem mnemonicParsing="false" onAction="#guardar5segundos" text="5s" />
+         </items>
+      </MenuButton>
+      <MenuButton fx:id="idArtefactoAfectado" alignment="CENTER" layoutX="190.0" layoutY="186.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="132.0" textAlignment="CENTER">
+         <items>
+            <MenuItem mnemonicParsing="false" onAction="#guardarArtefacto1" text="Artefacto Afectado 1" />
+         </items>
+      </MenuButton>
+      <MenuButton fx:id="idAmbiente" alignment="CENTER" layoutX="123.0" layoutY="218.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="132.0" text="      " textAlignment="CENTER">
+         <items>
+            <MenuItem mnemonicParsing="false" onAction="#guardarAmbiente1" text="Ambiente 1" />
+         </items>
+      </MenuButton>
+   </children>
+</AnchorPane>

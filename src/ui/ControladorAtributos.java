@@ -1,290 +1,183 @@
 package ui;
 
+import java.net.URL;
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.Optional;
-
-import core.EscenarioDeCalidad;
+import java.util.ResourceBundle;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.scene.Group;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Labeled;
 import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
-import javafx.scene.layout.GridPane;
-import javafx.scene.text.Text;
-import javafx.event.EventHandler;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Font;
+import javafx.stage.Stage;
 
-public class ControladorAtributos {
-	
-	@FXML private MenuButton verAtributos = new MenuButton();
-	@FXML private Text atributoActual = new Text();
-	@FXML private static Text nombreActual = new Text();
-	@FXML private Text mostrarValor = new Text();
-	@FXML private TextField valorAtributo = new TextField();
-	@FXML private TableView<Contact> tablaEstimulo = new TableView<>();
-	@FXML private TableColumn<Contact, String> columnaEstimulo = new TableColumn<>("Estimulo");
-	
-	final static Button button = new Button ("Guardar");
-	final static Button botonGuardarPropiedades = new Button("Guardar");
-	final static Label notification = new Label ();
-	final static TextField subject = new TextField("");
-	final static TextArea text = new TextArea ("");
-	  
-	private static String address = " ";
-	
-	
-	//ComboBoxs
-    private static ComboBox<String> valorEstimuloComboBox = new ComboBox<String>();
-    private static ComboBox<String> valorRespuestaComboBox = new ComboBox<String>();
-    private static ComboBox<String> valorFuenteComboBox = new ComboBox<String>();
-    private static ComboBox<String> valorAmbienteComboBox = new ComboBox<String>();
-    private static ComboBox<String> valorMedidaRespuestaComboBox = new ComboBox<String>();
-    private static ComboBox<String> valorArtefactoAfectadoComboBox = new ComboBox<String>();
-    
-	public String getAddres(){
-		return address;
-	}
-    
-	@FXML
-	private void asignarValor(){
-		atributoActual.setText(Modelo.atribActual + valorAtributo.getText());
-	}
-	
-	@FXML
-	private void verPerformance(){
-		atributoActual.setText("Performance: ");
-		Modelo.nombreAtributo = "Performance";
-		Modelo.atribActual= "Performance: ";
-	}
-	
-	@FXML
-	private void verUsabilidad(){
-		atributoActual.setText("Usabilidad: " );
-		Modelo.nombreAtributo = "Usabilidad";
-		Modelo.atribActual= "Usabilidad: ";
-	}
-	
-	@FXML
-	private void verSeguridad(){
-		atributoActual.setText("Seguridad: " );
-		Modelo.nombreAtributo = "Seguridad";
-		Modelo.atribActual= "Seguridad: ";
-	}
-	
-	@FXML
-	private void verDisponibilidad(){
-		atributoActual.setText("Disponibilidad: " );
-		Modelo.nombreAtributo = "Disponibilidad";
-		Modelo.atribActual= "Disponibilidad: ";
-	}
-	
-	@FXML
-	private void verModificabilidad(){
-		atributoActual.setText("Modificabilidad: " );
-		Modelo.nombreAtributo = "Modificabilidad";
-		Modelo.atribActual= "Modificabilidad: ";
-	}
-	
-	@FXML
-	private void verTestability(){
-		atributoActual.setText("Testability: ");
-		Modelo.nombreAtributo = "Testability";
-		Modelo.atribActual= "Testability: ";
-	}
-	
-	@FXML
-	public static void editarPropiedades(){
-		Modelo.propiedades.setTitle("Editar Propiedades del Conector: " + Modelo.nombreAtributo);
-		Modelo.propiedades.getIcons().add(new Image("file:resources/imagen/icono.png"));
-		
-		Scene scene = new Scene(new Group(), 500, 300);
-		
-        botonGuardarPropiedades.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-            	notification.setText("Las propiedades se han guardado con éxito");                        
-                subject.clear();
-                text.clear();
-            }
-        });
-        
-        GridPane grid = new GridPane();
-        grid.setVgap(4);
-        grid.setHgap(10);
-        grid.setPadding(new Insets(6, 6, 6, 6));
-        grid.add(botonGuardarPropiedades,0,25);
-        grid.add (notification, 1,25, 25, 1);
-        
-        Group root = (Group)scene.getRoot();
-        root.getChildren().add(grid);
-        Modelo.propiedades.setScene(scene);
-        Modelo.propiedades.show();
-		
-	}
-	
-	@FXML
-	public static void agregarEscenario(){
-		Modelo.escenario.setTitle(Modelo.nombreAtributo);
-		Modelo.escenario.getIcons().add(new Image("file:resources/imagen/icono.png"));
-		notification.setText("");
-		
-        Scene scene = new Scene(new Group(), 500, 300);
-        
-        //ComboBox Estímulo
-        valorEstimuloComboBox.getItems().addAll(
-                "valorEstimulo1",
-                "valorEstimulo2",
-                "valorEstimulo3"
-            );
-        
-        valorEstimuloComboBox.setPromptText("Valor Estímulo");
-        valorEstimuloComboBox.setEditable(true);        
-        valorEstimuloComboBox.valueProperty().addListener((ChangeListener<String>) (ov, t, t1) -> address = t1);
-        
-        //ComboBox Respuesta
-        valorRespuestaComboBox.getItems().addAll(
-            "valorRespuesta1",
-            "valorRespuesta2",
-            "valorRespuesta3"
-        );
-        
-        valorRespuestaComboBox.setPromptText("Valor Respuesta");
-        valorRespuestaComboBox.setEditable(true);        
-        valorRespuestaComboBox.valueProperty().addListener((ChangeListener<String>) (ov, t, t1) -> address = t1);
-        
-      //ComboBox Fuente
-        valorFuenteComboBox.getItems().addAll(
-            "valorFuente1",
-            "valorFuente2",
-            "valorFuente3"
-        );
-        
-        valorFuenteComboBox.setPromptText("Valor Fuente del Estímulo");
-        valorFuenteComboBox.setEditable(true);        
-        valorFuenteComboBox.valueProperty().addListener((ChangeListener<String>) (ov, t, t1) -> address = t1);
-        
-      //ComboBox Medida de Respuesta
-        valorMedidaRespuestaComboBox.getItems().addAll(
-            "valorMedidaRespuesta1",
-            "valorMedidaRespuesta2",
-            "valorMedidaRespuesta3"
-        );
+import core.Atributo;
+import core.Propiedades;
+import core.EscenarioDeCalidad;
 
-        valorMedidaRespuestaComboBox.setPromptText("Valor Medida de la Respuesta");
-        valorMedidaRespuestaComboBox.setEditable(true);        
-        valorMedidaRespuestaComboBox.valueProperty().addListener((ChangeListener<String>) (ov, t, t1) -> address = t1);
-        
-        //ComboBox Artefacto Afectado
-        valorArtefactoAfectadoComboBox.getItems().addAll(
-            "valorArtefactoAfectado1",
-            "valorArtefactoAfectado2",
-            "valorArtefactoAfectado3"
-        );
-        
-        valorArtefactoAfectadoComboBox.setPromptText("Valor Artefacto Afectado");
-        valorArtefactoAfectadoComboBox.setEditable(true);        
-        valorArtefactoAfectadoComboBox.valueProperty().addListener((ChangeListener<String>) (ov, t, t1) -> address = t1);
-        
-        //ComboBox Ambiente
-        valorAmbienteComboBox.getItems().addAll(
-            "valorAmbienteComboBox1",
-            "valorAmbienteComboBox2",
-            "valorAmbienteComboBox3"
-        );
-        
-        valorAmbienteComboBox.setPromptText("Valor Ambiente");
-        valorAmbienteComboBox.setEditable(true);        
-        valorAmbienteComboBox.valueProperty().addListener((ChangeListener<String>) (ov, t, t1) -> address = t1);
-        
-        button.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                if ((valorEstimuloComboBox.getValue() != null && !valorEstimuloComboBox.getValue().toString().isEmpty()) &&
-                		(valorRespuestaComboBox.getValue() != null && !valorRespuestaComboBox.getValue().toString().isEmpty())&&
-                			(valorFuenteComboBox.getValue() != null && !valorFuenteComboBox.getValue().toString().isEmpty())&&
-                				(valorMedidaRespuestaComboBox.getValue() != null && !valorMedidaRespuestaComboBox.getValue().toString().isEmpty())&&
-                					(valorArtefactoAfectadoComboBox.getValue() != null && !valorArtefactoAfectadoComboBox.getValue().toString().isEmpty())&&
-                						(valorAmbienteComboBox.getValue() != null && !valorAmbienteComboBox.getValue().toString().isEmpty())){
-                        
-                		EscenarioDeCalidad aGuardar = new EscenarioDeCalidad();
-                		ArrayList<String> arrAux = new ArrayList<String>();
-                		arrAux.add(valorEstimuloComboBox.getValue());
-                		arrAux.add(valorRespuestaComboBox.getValue());
-                		arrAux.add(valorFuenteComboBox.getValue());
-                		arrAux.add(valorMedidaRespuestaComboBox.getValue());
-                		arrAux.add(valorArtefactoAfectadoComboBox.getValue());
-                		arrAux.add(valorAmbienteComboBox.getValue());
-                		aGuardar.setValores(arrAux);
-                		
-                		if(Modelo.conectorActual.getEscenariosCalidad().get(Modelo.nombreAtributo) != null){
-                			Modelo.conectorActual.getEscenariosCalidad().get(Modelo.nombreAtributo).put(Integer.toString(Modelo.numeroId), aGuardar);
-                		}
-                		else {
-                			Hashtable<String,EscenarioDeCalidad> hashAux = new Hashtable<String,EscenarioDeCalidad>();
-                			hashAux.put(Integer.toString(Modelo.numeroId), aGuardar);
-                			Modelo.conectorActual.getEscenariosCalidad().put(Modelo.nombreAtributo, hashAux);
-                		}
-                		
-                		
-                		
-                		notification.setText("El escenario se ha guardado con éxito");                        
-                        valorEstimuloComboBox.setValue(null);
-                        valorRespuestaComboBox.setValue(null);
-                        valorFuenteComboBox.setValue(null);
-                        valorMedidaRespuestaComboBox.setValue(null);
-                        valorArtefactoAfectadoComboBox.setValue(null);
-                        valorAmbienteComboBox.setValue(null);
-                        subject.clear();
-                        text.clear();
-                        ControladorComponentes.agregarListaEscenario();
-                }
-                else {
-                    notification.setText("Debes completar todos los campos antes de guardar"); 
-                }
-            }
-        });
- 
-        GridPane grid = new GridPane();
-        grid.setVgap(4);
-        grid.setHgap(10);
-        grid.setPadding(new Insets(6, 6, 6, 6));
-        grid.add(new Label("Agregar Escenario de Calidad: "), 0, 0);
-        grid.add(new Label("Estímulo: "), 0, 2);
-        grid.add(valorEstimuloComboBox, 1, 2);
-        grid.add(new Label("Respuesta: "), 0, 3);
-        grid.add(valorRespuestaComboBox, 1,3);
-        grid.add(new Label("Fuente del Estímulo: "), 0, 4);
-        grid.add(valorFuenteComboBox, 1,4);
-        grid.add(new Label("Medida de la Respuesta: "), 0, 5);
-        grid.add(valorMedidaRespuestaComboBox, 1,5);
-        grid.add(new Label("Artefacto Afectado: "), 0, 6);
-        grid.add(valorArtefactoAfectadoComboBox, 1,6);
-        grid.add(new Label("Ambiente: "), 0, 7);
-        grid.add(valorAmbienteComboBox, 1,7);
-        grid.add(button, 0,13);
-        grid.add (notification, 1,13, 13, 1);
-
-
-        Group root = (Group)scene.getRoot();
-        root.getChildren().add(grid);
-        Modelo.escenario.setScene(scene);
-        Modelo.escenario.show();
+public class ControladorAtributos implements Initializable {
+	
+	@Override
+    public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
+		System.out.println("El conector- a editar es" + Modelo.conectorActual.getNombre());
+		Modelo.controladorAtributo = this;
+		idTablaPropiedades.setEditable(true);
+		idTablaTradeOFF.setEditable(true);
+        dimNameCol.setMinWidth(100);
+        dimNameCol.setCellValueFactory(new PropertyValueFactory<Propiedades, String>("dimension"));
+        subNameCol.setMinWidth(100);
+        subNameCol.setCellValueFactory(new PropertyValueFactory<Propiedades, String>("subdimension"));
+        valorNameCol.setMinWidth(120);
+        valorNameCol.setCellValueFactory(new PropertyValueFactory<Propiedades, String>("value"));
+        idTablaPropiedades.getColumns().addAll(dimNameCol, subNameCol, valorNameCol);
+        atributoNameCol.setMinWidth(100);
+        atributoNameCol.setCellValueFactory(new PropertyValueFactory<String, String>("nombre"));
+        idTablaTradeOFF.getColumns().addAll(atributoNameCol);
+	}
+	
+	
+	Stage primaryStage = new Stage();
+	@FXML private TableView<Propiedades> idTablaPropiedades = new TableView<Propiedades>();
+	@FXML private TableView<Atributo> idTablaTradeOFF = new TableView<Atributo>();
+	@FXML private AnchorPane panelAtributosCalidad;
+	@FXML private MenuButton idVerAtributos = new MenuButton();
+	@FXML private TextField idValorAtributo = new TextField();
+	@FXML private MenuButton botonAgregarTradeOff = new MenuButton();
+	
+	TableColumn dimNameCol = new TableColumn("Dimensión");
+	TableColumn subNameCol = new TableColumn("SubDimensión");
+	TableColumn valorNameCol = new TableColumn("Valor");
+	private ObservableList<Propiedades> data = FXCollections.observableArrayList();
+	
+	TableColumn atributoNameCol = new TableColumn("Lista");
+	private ObservableList<Atributo> dataAtributosTradeOff = FXCollections.observableArrayList();
+	
+	private void borrarBotonesEscenarios(){
+		//Se borran todos los botones de la interfaz.
+		Modelo.yLabel -= Modelo.listaBotones.size() * 40;
+		Modelo.yBotonBorrar -= Modelo.listaBotones.size() * 40;
+		Modelo.yBotonEditar -= Modelo.listaBotones.size() * 40;
+		for(ArrayList<Labeled> arr: Modelo.listaBotones){
+			panelAtributosCalidad.getChildren().removeAll(arr);
+		}
+	}
+	
+	@FXML
+	private void cambiarAtributo(String elegido){
+    	Modelo.nombreAtributo = elegido;
+    	borrarBotonesEscenarios();
+    	borrarTablaTradeOff();
+    	Modelo.numero = 1;
+    	Modelo.listaBotones = Modelo.hashAtributos.get(Modelo.nombreAtributo);
+    	if(Modelo.listaBotones != null){
+        	generarBotonesEscenarios();
+    	}
+    	else{
+    		Modelo.listaBotones = new ArrayList<ArrayList<Labeled>>();
+    	}
+    }
+	
+	@FXML
+	private void borrarTablaTradeOff(){
+		//Limpio la tabla para generar la correcta para cada atributo de calidad
+		idTablaTradeOFF.getItems().clear();
+		ArrayList<Atributo> lista = Modelo.atributoActual.getAtributosTradeOff();
+		if(!Modelo.atributoActual.getAtributosTradeOff().isEmpty()){
+			for(Atributo a: lista){
+				idTablaTradeOFF.getItems().add(a);
+			}
+		}
+	}
+	
+	@FXML
+	private void verAtributosDeCalidad(){
+		idVerAtributos.getItems().clear();
+		ObservableList<MenuItem> list = FXCollections.observableArrayList();
+		
+		for (String c: Modelo.conectorActual.getAtributosCalidad().keySet()){
+			MenuItem item = new MenuItem(c);
+			list.addAll(item);
+			Atributo nuevo = new Atributo();
+	        item.setOnAction(new EventHandler<ActionEvent>() {
+	            @Override
+	            public void handle(ActionEvent e) {
+	            	nuevo.setNombre(item.getText());
+	            	Modelo.atributoActual= nuevo;
+	            	cambiarAtributo(c);
+	            	Modelo.nombreAtributo = item.getText();
+	            	idVerAtributos.setText(item.getText());
+	            	idValorAtributo.setText(Float.toString(Modelo.conectorActual.getAtributosCalidad().get(item.getText())));
+	            }
+	        });
+		}
+		idVerAtributos.getItems().addAll(list);     
+	}
+	
+	@FXML
+	private void asignarValorAtributoCalidad(){
+		Modelo.conectorActual.getAtributosCalidad().replace(Modelo.nombreAtributo,Float.parseFloat((idValorAtributo.getText())));
+	}
+	
+	@FXML
+	private void agregarAtributoDeCalidad(){
+		try {
+			primaryStage.setTitle("Agregar Atributo");
+			primaryStage.getIcons().add(new Image("file:resources/imagen/icono.png"));
+			Parent root = FXMLLoader.load(getClass().getResource("Vista Agregar Atributo Calidad.fxml"));
+			Scene scene = new Scene(root);
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@FXML
+	private void agregarEscenarioCalidad(){
+		try {
+			primaryStage.setTitle("Escenario de Calidad");
+			primaryStage.getIcons().add(new Image("file:resources/imagen/icono.png"));
+			Parent root = FXMLLoader.load(getClass().getResource("Vista Escenario de Calidad.fxml"));
+			Scene scene = new Scene(root);
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@FXML
+	private void agregarPropiedades(){
+		try {
+			primaryStage.setTitle("Tipo conector: " + Modelo.conectorActual.getTipo());
+			primaryStage.getIcons().add(new Image("file:resources/imagen/icono.png"));
+			Parent root = FXMLLoader.load(getClass().getResource("Vista Propiedades del Conector.fxml"));
+			Scene scene = new Scene(root);
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@FXML
@@ -295,7 +188,201 @@ public class ControladorAtributos {
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK){
 			Platform.exit();
-		} 		
+		}
 	}
 	
+	@FXML
+	public void agregarListaEscenario(){
+		Label l1 = new Label();
+        String nombrefinal = "Escenario" + Modelo.numero;
+        l1.setText(nombrefinal);
+        l1.setFont(new Font("Arial", 18)); 
+        l1.setId(Integer.toString(Modelo.numeroId));
+        Modelo.numeroId ++;
+
+    	Button buttonEditar = new Button ("Editar Escenario");
+    	Button buttonBorrar = new Button ("Borrar Escenario");
+    	    	
+    	l1.setLayoutX(Modelo.xLabel);
+    	l1.setLayoutY(Modelo.yLabel);
+    	
+    	buttonEditar.setLayoutX(Modelo.xBotonEditar);
+    	buttonEditar.setLayoutY(Modelo.yBotonEditar);
+    	
+    	buttonBorrar.setLayoutX(Modelo.xBotonBorrar);
+    	buttonBorrar.setLayoutY(Modelo.yBotonBorrar);
+    	
+    	panelAtributosCalidad.getChildren().add(l1);
+    	panelAtributosCalidad.getChildren().add(buttonEditar);
+    	panelAtributosCalidad.getChildren().add(buttonBorrar);
+        
+        ArrayList<Labeled> aux = new ArrayList<Labeled>();
+        aux.add(l1);
+        aux.add(buttonEditar);
+        aux.add(buttonBorrar);
+        Modelo.listaBotones.add(aux);
+        
+        Modelo.hashAtributos.remove(Modelo.nombreAtributo);
+        Modelo.hashAtributos.put(Modelo.nombreAtributo, Modelo.listaBotones);
+        
+        Modelo.numero++;
+        Modelo.yLabel = Modelo.yLabel + 40;
+        Modelo.yBotonBorrar = Modelo.yBotonBorrar +40;
+        Modelo.yBotonEditar = Modelo.yBotonEditar +40;
+        
+    	buttonBorrar.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				ArrayList<Labeled> aBorrar = new ArrayList<Labeled>();
+				//Se borran todos los botones de la interfaz.
+				Modelo.yLabel -= Modelo.listaBotones.size() * 40;
+				Modelo.yBotonBorrar -= Modelo.listaBotones.size() * 40;
+				Modelo.yBotonEditar -= Modelo.listaBotones.size() * 40;
+				
+				for(ArrayList<Labeled> arr: Modelo.listaBotones){
+					panelAtributosCalidad.getChildren().removeAll(arr);
+					//Se borran los botones a eliminar de la lista de botones.
+					if(arr.contains(l1)){
+						aBorrar = arr;
+					}
+				}
+				Modelo.listaBotones.remove(aBorrar);
+				generarBotonesEscenarios();
+			}		
+    	});
+
+    	buttonEditar.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {				
+				//Se obtiene el escenario de calidad que corresponde a este boton.
+				EscenarioDeCalidad escenarioAEditar = Modelo.conectorActual.getEscenariosCalidad().get(Modelo.nombreAtributo).get(l1.getId());
+				Modelo.escenarioAEditarValores = escenarioAEditar.getValores();
+				Modelo.idAuxiliarEscenario = l1.getId();
+				editarEscenario();
+			}	
+			
+    	});
+	}
+	
+	@FXML
+	private void editarEscenario(){
+		try {
+			primaryStage.setTitle("Modificar Escenario de Calidad");
+			primaryStage.getIcons().add(new Image("file:resources/imagen/icono.png"));
+			Parent root = FXMLLoader.load(getClass().getResource("Vista Escenario Modificado.fxml"));
+			Scene scene = new Scene(root);
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		} catch(Exception a) {
+			a.printStackTrace();
+		}
+	}
+	
+	public void generarBotonesEscenarios(){
+		Modelo.numero = 1;
+		//Se vuelven a generar los botones.
+		for(ArrayList<Labeled> arr: Modelo.listaBotones){
+			arr.get(0).setText("Escenario" + Modelo.numero);
+			
+			arr.get(0).setLayoutX(Modelo.xLabel);
+			arr.get(0).setLayoutY(Modelo.yLabel);
+	    	
+			arr.get(1).setLayoutX(Modelo.xBotonEditar);
+			arr.get(1).setLayoutY(Modelo.yBotonEditar);
+	    	
+			arr.get(2).setLayoutX(Modelo.xBotonBorrar);
+			arr.get(2).setLayoutY(Modelo.yBotonBorrar);
+			
+			panelAtributosCalidad.getChildren().add(arr.get(0));
+			panelAtributosCalidad.getChildren().add(arr.get(1));
+			panelAtributosCalidad.getChildren().add(arr.get(2));
+
+	        Modelo.yLabel = Modelo.yLabel + 40;
+	        Modelo.yBotonBorrar = Modelo.yBotonBorrar +40;
+	        Modelo.yBotonEditar = Modelo.yBotonEditar +40;
+	        
+	        Modelo.numero ++;
+		}
+	}
+		
+	@FXML
+	private void borrarPropiedad(){
+	Propiedades p = idTablaPropiedades.getSelectionModel().getSelectedItem();
+	ArrayList<Propiedades> lista = Modelo.conectorActual.getPropiedades();
+	lista.remove(p);
+	idTablaPropiedades.getItems().remove(p);
+	}
+	
+	public void actualizarListaPropiedades(){
+		ArrayList<Propiedades> listaPropiedades = Modelo.conectorActual.getPropiedades();
+		data.add(listaPropiedades.get(listaPropiedades.size()-1));
+		idTablaPropiedades.setItems(data);
+	}
+	
+	@FXML
+	private void borrarAtributoTradeOFF(){
+		Atributo a = idTablaTradeOFF.getSelectionModel().getSelectedItem();
+		idTablaTradeOFF.getItems().remove(a);
+		Modelo.atributoActual.getAtributosTradeOff().remove(a);
+	}
+	
+	@FXML
+	private void tablaPerformance(){
+		Atributo t = new Atributo();
+		t.setNombre("Performance");
+		dataAtributosTradeOff.add(t);
+		idTablaTradeOFF.setItems(dataAtributosTradeOff);
+		ArrayList<Atributo> aux = Modelo.atributoActual.getAtributosTradeOff();
+		aux.add(t);
+	}
+	
+	@FXML
+	private void tablaSeguridad(){
+		Atributo t = new Atributo();
+		t.setNombre("Seguridad");
+		dataAtributosTradeOff.add(t);
+		idTablaTradeOFF.setItems(dataAtributosTradeOff);
+		ArrayList<Atributo> aux = Modelo.atributoActual.getAtributosTradeOff();
+		aux.add(t);
+	}
+	
+	@FXML
+	private void tablaModificabilidad(){
+		Atributo t = new Atributo();
+		t.setNombre("Modificabilidad");
+		dataAtributosTradeOff.add(t);
+		idTablaTradeOFF.setItems(dataAtributosTradeOff);
+		ArrayList<Atributo> aux = Modelo.atributoActual.getAtributosTradeOff();
+		aux.add(t);
+	}
+	
+	@FXML
+	private void tablaDisponibilidad(){
+		Atributo t = new Atributo();
+		t.setNombre("Disponibilidad");
+		dataAtributosTradeOff.add(t);
+		idTablaTradeOFF.setItems(dataAtributosTradeOff);
+		ArrayList<Atributo> aux = Modelo.atributoActual.getAtributosTradeOff();
+		aux.add(t);
+	}
+	
+	@FXML
+	private void tablaUsabilidad(){
+		Atributo t = new Atributo();
+		t.setNombre("Usabilidad");
+		dataAtributosTradeOff.add(t);
+		idTablaTradeOFF.setItems(dataAtributosTradeOff);
+		ArrayList<Atributo> aux = Modelo.atributoActual.getAtributosTradeOff();
+		aux.add(t);
+	}
+	
+	@FXML
+	private void tablaTestability(){
+		Atributo t = new Atributo();
+		t.setNombre("Testability");
+		dataAtributosTradeOff.add(t);
+		idTablaTradeOFF.setItems(dataAtributosTradeOff);
+		ArrayList<Atributo> aux = Modelo.atributoActual.getAtributosTradeOff();
+		aux.add(t);
+	}
 }
