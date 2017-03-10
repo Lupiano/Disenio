@@ -57,9 +57,8 @@ public class ControladorAtributos extends Application implements Initializable {
         atributoNameCol.setMinWidth(100);
         atributoNameCol.setCellValueFactory(new PropertyValueFactory<String, String>("nombre"));
         idTablaTradeOFF.getColumns().addAll(atributoNameCol);
-        
+
         actualizarMenuAtributosYTradeOff();
-        
 	}
 	
 	
@@ -67,8 +66,7 @@ public class ControladorAtributos extends Application implements Initializable {
 	@FXML private MenuButton menuAtributosCalidad = new MenuButton();
 	@FXML private TableView<Propiedades> idTablaPropiedades = new TableView<Propiedades>();
 	@FXML private TableView<Atributo> idTablaTradeOFF = new TableView<Atributo>();
-	@FXML private AnchorPane panelAtributosCalidad;
-	@FXML private TextField idValorAtributo = new TextField();
+	@FXML private AnchorPane panelAtributosCalidad;	@FXML private TextField idValorAtributo = new TextField();
 	@FXML private MenuButton botonAgregarTradeOff = new MenuButton();
 	
 	TableColumn dimNameCol = new TableColumn("Dimensión");
@@ -203,8 +201,7 @@ public class ControladorAtributos extends Application implements Initializable {
 			Platform.exit();
 		}
 	}
-	
-	@FXML
+
 	public void agregarListaEscenario(){
 		Label l1 = new Label();
         String nombrefinal = "Escenario" + Modelo.numero;
@@ -237,7 +234,6 @@ public class ControladorAtributos extends Application implements Initializable {
         
         Modelo.hashAtributos.remove(Modelo.nombreAtributo);
         Modelo.hashAtributos.put(Modelo.nombreAtributo, Modelo.listaBotones);
-        
         Modelo.numero++;
         Modelo.yLabel = Modelo.yLabel + 40;
         Modelo.yBotonBorrar = Modelo.yBotonBorrar +40;
