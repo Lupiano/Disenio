@@ -3,16 +3,25 @@ package core;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
+import ui.Modelo;
+
 public class Conector {
 	
 	public Conector(){
 		Float cero = ((float)0);
-		atributosCalidad.put("Performance", cero);
-		atributosCalidad.put("Seguridad", cero);
-		atributosCalidad.put("Modificabilidad", cero);
-		atributosCalidad.put("Disponibilidad", cero);
-		atributosCalidad.put("Usabilidad", cero);
-		atributosCalidad.put("Testability", cero);
+		Atributo a1 = new Atributo("Performance");
+		Atributo a2 = new Atributo("Seguridad");
+		Atributo a3 = new Atributo("Modificabilidad");
+		Atributo a4 = new Atributo("Disponibilidad");
+		Atributo a5 = new Atributo("Usabilidad");
+		Atributo a6 = new Atributo("Testability");
+		
+		atributosCalidad.put(a1, cero);
+		atributosCalidad.put(a2, cero);
+		atributosCalidad.put(a3, cero);
+		atributosCalidad.put(a4, cero);
+		atributosCalidad.put(a5, cero);
+		atributosCalidad.put(a6, cero);
 	}
 	
 	private String nombre;
@@ -22,7 +31,7 @@ public class Conector {
 	private ArrayList<Propiedades> propiedades = new ArrayList<Propiedades>();
 	
 	//Atributos de calidad.
-	private Hashtable<String,Float> atributosCalidad = new Hashtable<String,Float>();
+	private Hashtable<Atributo,Float> atributosCalidad = new Hashtable<Atributo,Float>();
 	
 	//Escenarios de calidad por cada atributo.
 	private Hashtable<String, Hashtable<String, EscenarioDeCalidad>> escenariosCalidad = new Hashtable<String,Hashtable<String, EscenarioDeCalidad>>();
@@ -59,11 +68,11 @@ public class Conector {
 		this.componenteDestino = componenteDestino;
 	}
 
-	public Hashtable<String, Float> getAtributosCalidad() {
+	public Hashtable<Atributo, Float> getAtributosCalidad() {
 		return atributosCalidad;
 	}
 
-	public void setAtributosCalidad(Hashtable<String, Float> atributosCalidad) {
+	public void setAtributosCalidad(Hashtable<Atributo, Float> atributosCalidad) {
 		this.atributosCalidad = atributosCalidad;
 	}
 
@@ -78,6 +87,14 @@ public class Conector {
 	
 	public ArrayList<Propiedades> getPropiedades(){
 		return propiedades;
+	}
+	
+	public Atributo getAtributo(String nombre){
+		for (Atributo a: Modelo.conectorActual.getAtributosCalidad().keySet()){
+    		if(a.getNombre().equals(nombre))
+        		return a;
+    	}
+		return null;
 	}
 	
 }
