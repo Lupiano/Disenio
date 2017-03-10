@@ -1,5 +1,6 @@
 package ui;
 
+import core.Atributo;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
@@ -16,7 +17,8 @@ public class ControladorAgregarAtributoCalidad {
             String primString = primero + "";
             value = primString.toUpperCase() + value.substring(1, value.length()).toLowerCase();
             Float cero = new Float(0);             	
-            Modelo.conectorActual.getAtributosCalidad().put(value, cero); 		
+            Modelo.conectorActual.getAtributosCalidad().put(new Atributo(value), cero); 
+            Modelo.controladorAtributo.actualizarMenuAtributosYTradeOff();
 		}	
 	}
 }
