@@ -4,10 +4,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
-<<<<<<< HEAD
-=======
-
->>>>>>> refs/remotes/origin/master
 import core.Atributo;
 import core.EscenarioDeCalidad;
 import core.Propiedades;
@@ -39,7 +35,6 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class ControladorAtributos implements Initializable {
-<<<<<<< HEAD
 	
 	@Override
     public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
@@ -73,41 +68,8 @@ public class ControladorAtributos implements Initializable {
 	TableColumn valorNameCol = new TableColumn("Valor");
 	private ObservableList<Propiedades> data = FXCollections.observableArrayList();
 	
-=======
 	
-	@Override
-    public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
-		System.out.println("El conector- a editar es" + Modelo.conectorActual.getNombre());
-		Modelo.controladorAtributo = this;
-		idTablaPropiedades.setEditable(true);
-		idTablaTradeOFF.setEditable(true);
-        dimNameCol.setMinWidth(100);
-        dimNameCol.setCellValueFactory(new PropertyValueFactory<Propiedades, String>("dimension"));
-        subNameCol.setMinWidth(100);
-        subNameCol.setCellValueFactory(new PropertyValueFactory<Propiedades, String>("subdimension"));
-        valorNameCol.setMinWidth(120);
-        valorNameCol.setCellValueFactory(new PropertyValueFactory<Propiedades, String>("value"));
-        idTablaPropiedades.getColumns().addAll(dimNameCol, subNameCol, valorNameCol);
-        atributoNameCol.setMinWidth(100);
-        atributoNameCol.setCellValueFactory(new PropertyValueFactory<String, String>("nombre"));
-        idTablaTradeOFF.getColumns().addAll(atributoNameCol);
-	}
-	
-	
-	Stage primaryStage = new Stage();
-	@FXML private TableView<Propiedades> idTablaPropiedades = new TableView<Propiedades>();
-	@FXML private TableView<Atributo> idTablaTradeOFF = new TableView<Atributo>();
-	@FXML private AnchorPane panelAtributosCalidad;
-	@FXML private MenuButton idVerAtributos = new MenuButton();
-	@FXML private TextField idValorAtributo = new TextField();
-	@FXML private MenuButton botonAgregarTradeOff = new MenuButton();
-	
-	TableColumn dimNameCol = new TableColumn("Dimensión");
-	TableColumn subNameCol = new TableColumn("SubDimensión");
-	TableColumn valorNameCol = new TableColumn("Valor");
-	private ObservableList<Propiedades> data = FXCollections.observableArrayList();
-	
->>>>>>> refs/remotes/origin/master
+
 	TableColumn atributoNameCol = new TableColumn("Lista");
 	private ObservableList<Atributo> dataAtributosTradeOff = FXCollections.observableArrayList();
 	
@@ -423,9 +385,6 @@ public class ControladorAtributos implements Initializable {
 		idTablaTradeOFF.setItems(dataAtributosTradeOff);
 		ArrayList<Atributo> aux = Modelo.atributoActual.getAtributosTradeOff();
 		aux.add(t);
-<<<<<<< HEAD
-=======
 		System.out.print("hola");
->>>>>>> refs/remotes/origin/master
 	}
 }
