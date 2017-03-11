@@ -32,6 +32,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
@@ -57,7 +58,14 @@ public class ControladorAtributos extends Application implements Initializable {
         atributoNameCol.setMinWidth(100);
         atributoNameCol.setCellValueFactory(new PropertyValueFactory<String, String>("nombre"));
         idTablaTradeOFF.getColumns().addAll(atributoNameCol);
-
+        
+        //Inicio con el primer atributo de la lista.
+        Modelo.atributoActual = Modelo.conectorActual.getAtributosCalidad().get(0);
+        cambiarAtributo(Modelo.atributoActual.getNombre());
+    	Modelo.nombreAtributo = Modelo.atributoActual.getNombre();
+    	menuAtributosCalidad.setText(Modelo.atributoActual.getNombre());
+    	idValorAtributo.setText(Float.toString(Modelo.atributoActual.getValor()));
+    	
         actualizarMenuAtributosYTradeOff();
 	}
 	
@@ -81,14 +89,11 @@ public class ControladorAtributos extends Application implements Initializable {
 		//Llena el MenuButton atributos y tradeOff con items de los atributos del conector actual.
 		
 		menuAtributosCalidad.getItems().clear();
-		botonAgregarTradeOff.getItems().clear();
 		
 		ObservableList<MenuItem> list = FXCollections.observableArrayList();
-		ObservableList<MenuItem> listTradeOff = FXCollections.observableArrayList();
 		
-		for (Atributo c: Modelo.conectorActual.getAtributosCalidad().keySet()){
+		for (Atributo c: Modelo.conectorActual.getAtributosCalidad()){
 			MenuItem item = new MenuItem(c.getNombre());
-			MenuItem itemTradeOff = new MenuItem(c.getNombre());
 			
 	        item.setOnAction(new EventHandler<ActionEvent>() {
 	            @Override
@@ -97,27 +102,42 @@ public class ControladorAtributos extends Application implements Initializable {
 	            	cambiarAtributo(c.getNombre());
 	            	Modelo.nombreAtributo = item.getText();
 	            	menuAtributosCalidad.setText(item.getText());
-	            	idValorAtributo.setText(Float.toString(Modelo.conectorActual.getAtributosCalidad().get(Modelo.atributoActual)));
+	            	idValorAtributo.setText(Float.toString(Modelo.atributoActual.getValor()));
 	            }
 	        });
 	        
-			list.add(item);
-			
-	        itemTradeOff.setOnAction(new EventHandler<ActionEvent>() {
-	            @Override
-	            public void handle(ActionEvent e) {
-	            	Atributo t = Modelo.conectorActual.getAtributo(itemTradeOff.getText());
-	        		dataAtributosTradeOff.add(t);
-	        		idTablaTradeOFF.setItems(dataAtributosTradeOff);
-	        		Modelo.atributoActual.getAtributosTradeOff().add(t);
-	        		System.out.println("Le agrego a " + Modelo.atributoActual.getNombre());
-	            }
-	        });
-	        
-			listTradeOff.add(itemTradeOff);
+			list.add(item); 
 		}
 		
 		menuAtributosCalidad.getItems().addAll(list);
+	}
+	
+	private void generarBotonesTradeOff(){
+		
+		ObservableList<MenuItem> listTradeOff = FXCollections.observableArrayList();
+		botonAgregarTradeOff.getItems().clear();
+		
+		for (Atributo c: Modelo.conectorActual.getAtributosCalidad()){
+			if(!c.getNombre().equals(Modelo.atributoActual.getNombre())){
+				MenuItem itemTradeOff = new MenuItem(c.getNombre());
+		        itemTradeOff.setOnAction(new EventHandler<ActionEvent>() {
+		            @Override
+		            public void handle(ActionEvent e) {
+		            	Atributo t = Modelo.conectorActual.getAtributo(itemTradeOff.getText());
+		        		dataAtributosTradeOff.add(t);
+		        		idTablaTradeOFF.setItems(dataAtributosTradeOff);
+		        		Modelo.atributoActual.getAtributosTradeOff().add(t);
+		        		t.getAtributosTradeOff().add(Modelo.atributoActual);
+		        		Modelo.atributoActual.addObserver(t);
+		        		t.addObserver(Modelo.atributoActual);
+		        		t.cambiarValor(1 - Modelo.atributoActual.getValor());
+		        		System.out.println("Le agrego a " + Modelo.atributoActual.getNombre());
+		            }
+		        });
+				listTradeOff.add(itemTradeOff);
+			}
+		}
+		
 		botonAgregarTradeOff.getItems().addAll(listTradeOff);
 	}
 	
@@ -144,7 +164,7 @@ public class ControladorAtributos extends Application implements Initializable {
 	
 	@FXML
 	private void asignarValorAtributoCalidad(){
-		Modelo.conectorActual.getAtributosCalidad().replace(new Atributo(Modelo.nombreAtributo),Float.parseFloat((idValorAtributo.getText())));
+		Modelo.atributoActual.cambiarValor(Float.parseFloat((idValorAtributo.getText())));
 	}
 	
 	@FXML
@@ -393,6 +413,7 @@ public class ControladorAtributos extends Application implements Initializable {
 	private void cambiarAtributo(String elegido){
     	Modelo.nombreAtributo = elegido;
     	borrarBotonesEscenarios();
+    	generarBotonesTradeOff();
     	borrarTablaTradeOff();
     	Modelo.numero = 1;
     	Modelo.listaBotones = Modelo.hashAtributos.get(Modelo.nombreAtributo);
@@ -404,6 +425,7 @@ public class ControladorAtributos extends Application implements Initializable {
     	}
     }
 	
+
 	@Override
 	public void start(Stage primaryStage) {
 

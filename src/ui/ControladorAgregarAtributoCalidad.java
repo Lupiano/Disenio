@@ -16,8 +16,7 @@ public class ControladorAgregarAtributoCalidad {
         	char primero = value.charAt(0);
             String primString = primero + "";
             value = primString.toUpperCase() + value.substring(1, value.length()).toLowerCase();
-            Float cero = new Float(0);             	
-            Modelo.conectorActual.getAtributosCalidad().put(new Atributo(value), cero); 
+            Modelo.conectorActual.getAtributosCalidad().add(new Atributo(value)); 
             Modelo.controladorAtributo.actualizarMenuAtributosYTradeOff();
 		}	
 	}
