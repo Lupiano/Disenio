@@ -41,5 +41,5 @@ public class Modelo {
 	public static ArrayList<String> escenarioAEditarValores;
 	public static String idAuxiliarEscenario;
 	
-	public static Atributo atributoActual= new Atributo();
+	public static Atributo atributoActual;
 }
