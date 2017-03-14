@@ -74,7 +74,8 @@ public class ControladorAtributos extends Application implements Initializable {
 	@FXML private MenuButton menuAtributosCalidad = new MenuButton();
 	@FXML private TableView<Propiedades> idTablaPropiedades = new TableView<Propiedades>();
 	@FXML private TableView<Atributo> idTablaTradeOFF = new TableView<Atributo>();
-	@FXML private AnchorPane panelAtributosCalidad;	@FXML private TextField idValorAtributo = new TextField();
+	@FXML private AnchorPane panelAtributosCalidad;	
+	@FXML private TextField idValorAtributo = new TextField();
 	@FXML private MenuButton botonAgregarTradeOff = new MenuButton();
 	
 	TableColumn dimNameCol = new TableColumn("Dimensión");
@@ -124,7 +125,7 @@ public class ControladorAtributos extends Application implements Initializable {
 		            @Override
 		            public void handle(ActionEvent e) {
 		            	Atributo t = Modelo.conectorActual.getAtributo(itemTradeOff.getText());
-		        		dataAtributosTradeOff.add(t);
+		        		dataAtributosTradeOff.add(new Atributo(t.getNombre()));
 		        		idTablaTradeOFF.setItems(dataAtributosTradeOff);
 		        		Modelo.atributoActual.getAtributosTradeOff().add(t);
 		        		t.getAtributosTradeOff().add(Modelo.atributoActual);
@@ -157,7 +158,7 @@ public class ControladorAtributos extends Application implements Initializable {
 		ArrayList<Atributo> lista = Modelo.atributoActual.getAtributosTradeOff();
 		if(!lista.isEmpty()){
 			for(Atributo a: lista){
-				idTablaTradeOFF.getItems().add(a);
+				idTablaTradeOFF.getItems().add(new Atributo(a.getNombre()));
 			}
 		}
 	}
@@ -352,7 +353,10 @@ public class ControladorAtributos extends Application implements Initializable {
 	private void borrarAtributoTradeOFF(){
 		Atributo a = idTablaTradeOFF.getSelectionModel().getSelectedItem();
 		idTablaTradeOFF.getItems().remove(a);
-		Modelo.atributoActual.getAtributosTradeOff().remove(a);
+		Atributo aBorrar = Modelo.conectorActual.getAtributo(a.getNombre());
+		a = null;
+		aBorrar.getAtributosTradeOff().remove(Modelo.atributoActual);
+		Modelo.atributoActual.getAtributosTradeOff().remove(aBorrar);
 	}
 	
 	@FXML
