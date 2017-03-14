@@ -4,9 +4,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
-import javax.swing.JOptionPane;
-
 import core.Atributo;
 import core.Conector;
 import core.EscenarioDeCalidad;
@@ -32,7 +29,6 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
@@ -41,7 +37,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class ControladorAtributos extends Application implements Initializable {
-	
+
 	@Override
     public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
 		System.out.println("El conector- a editar es" + Modelo.conectorActual.getNombre());
@@ -75,15 +71,14 @@ public class ControladorAtributos extends Application implements Initializable {
 	@FXML private TableView<Propiedades> idTablaPropiedades = new TableView<Propiedades>();
 	@FXML private TableView<Atributo> idTablaTradeOFF = new TableView<Atributo>();
 	@FXML private AnchorPane panelAtributosCalidad;	@FXML private TextField idValorAtributo = new TextField();
-	@FXML private MenuButton botonAgregarTradeOff = new MenuButton();
-	
+	@FXML private MenuButton botonAgregarTradeOff = new MenuButton();	
 	TableColumn dimNameCol = new TableColumn("Dimensión");
 	TableColumn subNameCol = new TableColumn("SubDimensión");
 	TableColumn valorNameCol = new TableColumn("Valor");
-	private ObservableList<Propiedades> data = FXCollections.observableArrayList();
-	
+	private ObservableList<Propiedades> data = FXCollections.observableArrayList();	
 	TableColumn atributoNameCol = new TableColumn("Lista");
 	private ObservableList<Atributo> dataAtributosTradeOff = FXCollections.observableArrayList();
+
 	
 	public void actualizarMenuAtributosYTradeOff(){
 		//Llena el MenuButton atributos y tradeOff con items de los atributos del conector actual.
@@ -102,7 +97,8 @@ public class ControladorAtributos extends Application implements Initializable {
 	            	cambiarAtributo(c.getNombre());
 	            	Modelo.nombreAtributo = item.getText();
 	            	menuAtributosCalidad.setText(item.getText());
-	            	idValorAtributo.setText(Float.toString(Modelo.atributoActual.getValor()));
+	            	double aux = Math.round(Modelo.atributoActual.getValor()*100.0)/100.0;
+	            	idValorAtributo.setText(Double.toString(aux));
 	            }
 	        });
 	        
@@ -131,7 +127,6 @@ public class ControladorAtributos extends Application implements Initializable {
 		        		Modelo.atributoActual.addObserver(t);
 		        		t.addObserver(Modelo.atributoActual);
 		        		t.cambiarValor(1 - Modelo.atributoActual.getValor());
-		        		System.out.println("Le agrego a " + Modelo.atributoActual.getNombre());
 		            }
 		        });
 				listTradeOff.add(itemTradeOff);
