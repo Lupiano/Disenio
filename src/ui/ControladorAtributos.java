@@ -4,6 +4,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
+import javax.swing.JOptionPane;
+
 import core.Atributo;
 import core.Conector;
 import core.EscenarioDeCalidad;
@@ -29,6 +32,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
@@ -37,7 +41,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class ControladorAtributos extends Application implements Initializable {
-
+	
 	@Override
     public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
 		System.out.println("El conector- a editar es" + Modelo.conectorActual.getNombre());
@@ -70,15 +74,17 @@ public class ControladorAtributos extends Application implements Initializable {
 	@FXML private MenuButton menuAtributosCalidad = new MenuButton();
 	@FXML private TableView<Propiedades> idTablaPropiedades = new TableView<Propiedades>();
 	@FXML private TableView<Atributo> idTablaTradeOFF = new TableView<Atributo>();
-	@FXML private AnchorPane panelAtributosCalidad;	@FXML private TextField idValorAtributo = new TextField();
-	@FXML private MenuButton botonAgregarTradeOff = new MenuButton();	
+	@FXML private AnchorPane panelAtributosCalidad;	
+	@FXML private TextField idValorAtributo = new TextField();
+	@FXML private MenuButton botonAgregarTradeOff = new MenuButton();
+	
 	TableColumn dimNameCol = new TableColumn("Dimensión");
 	TableColumn subNameCol = new TableColumn("SubDimensión");
 	TableColumn valorNameCol = new TableColumn("Valor");
-	private ObservableList<Propiedades> data = FXCollections.observableArrayList();	
+	private ObservableList<Propiedades> data = FXCollections.observableArrayList();
+	
 	TableColumn atributoNameCol = new TableColumn("Lista");
 	private ObservableList<Atributo> dataAtributosTradeOff = FXCollections.observableArrayList();
-
 	
 	public void actualizarMenuAtributosYTradeOff(){
 		//Llena el MenuButton atributos y tradeOff con items de los atributos del conector actual.
@@ -97,8 +103,7 @@ public class ControladorAtributos extends Application implements Initializable {
 	            	cambiarAtributo(c.getNombre());
 	            	Modelo.nombreAtributo = item.getText();
 	            	menuAtributosCalidad.setText(item.getText());
-	            	double aux = Math.round(Modelo.atributoActual.getValor()*100.0)/100.0;
-	            	idValorAtributo.setText(Double.toString(aux));
+	            	idValorAtributo.setText(Float.toString(Modelo.atributoActual.getValor()));
 	            }
 	        });
 	        
@@ -120,13 +125,14 @@ public class ControladorAtributos extends Application implements Initializable {
 		            @Override
 		            public void handle(ActionEvent e) {
 		            	Atributo t = Modelo.conectorActual.getAtributo(itemTradeOff.getText());
-		        		dataAtributosTradeOff.add(t);
+		        		dataAtributosTradeOff.add(new Atributo(t.getNombre()));
 		        		idTablaTradeOFF.setItems(dataAtributosTradeOff);
 		        		Modelo.atributoActual.getAtributosTradeOff().add(t);
 		        		t.getAtributosTradeOff().add(Modelo.atributoActual);
 		        		Modelo.atributoActual.addObserver(t);
 		        		t.addObserver(Modelo.atributoActual);
 		        		t.cambiarValor(1 - Modelo.atributoActual.getValor());
+		        		System.out.println("Le agrego a " + Modelo.atributoActual.getNombre());
 		            }
 		        });
 				listTradeOff.add(itemTradeOff);
@@ -152,7 +158,7 @@ public class ControladorAtributos extends Application implements Initializable {
 		ArrayList<Atributo> lista = Modelo.atributoActual.getAtributosTradeOff();
 		if(!lista.isEmpty()){
 			for(Atributo a: lista){
-				idTablaTradeOFF.getItems().add(a);
+				idTablaTradeOFF.getItems().add(new Atributo(a.getNombre()));
 			}
 		}
 	}
@@ -221,12 +227,12 @@ public class ControladorAtributos extends Application implements Initializable {
 		Label l1 = new Label();
         String nombrefinal = "Escenario" + Modelo.numero;
         l1.setText(nombrefinal);
-        l1.setFont(new Font("Arial", 18)); 
+        l1.setFont(new Font("System", 17)); 
         l1.setId(Integer.toString(Modelo.numeroId));
         Modelo.numeroId ++;
 
-    	Button buttonEditar = new Button ("Editar Escenario");
-    	Button buttonBorrar = new Button ("Borrar Escenario");
+    	Button buttonEditar = new Button ("Editar");
+    	Button buttonBorrar = new Button ("Borrar");
     	    	
     	l1.setLayoutX(Modelo.xLabel);
     	l1.setLayoutY(Modelo.yLabel);
@@ -347,7 +353,10 @@ public class ControladorAtributos extends Application implements Initializable {
 	private void borrarAtributoTradeOFF(){
 		Atributo a = idTablaTradeOFF.getSelectionModel().getSelectedItem();
 		idTablaTradeOFF.getItems().remove(a);
-		Modelo.atributoActual.getAtributosTradeOff().remove(a);
+		Atributo aBorrar = Modelo.conectorActual.getAtributo(a.getNombre());
+		a = null;
+		aBorrar.getAtributosTradeOff().remove(Modelo.atributoActual);
+		Modelo.atributoActual.getAtributosTradeOff().remove(aBorrar);
 	}
 	
 	@FXML

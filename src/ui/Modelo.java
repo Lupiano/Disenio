@@ -29,14 +29,14 @@ public class Modelo {
 	public static int numero = 1;
 	public static int numeroId = 0;
 	
-	public static int xLabel = 30;
-	public static int yLabel =346;
+	public static int xLabel = 32;
+	public static int yLabel = 460;
 	
-	public static int xBotonEditar =237;
-	public static int yBotonEditar =346;
+	public static int xBotonEditar = 134;
+	public static int yBotonEditar = 460;
 	
-	public static int xBotonBorrar = 129;
-	public static int yBotonBorrar = 346;
+	public static int xBotonBorrar = 190;
+	public static int yBotonBorrar = 460;
 	
 	public static ArrayList<String> escenarioAEditarValores;
 	public static String idAuxiliarEscenario;
