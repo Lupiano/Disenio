@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minHeight="300.0" minWidth="450.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.ControladorModificarEscenario">
+<AnchorPane fx:id="panelModificarEscenario" minHeight="300.0" minWidth="450.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.ControladorModificarEscenario">
    <children>
       <MenuButton fx:id="idAmbiente" alignment="CENTER" layoutX="133.0" layoutY="228.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="132.0" text="      " textAlignment="CENTER">
          <items>

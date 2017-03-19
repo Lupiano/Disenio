@@ -4,16 +4,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
 import javax.swing.JOptionPane;
-
 import core.Conector;
-import core.Propiedades;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -21,7 +16,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitMenuButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -68,12 +62,17 @@ public class ControladorComponentes implements Initializable{
 	
 	@FXML
 	private void borrarConector(){
-		Conector c = idTablaConectores.getSelectionModel().getSelectedItem();
-		//ACORDARSE DE QUE ESTO NO BORRA NO SE PORQUE
-		Modelo.Conectores.remove(c);
-		idTablaConectores.getItems().remove(c);	
+		//NO ENTIENDO POR QUE NO LO BORRA ESE REMOVE
+		Conector a = idTablaConectores.getSelectionModel().getSelectedItem();
+		System.out.println("A es " + a.getNombre());
+		Modelo.Conectores.remove(a);
+		idTablaConectores.getItems().remove(a);	
 		if(Modelo.Conectores.isEmpty())
 			System.out.println("Vaciaaaaa");
+		ArrayList<Conector> conectores = Modelo.Conectores;
+		for(Conector e: conectores){
+			System.out.println("Tengo conector " + e.getNombre());
+		}
 	}
 	
 	@FXML

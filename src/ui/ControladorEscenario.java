@@ -1,10 +1,7 @@
 package ui;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.ResourceBundle;
-
 import core.EscenarioDeCalidad;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -29,7 +26,7 @@ public class ControladorEscenario implements Initializable {
 	@FXML private MenuButton idArtefactoAfectado = new MenuButton();
 	@FXML private MenuButton idAmbiente = new MenuButton();
 	@FXML private Label l1 = new Label("");
-	ControladorAtributos cA = Modelo.controladorAtributo;;
+	ControladorAtributos cA = Modelo.controladorAtributo;
 	
 	@FXML
 	private void guardarEscenarioCalidad(){
@@ -44,37 +41,22 @@ public class ControladorEscenario implements Initializable {
     								(!idArtefactoAfectado.getText().isEmpty())&&
     									(!idAmbiente.getText().isEmpty())){
     										
-    										l1.setText("El escenario se ha guardado con exito");
-    										idEstimulo.setDisable(true);
-    										idRespuesta.setDisable(true);
-    										idFuenteEstimulo.setDisable(true);
-    										idMedidaRespuesta.setDisable(true);
-    										idArtefactoAfectado.setDisable(true);
-    										idAmbiente.setDisable(true);
-    										botonGuardarEscenario.setDisable(true);
-    										
-    				                		//Se guardan los valores en el objecto EscenarioDeCalidad
-    										
-    										EscenarioDeCalidad aGuardar = new EscenarioDeCalidad();
-    				                		ArrayList<String> arrAux = new ArrayList<String>();
-    				                		arrAux.add(idEstimulo.getText());
-    				                		arrAux.add(idRespuesta.getText());
-    				                		arrAux.add(idFuenteEstimulo.getText());
-    				                		arrAux.add(idMedidaRespuesta.getText());
-    				                		arrAux.add(idArtefactoAfectado.getText());
-    				                		arrAux.add(idAmbiente.getText());
-    				                		aGuardar.setValores(arrAux);
-    				                		
-    				                		if(Modelo.conectorActual.getEscenariosCalidad().get(Modelo.nombreAtributo) != null){
-    				                			Modelo.conectorActual.getEscenariosCalidad().get(Modelo.nombreAtributo).put(Integer.toString(Modelo.numeroId), aGuardar);
-    				                		}
-    				                		else {
-    				                			Hashtable<String,EscenarioDeCalidad> hashAux = new Hashtable<String,EscenarioDeCalidad>();
-    				                			hashAux.put(Integer.toString(Modelo.numeroId), aGuardar);
-    				                			Modelo.conectorActual.getEscenariosCalidad().put(Modelo.nombreAtributo, hashAux);
-    				                		}
-    				                		
-    				                		cA.agregarListaEscenario();
+    		l1.setText("El escenario se ha guardado con exito");    										
+    		//Se guardan los valores en el objecto EscenarioDeCalidad
+			if(Modelo.atributoActual.getEscenarios().isEmpty())
+				Modelo.numero=1;
+			EscenarioDeCalidad aGuardar = new EscenarioDeCalidad();
+			String nombrefinal = "Escenario " + Modelo.numero;
+			aGuardar.setEscenario(nombrefinal);
+    		aGuardar.setEstimulo((idEstimulo.getText()));
+    		aGuardar.setRespuesta(idRespuesta.getText());
+    		aGuardar.setFuenteEstimulo(idFuenteEstimulo.getText());
+    		aGuardar.setMedidaRespuesta(idMedidaRespuesta.getText());
+    		aGuardar.setArtefactoAfectado(idArtefactoAfectado.getText());
+    		aGuardar.setAmbiente(idAmbiente.getText());
+    		Modelo.atributoActual.getEscenarios().add(aGuardar);
+    		Modelo.numero++;
+    		cA.agregarListaEscenario(aGuardar);
     				                		
     									}
     	else

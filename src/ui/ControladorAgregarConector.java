@@ -1,6 +1,7 @@
 package ui;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import core.Conector;
@@ -15,7 +16,7 @@ public class ControladorAgregarConector implements Initializable{
 		
 	@Override
     public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
-    }
+	}
 
 	@FXML private AnchorPane panelAgregarConector;
 	@FXML private TextField idNombreDelConector;
