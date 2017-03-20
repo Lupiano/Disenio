@@ -24,23 +24,17 @@
          </font>
       </Text>
       <Button layoutX="424.0" layoutY="111.0" mnemonicParsing="false" onAction="#guardarPropiedadesDelConector" text="Guardar" />
-      <SplitMenuButton fx:id="idValorDimension" layoutX="14.0" layoutY="50.0" mnemonicParsing="false" onAction="#verDimension" text="Opciones">
+      <MenuButton fx:id="MenuButtonDimension" layoutX="15.0" layoutY="62.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Opciones">
         <items>
-          <MenuItem mnemonicParsing="false" text="Action 1" />
-          <MenuItem mnemonicParsing="false" text="Action 2" />
         </items>
-      </SplitMenuButton>
-      <SplitMenuButton fx:id="idValorSubDimension" layoutX="167.0" layoutY="50.0" mnemonicParsing="false" onAction="#verSubDimension" prefHeight="25.0" prefWidth="127.0" text="Opciones">
+      </MenuButton>
+      <MenuButton fx:id="MenuButtonSubdimension" layoutX="167.0" layoutY="61.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="127.0" text="Opciones">
          <items>
-            <MenuItem mnemonicParsing="false" text="Action 1" />
-            <MenuItem mnemonicParsing="false" text="Action 2" />
          </items>
-      </SplitMenuButton>
-      <SplitMenuButton fx:id="idValorValor" layoutX="339.0" layoutY="50.0" mnemonicParsing="false" onAction="#verValor" prefHeight="25.0" prefWidth="100.0" text="Opciones">
+      </MenuButton>
+      <MenuButton fx:id="MenuButtonValor" layoutX="340.0" layoutY="60.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Opciones">
          <items>
-            <MenuItem mnemonicParsing="false" text="Action 1" />
-            <MenuItem mnemonicParsing="false" text="Action 2" />
          </items>
-      </SplitMenuButton>
+      </MenuButton>
    </children>
 </AnchorPane>
