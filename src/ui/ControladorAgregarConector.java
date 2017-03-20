@@ -34,7 +34,7 @@ public class ControladorAgregarConector implements Initializable{
     	l1.setLayoutY(250);
     	
     	boolean existe = false;
-    	for(Conector c: Modelo.Conectores){
+    	for(Conector c: Modelo.conectores){
     		if(c.getNombre().equals((idNombreDelConector).getText()))
     			existe = true;
     	}
@@ -53,7 +53,7 @@ public class ControladorAgregarConector implements Initializable{
 	        	aux.SetTipo(Modelo.idTipoDeConector);
 	        	aux.setComponenteOrigen(Modelo.idConectorOrigen);
 	        	aux.setComponenteDestino(Modelo.idConectorDestino);
-	        	Modelo.Conectores.add(aux);
+	        	Modelo.conectores.add(aux);
 	    		
 	    		l1.setText("El conector se ha guardado correctamente");		
 	    		cC.guardarEnTabla();

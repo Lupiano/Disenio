@@ -70,9 +70,9 @@ public class ControladorComponentes implements Initializable{
 	private void borrarConector(){
 		Conector c = idTablaConectores.getSelectionModel().getSelectedItem();
 		//ACORDARSE DE QUE ESTO NO BORRA NO SE PORQUE
-		Modelo.Conectores.remove(c);
+		Modelo.conectores.remove(c);
 		idTablaConectores.getItems().remove(c);	
-		if(Modelo.Conectores.isEmpty())
+		if(Modelo.conectores.isEmpty())
 			System.out.println("Vaciaaaaa");
 	}
 	
@@ -93,7 +93,7 @@ public class ControladorComponentes implements Initializable{
 		if (c!=null){
 			Modelo.conectorActual = c;
 			try {
-				primaryStage.setTitle("Editar Conector");
+				primaryStage.setTitle("Editar Conector: " + Modelo.conectorActual.getNombre());
 				primaryStage.getIcons().add(new Image("file:resources/imagen/icono.png"));
 				Parent root = FXMLLoader.load(getClass().getResource("Vista Atributos Calidad.fxml"));
 				Scene scene = new Scene(root);

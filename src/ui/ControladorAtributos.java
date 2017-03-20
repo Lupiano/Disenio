@@ -67,6 +67,9 @@ public class ControladorAtributos extends Application implements Initializable {
     	idValorAtributo.setText(Float.toString(Modelo.atributoActual.getValor()));
     	
         actualizarMenuAtributosYTradeOff();
+        actualizarListaPropiedades();
+        //generarBotonesEscenarios();
+        
 	}
 	
 	
