@@ -10,7 +10,16 @@ public class Atributo extends Observable implements Observer {
 	private ArrayList<Atributo> atributosTradeOff = new ArrayList<Atributo>();
 	private float valor = 0;
 	private boolean yaModificado = false;
+	private ArrayList<EscenarioDeCalidad> escenarios = new ArrayList<EscenarioDeCalidad>();
 	
+	public ArrayList<EscenarioDeCalidad> getEscenarios() {
+		return escenarios;
+	}
+
+	public void setEscenarios(ArrayList<EscenarioDeCalidad> escenarios) {
+		this.escenarios = escenarios;
+	}
+
 	public Atributo(String nombre){
 		this.nombre = nombre;
 	}

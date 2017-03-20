@@ -1,10 +1,7 @@
 package ui;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
-
-import core.EscenarioDeCalidad;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -16,37 +13,29 @@ public class ControladorModificarEscenario implements Initializable {
 		
 		@Override
 	    public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
-			boolean hayValores = true;
-	        ArrayList<String> valores = Modelo.escenarioAEditarValores;
-	        if(valores == null){
-	        	hayValores = false;
-	        }
-	               
-	        if(hayValores){
-	        	idEstimulo.setText(valores.get(0));
-	        	idRespuesta.setText(valores.get(1));
-	        	idFuenteEstimulo.setText(valores.get(2));
-	        	idMedidaRespuesta.setText(valores.get(3));
-	        	idArtefactoAfectado.setText(valores.get(4));
-	        	idAmbiente.setText(valores.get(5));
-	        }
+			idEstimulo.setText(Modelo.escenarioactual.getEstimulo());
+	        idRespuesta.setText(Modelo.escenarioactual.getRespuesta());
+	        idFuenteEstimulo.setText(Modelo.escenarioactual.getFuenteEstimulo());
+	        idMedidaRespuesta.setText(Modelo.escenarioactual.getMedidaRespuesta());
+	        idArtefactoAfectado.setText(Modelo.escenarioactual.getArtefactoAfectado());
+	        idAmbiente.setText(Modelo.escenarioactual.getAmbiente());
 	    }
 		
 		@FXML private Button botonGuardarEscenario = new Button();
-		@FXML private AnchorPane panelAgregarEscenario;
+		@FXML private AnchorPane panelModificarEscenario;
 		@FXML private MenuButton idEstimulo = new MenuButton();
 		@FXML private MenuButton idRespuesta = new MenuButton();
 		@FXML private MenuButton idFuenteEstimulo = new MenuButton();
 		@FXML private MenuButton idMedidaRespuesta = new MenuButton();
 		@FXML private MenuButton idArtefactoAfectado = new MenuButton();
 		@FXML private MenuButton idAmbiente = new MenuButton();
-		@FXML private Label l1 = new Label("");
-		ControladorAtributos cA = Modelo.controladorAtributo;;
-				
+		@FXML private Label l2 = new Label("");
+		ControladorAtributos cA = Modelo.controladorAtributo;
+		
 		@FXML
 		private void guardarEscenarioCalidad(){
-			l1.setLayoutX(40);
-	    	l1.setLayoutY(265);
+			l2.setLayoutX(40);
+	    	l2.setLayoutY(265);
 	    	     	
 	    	if((!idEstimulo.getText().isEmpty())&&
 	    				(!idRespuesta.getText().isEmpty())&&
@@ -54,29 +43,18 @@ public class ControladorModificarEscenario implements Initializable {
 	    						(!idMedidaRespuesta.getText().isEmpty())&&
 	    								(!idArtefactoAfectado.getText().isEmpty())&&
 	    									(!idAmbiente.getText().isEmpty())){
-	    										
-	    										l1.setText("El escenario se ha guardado con exito");
-	    										idEstimulo.setDisable(true);
-	    										idRespuesta.setDisable(true);
-	    										idFuenteEstimulo.setDisable(true);
-	    										idMedidaRespuesta.setDisable(true);
-	    										idArtefactoAfectado.setDisable(true);
-	    										idAmbiente.setDisable(true);
-	    										botonGuardarEscenario.setDisable(true);
-	    											    				                		
-	    				                		//Se guardan los valores en el objecto EscenarioDeCalidad.
-	    				                		EscenarioDeCalidad aEditar = Modelo.conectorActual.getEscenariosCalidad().get(Modelo.nombreAtributo).get(Modelo.idAuxiliarEscenario);
-	    				                		ArrayList<String> arrAux = new ArrayList<String>();
-	    				                		arrAux.add(idEstimulo.getText());
-	    				                		arrAux.add(idRespuesta.getText());
-	    				                		arrAux.add(idFuenteEstimulo.getText());
-	    				                		arrAux.add(idMedidaRespuesta.getText());
-	    				                		arrAux.add(idArtefactoAfectado.getText());
-	    				                		arrAux.add(idAmbiente.getText());
-	    				                		aEditar.setValores(arrAux);
+	    										l2.setText("El escenario se ha guardado con exito");				                		
+	    										Modelo.escenarioactual.setEstimulo((idEstimulo.getText()));
+	    										Modelo.escenarioactual.setRespuesta((idRespuesta.getText()));
+	    										Modelo.escenarioactual.setFuenteEstimulo((idFuenteEstimulo.getText()));
+	    										Modelo.escenarioactual.setMedidaRespuesta((idMedidaRespuesta.getText()));
+	    										Modelo.escenarioactual.setArtefactoAfectado((idArtefactoAfectado.getText()));
+	    										Modelo.escenarioactual.setAmbiente((idAmbiente.getText()));
+	    										l2.setText("El escenario se ha guardado con exito");
 	    									}
 	    	else
-	    		l1.setText("Debes completar todos los campos");
+	    		l2.setText("Debes completar todos los campos");
+	    	panelModificarEscenario.getChildren().add(l2);
 		}
 		
 		@FXML

@@ -4,14 +4,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
-import javax.swing.JOptionPane;
-
 import core.Atributo;
-import core.Conector;
 import core.EscenarioDeCalidad;
 import core.Propiedades;
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,32 +18,30 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
-import javafx.scene.control.Labeled;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-public class ControladorAtributos extends Application implements Initializable {
+public class ControladorAtributos implements Initializable {
 	
 	@Override
     public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
-		System.out.println("El conector- a editar es" + Modelo.conectorActual.getNombre());
+		System.out.println("El conector a editar es" + Modelo.conectorActual.getNombre());
 		Modelo.controladorAtributo = this;
 		idTablaPropiedades.setEditable(true);
 		idTablaTradeOFF.setEditable(true);
-        dimNameCol.setMinWidth(100);
+		idTablaEscenariosCalidad.setEditable(true);
+		escenarioNameCol.setMinWidth(130);
+		escenarioNameCol.setCellValueFactory(new PropertyValueFactory<EscenarioDeCalidad, String>("escenario"));
+		dimNameCol.setMinWidth(100);
         dimNameCol.setCellValueFactory(new PropertyValueFactory<Propiedades, String>("dimension"));
         subNameCol.setMinWidth(100);
         subNameCol.setCellValueFactory(new PropertyValueFactory<Propiedades, String>("subdimension"));
@@ -58,47 +51,48 @@ public class ControladorAtributos extends Application implements Initializable {
         atributoNameCol.setMinWidth(100);
         atributoNameCol.setCellValueFactory(new PropertyValueFactory<String, String>("nombre"));
         idTablaTradeOFF.getColumns().addAll(atributoNameCol);
-        
+        idTablaEscenariosCalidad.getColumns().addAll(escenarioNameCol);
         //Inicio con el primer atributo de la lista.
         Modelo.atributoActual = Modelo.conectorActual.getAtributosCalidad().get(0);
         cambiarAtributo(Modelo.atributoActual.getNombre());
     	Modelo.nombreAtributo = Modelo.atributoActual.getNombre();
     	menuAtributosCalidad.setText(Modelo.atributoActual.getNombre());
     	idValorAtributo.setText(Float.toString(Modelo.atributoActual.getValor()));
-    	
         actualizarMenuAtributosYTradeOff();
-        actualizarListaPropiedades();
-        //generarBotonesEscenarios();
-        
+        generarListaPropiedades();
 	}
-	
 	
 	Stage primaryStage = new Stage();
 	@FXML private MenuButton menuAtributosCalidad = new MenuButton();
 	@FXML private TableView<Propiedades> idTablaPropiedades = new TableView<Propiedades>();
+	@FXML private TableView<EscenarioDeCalidad> idTablaEscenariosCalidad = new TableView<EscenarioDeCalidad>();
 	@FXML private TableView<Atributo> idTablaTradeOFF = new TableView<Atributo>();
 	@FXML private AnchorPane panelAtributosCalidad;	
 	@FXML private TextField idValorAtributo = new TextField();
 	@FXML private MenuButton botonAgregarTradeOff = new MenuButton();
-	
 	TableColumn dimNameCol = new TableColumn("Dimensión");
 	TableColumn subNameCol = new TableColumn("SubDimensión");
 	TableColumn valorNameCol = new TableColumn("Valor");
 	private ObservableList<Propiedades> data = FXCollections.observableArrayList();
-	
+	TableColumn escenarioNameCol = new TableColumn("Escenario");
+	private ObservableList<EscenarioDeCalidad> dataEscenarioCalidad = FXCollections.observableArrayList();
 	TableColumn atributoNameCol = new TableColumn("Lista");
 	private ObservableList<Atributo> dataAtributosTradeOff = FXCollections.observableArrayList();
 	
+	public void generarListaPropiedades(){
+		ArrayList<Propiedades> listaPropiedades = Modelo.conectorActual.getPropiedades();
+		for(Propiedades p: listaPropiedades){
+			data.add(p);
+			idTablaPropiedades.setItems(data);
+		}
+	}
+	
 	public void actualizarMenuAtributosYTradeOff(){
 		//Llena el MenuButton atributos y tradeOff con items de los atributos del conector actual.
-		
 		menuAtributosCalidad.getItems().clear();
-		
 		ObservableList<MenuItem> list = FXCollections.observableArrayList();
-		
 		for (Atributo c: Modelo.conectorActual.getAtributosCalidad()){
 			MenuItem item = new MenuItem(c.getNombre());
-			
 	        item.setOnAction(new EventHandler<ActionEvent>() {
 	            @Override
 	            public void handle(ActionEvent e) {
@@ -112,12 +106,10 @@ public class ControladorAtributos extends Application implements Initializable {
 	        
 			list.add(item); 
 		}
-		
 		menuAtributosCalidad.getItems().addAll(list);
 	}
 	
-	private void generarBotonesTradeOff(){
-		
+	private void generarBotonesTradeOff(){	
 		ObservableList<MenuItem> listTradeOff = FXCollections.observableArrayList();
 		botonAgregarTradeOff.getItems().clear();
 		
@@ -145,14 +137,48 @@ public class ControladorAtributos extends Application implements Initializable {
 		botonAgregarTradeOff.getItems().addAll(listTradeOff);
 	}
 	
-	private void borrarBotonesEscenarios(){
-		//Se borran todos los botones de la interfaz.
-		Modelo.yLabel -= Modelo.listaBotones.size() * 40;
-		Modelo.yBotonBorrar -= Modelo.listaBotones.size() * 40;
-		Modelo.yBotonEditar -= Modelo.listaBotones.size() * 40;
-		for(ArrayList<Labeled> arr: Modelo.listaBotones){
-			panelAtributosCalidad.getChildren().removeAll(arr);
+	private void generarEscenarios(){
+		idTablaEscenariosCalidad.getItems().clear();
+		ArrayList<EscenarioDeCalidad> escenarios = Modelo.atributoActual.getEscenarios();
+		if(!escenarios.isEmpty())
+			for(EscenarioDeCalidad e: escenarios){
+				idTablaEscenariosCalidad.getItems().add(e);
+			}
+	}
+	
+	@FXML
+	private void modificarEscenarioDeCalidad(){
+		EscenarioDeCalidad e = idTablaEscenariosCalidad.getSelectionModel().getSelectedItem();
+		if(e!=null){
+			Modelo.escenarioactual=e;
+			try {
+				primaryStage.setTitle("Modificar Escenario de Calidad");
+				primaryStage.getIcons().add(new Image("file:resources/imagen/icono.png"));
+				Parent root = FXMLLoader.load(getClass().getResource("Vista Escenario Modificado.fxml"));
+				Scene scene = new Scene(root);
+				primaryStage.setScene(scene);
+				primaryStage.show();
+			} catch(Exception a) {
+				a.printStackTrace();
+			}
 		}
+	}
+	
+	@FXML
+	private void borrarEscenarioDeCalidad(){
+		EscenarioDeCalidad e = idTablaEscenariosCalidad.getSelectionModel().getSelectedItem();
+		ArrayList<EscenarioDeCalidad> lista = Modelo.atributoActual.getEscenarios();
+		lista.remove(e);
+		idTablaEscenariosCalidad.getItems().clear();
+		if(!lista.isEmpty()){
+			int aux = 1;
+			for(EscenarioDeCalidad es: lista){
+				es.setEscenario("Escenario " + aux);
+				idTablaEscenariosCalidad.getItems().add(es);
+				aux++;
+			}
+		}
+		Modelo.numero--;
 	}
 	
 	private void borrarTablaTradeOff(){
@@ -182,8 +208,7 @@ public class ControladorAtributos extends Application implements Initializable {
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();
-		}
-		
+		}		
 		this.actualizarMenuAtributosYTradeOff();
 	}
 	
@@ -226,124 +251,17 @@ public class ControladorAtributos extends Application implements Initializable {
 		}
 	}
 
-	public void agregarListaEscenario(){
-		Label l1 = new Label();
-        String nombrefinal = "Escenario" + Modelo.numero;
-        l1.setText(nombrefinal);
-        l1.setFont(new Font("System", 17)); 
-        l1.setId(Integer.toString(Modelo.numeroId));
-        Modelo.numeroId ++;
-
-    	Button buttonEditar = new Button ("Editar");
-    	Button buttonBorrar = new Button ("Borrar");
-    	    	
-    	l1.setLayoutX(Modelo.xLabel);
-    	l1.setLayoutY(Modelo.yLabel);
-    	
-    	buttonEditar.setLayoutX(Modelo.xBotonEditar);
-    	buttonEditar.setLayoutY(Modelo.yBotonEditar);
-    	
-    	buttonBorrar.setLayoutX(Modelo.xBotonBorrar);
-    	buttonBorrar.setLayoutY(Modelo.yBotonBorrar);
-    	
-    	panelAtributosCalidad.getChildren().add(l1);
-    	panelAtributosCalidad.getChildren().add(buttonEditar);
-    	panelAtributosCalidad.getChildren().add(buttonBorrar);
-        
-        ArrayList<Labeled> aux = new ArrayList<Labeled>();
-        aux.add(l1);
-        aux.add(buttonEditar);
-        aux.add(buttonBorrar);
-        Modelo.listaBotones.add(aux);
-        
-        Modelo.hashAtributos.remove(Modelo.nombreAtributo);
-        Modelo.hashAtributos.put(Modelo.nombreAtributo, Modelo.listaBotones);
-        Modelo.numero++;
-        Modelo.yLabel = Modelo.yLabel + 40;
-        Modelo.yBotonBorrar = Modelo.yBotonBorrar +40;
-        Modelo.yBotonEditar = Modelo.yBotonEditar +40;
-        
-    	buttonBorrar.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				ArrayList<Labeled> aBorrar = new ArrayList<Labeled>();
-				//Se borran todos los botones de la interfaz.
-				Modelo.yLabel -= Modelo.listaBotones.size() * 40;
-				Modelo.yBotonBorrar -= Modelo.listaBotones.size() * 40;
-				Modelo.yBotonEditar -= Modelo.listaBotones.size() * 40;
-				
-				for(ArrayList<Labeled> arr: Modelo.listaBotones){
-					panelAtributosCalidad.getChildren().removeAll(arr);
-					//Se borran los botones a eliminar de la lista de botones.
-					if(arr.contains(l1)){
-						aBorrar = arr;
-					}
-				}
-				Modelo.listaBotones.remove(aBorrar);
-				generarBotonesEscenarios();
-			}		
-    	});
-
-    	buttonEditar.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {				
-				//Se obtiene el escenario de calidad que corresponde a este boton.
-				EscenarioDeCalidad escenarioAEditar = Modelo.conectorActual.getEscenariosCalidad().get(Modelo.nombreAtributo).get(l1.getId());
-				Modelo.escenarioAEditarValores = escenarioAEditar.getValores();
-				Modelo.idAuxiliarEscenario = l1.getId();
-				editarEscenario();
-			}	
-			
-    	});
+	public void agregarListaEscenario(EscenarioDeCalidad escenario){
+		dataEscenarioCalidad.add(escenario);
+		idTablaEscenariosCalidad.setItems(dataEscenarioCalidad);
 	}
 	
-	@FXML
-	private void editarEscenario(){
-		try {
-			primaryStage.setTitle("Modificar Escenario de Calidad");
-			primaryStage.getIcons().add(new Image("file:resources/imagen/icono.png"));
-			Parent root = FXMLLoader.load(getClass().getResource("Vista Escenario Modificado.fxml"));
-			Scene scene = new Scene(root);
-			primaryStage.setScene(scene);
-			primaryStage.show();
-		} catch(Exception a) {
-			a.printStackTrace();
-		}
-	}
-	
-	public void generarBotonesEscenarios(){
-		Modelo.numero = 1;
-		//Se vuelven a generar los botones.
-		for(ArrayList<Labeled> arr: Modelo.listaBotones){
-			arr.get(0).setText("Escenario" + Modelo.numero);
-			
-			arr.get(0).setLayoutX(Modelo.xLabel);
-			arr.get(0).setLayoutY(Modelo.yLabel);
-	    	
-			arr.get(1).setLayoutX(Modelo.xBotonEditar);
-			arr.get(1).setLayoutY(Modelo.yBotonEditar);
-	    	
-			arr.get(2).setLayoutX(Modelo.xBotonBorrar);
-			arr.get(2).setLayoutY(Modelo.yBotonBorrar);
-			
-			panelAtributosCalidad.getChildren().add(arr.get(0));
-			panelAtributosCalidad.getChildren().add(arr.get(1));
-			panelAtributosCalidad.getChildren().add(arr.get(2));
-
-	        Modelo.yLabel = Modelo.yLabel + 40;
-	        Modelo.yBotonBorrar = Modelo.yBotonBorrar +40;
-	        Modelo.yBotonEditar = Modelo.yBotonEditar +40;
-	        
-	        Modelo.numero ++;
-		}
-	}
-		
 	@FXML
 	private void borrarPropiedad(){
-	Propiedades p = idTablaPropiedades.getSelectionModel().getSelectedItem();
-	ArrayList<Propiedades> lista = Modelo.conectorActual.getPropiedades();
-	lista.remove(p);
-	idTablaPropiedades.getItems().remove(p);
+		Propiedades p = idTablaPropiedades.getSelectionModel().getSelectedItem();
+		ArrayList<Propiedades> lista = Modelo.conectorActual.getPropiedades();
+		lista.remove(p);
+		idTablaPropiedades.getItems().remove(p);
 	}
 	
 	public void actualizarListaPropiedades(){
@@ -419,21 +337,13 @@ public class ControladorAtributos extends Application implements Initializable {
 	@FXML
 	private void cambiarAtributo(String elegido){
     	Modelo.nombreAtributo = elegido;
-    	borrarBotonesEscenarios();
+    	generarEscenarios();
     	generarBotonesTradeOff();
     	borrarTablaTradeOff();
-    	Modelo.numero = 1;
-    	Modelo.listaBotones = Modelo.hashAtributos.get(Modelo.nombreAtributo);
-    	if(Modelo.listaBotones != null){
-        	generarBotonesEscenarios();
-    	}
-    	else{
-    		Modelo.listaBotones = new ArrayList<ArrayList<Labeled>>();
-    	}
     }
 	
 
-	@Override
+	/*@Override
 	public void start(Stage primaryStage) {
 
 		Conector c = new Conector();
@@ -458,5 +368,5 @@ public class ControladorAtributos extends Application implements Initializable {
 	
 	public static void main(String[] args) {
 		launch(args);
-	}
+	}¨*/
 }

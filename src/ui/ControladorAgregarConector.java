@@ -1,6 +1,7 @@
 package ui;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import core.Conector;
@@ -15,7 +16,7 @@ public class ControladorAgregarConector implements Initializable{
 		
 	@Override
     public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
-    }
+	}
 
 	@FXML private AnchorPane panelAgregarConector;
 	@FXML private TextField idNombreDelConector;
@@ -34,7 +35,7 @@ public class ControladorAgregarConector implements Initializable{
     	l1.setLayoutY(250);
     	
     	boolean existe = false;
-    	for(Conector c: Modelo.conectores){
+    	for(Conector c: Modelo.Conectores){
     		if(c.getNombre().equals((idNombreDelConector).getText()))
     			existe = true;
     	}
@@ -53,7 +54,7 @@ public class ControladorAgregarConector implements Initializable{
 	        	aux.SetTipo(Modelo.idTipoDeConector);
 	        	aux.setComponenteOrigen(Modelo.idConectorOrigen);
 	        	aux.setComponenteDestino(Modelo.idConectorDestino);
-	        	Modelo.conectores.add(aux);
+	        	Modelo.Conectores.add(aux);
 	    		
 	    		l1.setText("El conector se ha guardado correctamente");		
 	    		cC.guardarEnTabla();
