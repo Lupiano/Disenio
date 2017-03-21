@@ -19,20 +19,20 @@
             </Menu>
          </menus>
       </MenuBar>
-      <Text layoutX="347.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Arquitectura" wrappingWidth="106.99999934434891">
+      <Text layoutX="343.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Arquitectura" wrappingWidth="168.9999993443489">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Text>
+      <Text layoutX="102.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Conectores" wrappingWidth="106.99999934434891">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <Text layoutX="48.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Conectores" wrappingWidth="106.99999934434891">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Text>
-      <Button layoutX="48.0" layoutY="146.0" mnemonicParsing="false" onAction="#agregarConector" prefHeight="25.0" prefWidth="137.0" text="Agregar Conector" />
-      <Button layoutX="48.0" layoutY="245.0" mnemonicParsing="false" onAction="#editarConector" prefHeight="25.0" prefWidth="137.0" text="Editar Conector" />
-      <Button layoutX="48.0" layoutY="195.0" mnemonicParsing="false" onAction="#borrarConector" prefHeight="25.0" prefWidth="137.0" text="Borrar Conector" />
+      <Button layoutX="102.0" layoutY="159.0" mnemonicParsing="false" onAction="#agregarConector" prefHeight="25.0" prefWidth="137.0" text="Agregar " />
+      <Button layoutX="102.0" layoutY="199.0" mnemonicParsing="false" onAction="#editarConector" prefHeight="25.0" prefWidth="137.0" text="Editar " />
+      <Button layoutX="102.0" layoutY="239.0" mnemonicParsing="false" onAction="#borrarConector" prefHeight="25.0" prefWidth="137.0" text="Eliminar" />
       <Button layoutX="625.0" layoutY="531.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="122.0" text="Obtener Solución" />
-      <TableView fx:id="idTablaConectores" layoutX="248.0" layoutY="120.0" prefHeight="225.0" prefWidth="419.0" />
+      <TableView fx:id="idTablaConectores" layoutX="302.0" layoutY="159.0" prefHeight="225.0" prefWidth="419.0" />
    </children>
 </AnchorPane>
