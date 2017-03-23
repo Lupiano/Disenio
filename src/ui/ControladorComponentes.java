@@ -92,7 +92,7 @@ public class ControladorComponentes implements Initializable{
 		if (c!=null){
 			Modelo.conectorActual = c;
 			try {
-				primaryStage.setTitle("Editar Conector");
+				primaryStage.setTitle("Editar Conector: " + Modelo.conectorActual.getNombre());
 				primaryStage.getIcons().add(new Image("file:resources/imagen/icono.png"));
 				Parent root = FXMLLoader.load(getClass().getResource("Vista Atributos Calidad.fxml"));
 				Scene scene = new Scene(root);

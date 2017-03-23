@@ -14,7 +14,7 @@ public class Modelo {
 	public static String idConectorOrigen;
 	public static String idConectorDestino;
 	public static Conector conectorActual = null;
-	public static ArrayList<Conector> Conectores = new ArrayList<Conector>();	
+	public static ArrayList<Conector> Conectores = new ArrayList<Conector>();
 	public static String atribActual = "";
 	public static String nombreAtributo = "";
 	public static int numero = 1;	

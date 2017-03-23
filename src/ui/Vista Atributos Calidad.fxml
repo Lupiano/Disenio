@@ -19,7 +19,7 @@
             </Menu>
          </menus>
       </MenuBar>
-      <Button layoutX="703.0" layoutY="584.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="148.0" text="Guardar" />
+      <Button layoutX="715.0" layoutY="602.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="148.0" text="Guardar" />
       <Text layoutX="30.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Atributos de Calidad" wrappingWidth="276.0">
          <font>
             <Font size="30.0" />
@@ -60,7 +60,7 @@
       </MenuButton>
       
       <Button layoutX="107.0" layoutY="309.0" mnemonicParsing="false" onAction="#asignarValorAtributoCalidad" text="Asignar" />
-      <TableView fx:id="idTablaPropiedades" layoutX="570.0" layoutY="141.0" prefHeight="256.0" prefWidth="300.0" tableMenuButtonVisible="true" />
+      <TableView fx:id="idTablaPropiedades" layoutX="570.0" layoutY="141.0" prefHeight="256.0" prefWidth="300.0" />
       <Button layoutX="644.0" layoutY="416.0" mnemonicParsing="false" onAction="#borrarPropiedad" text="Eliminar" />
       <TableView fx:id="idTablaTradeOFF" layoutX="278.0" layoutY="195.0" prefHeight="139.0" prefWidth="100.0" />
       <Text layoutX="290.0" layoutY="187.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TRADE OFF" wrappingWidth="76.0">
@@ -72,13 +72,8 @@
       <MenuButton fx:id="botonAgregarTradeOff" layoutX="386.0" layoutY="194.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="76.0" text="Agregar">
       </MenuButton>
       <Line endX="-100.0" endY="555.0" layoutX="613.0" layoutY="15.5" startX="-100.0" startY="120.0" strokeWidth="0.7" AnchorPane.bottomAnchor="104.0" AnchorPane.topAnchor="135.0" />
-      <Text layoutX="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Escenario1" wrappingWidth="314.0">
-         <font>
-            <Font size="17.0" />
-         </font>
-      </Text>
-      <TableView fx:id="idTablaEscenariosCalidad" layoutX="29.0" layoutY="441.0" prefHeight="193.0" prefWidth="137.0" tableMenuButtonVisible="true" />
-      <Button layoutX="108.0" layoutY="409.0" mnemonicParsing="false" onAction="#borrarEscenarioDeCalidad" prefHeight="25.0" prefWidth="67.0" text="Borrar" />
-      <Button layoutX="185.0" layoutY="409.0" mnemonicParsing="false" onAction="#modificarEscenarioDeCalidad" text="Modificar" />
+      <TableView fx:id="idTablaEscenariosCalidad" layoutX="121.0" layoutY="409.0" prefHeight="193.0" prefWidth="137.0" />
+      <Button layoutX="30.0" layoutY="487.0" mnemonicParsing="false" onAction="#borrarEscenarioDeCalidad" prefHeight="25.0" prefWidth="67.0" text="Eliminar" />
+      <Button layoutX="30.0" layoutY="448.0" mnemonicParsing="false" onAction="#modificarEscenarioDeCalidad" text="   Editar   " />
    </children>
 </AnchorPane>
